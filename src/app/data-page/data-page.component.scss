@@ -1,0 +1,38 @@
+.data{
+    overflow: hidden;
+    .left{
+        width: 186px;
+        float:left;
+        background: #2f3438;
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+        ul{
+            padding: 0;
+            margin: 0;
+            li{
+                list-style: none;
+                height:55px;
+                line-height: 55px;
+                color: #666a6d;
+                text-align: center;
+                font-size: 16px;
+                border-bottom: 1px solid #292d30;
+                box-sizing: border-box;
+                &.cur{
+                    background: #276ab0;
+                    color: #eee;
+                }
+            }
+        }
+    }
+
+    .right{
+        padding-left:22px; 
+        .info-bar{
+            height: 55px;
+            background: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+        }
+    }
+
+}
