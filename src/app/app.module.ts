@@ -15,6 +15,10 @@ import { AppComponent } from './app.component';
 
 import { MasterPageComponent } from './master-page/master-page.component';
 import { DataPageComponent } from './data-page/data-page.component';
+import { WarningPageComponent } from './warning-page/warning-page.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
+import { DangerPageComponent } from './danger-page/danger-page.component';
 
 
 const appRoutes: Routes = [
@@ -23,13 +27,21 @@ const appRoutes: Routes = [
   // { path: 'echarts',component:EchartsComponent}
   { path: 'master', component: MasterPageComponent },
   { path: 'data', component: DataPageComponent },
-]
+  { path: 'warning', component: WarningPageComponent },
+  { path: 'mistake', component: ErrorPageComponent },
+  { path: 'dashboard', component: DashboardPageComponent },
+  { path: 'danger', component: DangerPageComponent },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     MasterPageComponent,
-    DataPageComponent
+    DataPageComponent,
+    WarningPageComponent,
+    ErrorPageComponent,
+    DashboardPageComponent,
+    DangerPageComponent
   ],
   imports: [
     BrowserModule,
