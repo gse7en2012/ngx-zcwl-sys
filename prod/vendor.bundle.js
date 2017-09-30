@@ -1,4 +1,4 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
 /***/ "../../../../css-loader/lib/css-base.js":
 /***/ (function(module, exports) {
@@ -512,6 +512,227 @@ function safeJsonParse(str) {
     }
 }
 
+
+/***/ }),
+
+/***/ "../../../../ngx-echarts/directive/angular-echarts.directive.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AngularEchartsDirective; });
+
+
+var AngularEchartsDirective = (function () {
+    function AngularEchartsDirective(el, renderer, _ngZone) {
+        this.el = el;
+        this.renderer = renderer;
+        this._ngZone = _ngZone;
+        this.theme = '';
+        this.chartInit = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartClick = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartDblClick = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartMouseDown = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartMouseUp = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartMouseOver = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartMouseOut = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartGlobalOut = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartContextMenu = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.chartDataZoom = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* EventEmitter */]();
+        this.myChart = null;
+        this.currentWindowWidth = null;
+    }
+    AngularEchartsDirective.prototype.createChart = function () {
+        var _this = this;
+        this.theme = this.theme || '';
+        this.currentWindowWidth = window.innerWidth;
+        if (this.theme) {
+            return this._ngZone.runOutsideAngular(function () { return echarts.init(_this.el.nativeElement, _this.theme); });
+        }
+        else {
+            return this._ngZone.runOutsideAngular(function () { return echarts.init(_this.el.nativeElement); });
+        }
+    };
+    AngularEchartsDirective.prototype.updateChart = function () {
+        this.myChart.setOption(this.options);
+        this.myChart.resize();
+    };
+    AngularEchartsDirective.prototype.onWindowResize = function (event) {
+        if (event.target.innerWidth !== this.currentWindowWidth) {
+            this.currentWindowWidth = event.target.innerWidth;
+            if (this.myChart) {
+                this.myChart.resize();
+            }
+        }
+    };
+    AngularEchartsDirective.prototype.ngOnChanges = function (changes) {
+        if (changes['dataset']) {
+            this.onDatasetChange(this.dataset);
+        }
+        if (changes['options']) {
+            this.onOptionsChange(this.options);
+        }
+        if (changes['loading']) {
+            this.onLoadingChange(this.loading);
+        }
+    };
+    AngularEchartsDirective.prototype.ngOnDestroy = function () {
+        if (this.myChart) {
+            this.myChart.dispose();
+            this.myChart = null;
+        }
+    };
+    AngularEchartsDirective.prototype.onOptionsChange = function (opt) {
+        if (opt) {
+            if (!this.myChart) {
+                this.myChart = this.createChart();
+                this.chartInit.emit(this.myChart);
+                this.registerEvents(this.myChart);
+            }
+            if (this.hasData()) {
+                this.updateChart();
+            }
+            else if (this.dataset && this.dataset.length) {
+                this.mergeDataset(this.dataset);
+                this.updateChart();
+            }
+        }
+    };
+    AngularEchartsDirective.prototype.onDatasetChange = function (dataset) {
+        if (this.myChart && this.options) {
+            if (!this.options.series) {
+                this.options.series = [];
+            }
+            this.mergeDataset(dataset);
+            this.updateChart();
+        }
+    };
+    AngularEchartsDirective.prototype.onLoadingChange = function (loading) {
+        if (this.myChart) {
+            if (loading) {
+                this.myChart.showLoading();
+            }
+            else {
+                this.myChart.hideLoading();
+            }
+        }
+    };
+    AngularEchartsDirective.prototype.mergeDataset = function (dataset) {
+        for (var i = 0, len = dataset.length; i < len; i++) {
+            if (!this.options.series[i]) {
+                this.options.series[i] = { data: dataset[i] };
+            }
+            else {
+                this.options.series[i].data = dataset[i];
+            }
+        }
+    };
+    AngularEchartsDirective.prototype.hasData = function () {
+        if (this.options.baseOption && this.options.baseOption.timeline) {
+            var options = this.options.options;
+            if (options.length) {
+                for (var _i = 0, options_1 = options; _i < options_1.length; _i++) {
+                    var o = options_1[_i];
+                    if (o.series) {
+                        for (var _a = 0, _b = o.series; _a < _b.length; _a++) {
+                            var serie = _b[_a];
+                            if (serie.data && serie.data.length > 0) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        if (!this.options.series || !this.options.series.length) {
+            return false;
+        }
+        for (var _c = 0, _d = this.options.series; _c < _d.length; _c++) {
+            var serie = _d[_c];
+            if (serie.data && serie.data.length > 0) {
+                return true;
+            }
+        }
+        return false;
+    };
+    AngularEchartsDirective.prototype.registerEvents = function (myChart) {
+        var _this = this;
+        if (myChart) {
+            myChart.on('click', function (e) { _this.chartClick.emit(e); });
+            myChart.on('dblClick', function (e) { _this.chartDblClick.emit(e); });
+            myChart.on('mousedown', function (e) { _this.chartMouseDown.emit(e); });
+            myChart.on('mouseup', function (e) { _this.chartMouseUp.emit(e); });
+            myChart.on('mouseover', function (e) { _this.chartMouseOver.emit(e); });
+            myChart.on('mouseout', function (e) { _this.chartMouseOut.emit(e); });
+            myChart.on('globalout', function (e) { _this.chartGlobalOut.emit(e); });
+            myChart.on('contextmenu', function (e) { _this.chartContextMenu.emit(e); });
+            myChart.on('dataZoom', function (e) { _this.chartDataZoom.emit(e); });
+        }
+    };
+    return AngularEchartsDirective;
+}());
+
+AngularEchartsDirective.decorators = [
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* Directive */], args: [{
+                selector: '[echarts]'
+            },] },
+];
+AngularEchartsDirective.ctorParameters = function () { return [
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* ElementRef */], },
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Renderer */], },
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* NgZone */], },
+]; };
+AngularEchartsDirective.propDecorators = {
+    'options': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */] },],
+    'dataset': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */] },],
+    'theme': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */] },],
+    'loading': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Input */] },],
+    'chartInit': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartClick': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartDblClick': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartMouseDown': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartMouseUp': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartMouseOver': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartMouseOut': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartGlobalOut': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartContextMenu': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'chartDataZoom': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* Output */] },],
+    'onWindowResize': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* HostListener */], args: ['window:resize', ['$event'],] },],
+};
+//# sourceMappingURL=angular-echarts.directive.js.map
+
+/***/ }),
+
+/***/ "../../../../ngx-echarts/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__directive_angular_echarts_directive__ = __webpack_require__("../../../../ngx-echarts/directive/angular-echarts.directive.js");
+/* unused harmony namespace reexport */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AngularEchartsModule; });
+
+
+
+var AngularEchartsModule = (function () {
+    function AngularEchartsModule() {
+    }
+    return AngularEchartsModule;
+}());
+
+AngularEchartsModule.decorators = [
+    { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["b" /* NgModule */], args: [{
+                declarations: [
+                    __WEBPACK_IMPORTED_MODULE_1__directive_angular_echarts_directive__["a" /* AngularEchartsDirective */]
+                ],
+                exports: [
+                    __WEBPACK_IMPORTED_MODULE_1__directive_angular_echarts_directive__["a" /* AngularEchartsDirective */]
+                ]
+            },] },
+];
+AngularEchartsModule.ctorParameters = function () { return []; };
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
