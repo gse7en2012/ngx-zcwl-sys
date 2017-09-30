@@ -14,11 +14,19 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { AppComponent } from './app.component';
 
 import { MasterPageComponent } from './master-page/master-page.component';
+
+
 import { DataPageComponent } from './data-page/data-page.component';
+import { BranchComponent } from './data-page/branch/branch.component';
+import { DeviceComponent } from './data-page/device/device.component';
+
+
+
 import { WarningPageComponent } from './warning-page/warning-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { DangerPageComponent } from './danger-page/danger-page.component';
+
 
 
 const appRoutes: Routes = [
@@ -26,8 +34,13 @@ const appRoutes: Routes = [
   // { path: 'login', component: LoginPageComponent },
   // { path: 'echarts',component:EchartsComponent}
   { path: 'master', component: MasterPageComponent },
+  
   { path: 'data', component: DataPageComponent },
+  { path: 'data/branch/:branch_id', component: BranchComponent },
+  { path: 'data/device/:device_id', component: DeviceComponent },
+
   { path: 'warning', component: WarningPageComponent },
+
   { path: 'mistake', component: ErrorPageComponent },
   { path: 'dashboard', component: DashboardPageComponent },
   { path: 'danger', component: DangerPageComponent },
@@ -41,10 +54,14 @@ const appRoutes: Routes = [
     WarningPageComponent,
     ErrorPageComponent,
     DashboardPageComponent,
-    DangerPageComponent
+    DangerPageComponent,
+    BranchComponent,
+    DeviceComponent,
+
   ],
   imports: [
     BrowserModule,
+    AngularEchartsModule,
     CookieModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],

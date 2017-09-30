@@ -1,5 +1,8 @@
 .data{
     overflow: hidden;
+    p{margin: 0;}
+    .fl{float: left}
+    .fr{float: right}
     .left{
         width: 186px;
         float:left;
@@ -27,12 +30,127 @@
     }
 
     .right{
-        padding-left:22px; 
+        padding-left:186px; 
         .info-bar{
             height: 55px;
             background: #f1f1f1;
             border-bottom: 1px solid #ddd;
+            line-height: 55px;
+            padding: 0 20px;
+            .bread-crumb{
+                float: left;
+            }
+            .switch-box{
+                float: right;
+                margin-right: 5%;
+                .toggle{
+                    margin: 13px 5px;
+                }
+            }
+            .search-box{
+                position: relative;
+                display: inline-block;
+                .icon{
+                    width: 16px;
+                    position: absolute;
+                    right: 18px;
+                    top: 18px;
+                }
+            }
+            .search{
+                margin: 0 10px;
+                border: 0;
+                background: #276ab0;
+                height: 28px;
+                border-radius: 14px;
+                padding: 0 10px;
+                color: #ddd;
+                outline: 0;
+                width: 120px;
+                padding-right: 30px;
+                &::-webkit-input-placeholder{
+                    color: #ddd;
+                }
+            }
+        }
+
+        .content{
+            padding: 35px 40px;
+            .device-list{
+                overflow: hidden;
+                .section{
+                    float: left;
+                    background: #fff;
+                    box-shadow: 2px 2px 2px #ddd;
+                    width: 23%;
+                    margin: 0 1% 5%;
+                    color: #666;
+                    text-decoration: none;
+                }
+                .device-name{
+                    text-align: center;
+                    font-weight: normal;
+                    margin-bottom: 5px;
+                }
+                .device-pic{
+                    width: 70%;
+                    margin: 0 auto;
+                    height: 0;
+                    padding-bottom: 50%;
+                    overflow: hidden;
+                    position: relative;
+                    img{
+                        width: 100%;
+                        position: absolute;
+                        top: 50%;
+                        transform: translate(-50%,-50%);
+                        left: 50%;
+                    }
+                }
+                .device-info{
+                    overflow: hidden;
+                    text-align: center;
+                    margin: 0 0 8px;
+                    .fl,.fr{
+                        width: 50%;
+                        .num{
+                            font-size: 20px;
+                            color: #fa8562;
+                            font-weight: bold;
+                        }
+                        p{
+                            line-height: 1.5;
+                        }
+                    }
+                }
+            }
+        }
+
+        .pagination{
+            text-align: center;
+            margin-bottom: 50px;
+            .btn{
+                background: #36c2ff;
+                color: #fff;
+                display: inline-block;
+                padding: 5px 20px;
+                border-radius:30px;
+                margin: 0 4px; 
+                &.disabled{
+                    background: #cacaca;
+                    color: #9b9fa2;
+                }
+            }
+            .page-input{
+                background: #fff;
+                height: 24px;
+                padding: 0 10px;
+                border-radius: 13px;
+                width: 60px;
+                text-align: center;
+                outline: 0;
+                border: 1px solid #36c2ff;
+            }
         }
     }
-
 }
