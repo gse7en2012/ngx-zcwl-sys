@@ -1,0 +1,86 @@
+.login-page{
+    background:#fff url('../../assets/image/login_bg.jpg') no-repeat 50% 0;
+    .top{
+        height: 80px;background:#e5e5e5;
+        .box{
+            max-width: 1050px;margin: 0 auto;
+            img{
+                height: 80px;float:left;margin-right: 10px;
+            }
+            p{
+                line-height: 80px;
+                color: #333;
+                font-size: 22px;
+                margin: 0;
+            }
+        }
+    }
+
+}
+
+.copyright{
+    font-size: 14px;
+    color: #6b6b6b;
+    text-align: center;
+    margin-top: 420px;
+}
+
+
+
+.ctx{max-width: 1050px;margin: 0 auto;min-height: 900px;position: relative;overflow: hidden;}
+
+.form{
+    .row{
+        overflow: hidden;
+    }
+    width: 400px;position: absolute;right:5px;top:40px;border-radius: 5px;background: #fff;box-sizing: border-box;padding: 25px;font-size: 16px;
+    input{
+        border:1px solid #ececec;background: none;outline: none;display: block;margin: 0;height: 50px;line-height: 50px;padding: 0 8px;width: 100%;box-sizing: border-box;margin-bottom: 10px;padding-left: 45px;color: #444;
+    }
+    label{
+        font-size: 14px;overflow: hidden;
+        span{
+            display: inline-block;margin-left: 5px;color: #555;
+        }
+    }
+    #name{
+        background: url('../../assets/image/login_avatar.png') no-repeat 10px 11px;
+
+    }
+    #pass{
+        background: url('../../assets/image/login_pass.png') no-repeat 10px 11px;
+        width: 58%;float: left;
+    }
+    #sms-code{
+        width: 38%;
+        margin-left: 4%;
+        float: left;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+}
+.title{text-align: center;color: #555;font-size: 20px;line-height: 1.5;margin:0;margin-bottom: 20px;font-weight: normal;}
+
+
+#box{margin: 20px 0;}
+#auto{width: auto;height: auto;display: inline-block;}
+
+
+.login-btn{
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    color: #fff;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 5px;
+    background: #44b549;
+    font-size: 18px;
+}
+

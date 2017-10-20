@@ -1,6 +1,13 @@
 .data{
     overflow: hidden;
     p{margin: 0;}
+    p.no-data{
+        text-align: center;
+        border: 1px solid #ddd;
+        background: #fff;
+        padding: 100px;
+        font-size: 30px;
+    }
     .fl{float: left}
     .fr{float: right}
     .left{
@@ -103,6 +110,7 @@
                 .ctx{
                     height: 214px;
                     overflow: hidden;
+                    position: relative;
                     .pic-box{
                         width: 35%;
                         padding: 70px 0;
@@ -111,7 +119,10 @@
                     }
                     .desc-box{
                         width: 65%;
-                        padding: 70px 0;
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
                         .title{
                             font-size: 16px;
                             line-height: 1.5;
@@ -122,8 +133,8 @@
                             overflow: hidden;
                             .item{
                                 float: left;
-                                width: 50%;
-                                line-height: 1.5;
+                                width: 100%;
+                                line-height: 1.7;
                             }
                         }
                     }
@@ -135,7 +146,8 @@
                             width:33.33333%;
                             line-height: 1.8;
                             margin-bottom: 10px;
-
+                            height: 25px;
+                            overflow: hidden;
                             .number{
                                 color: #266bb0;
                                 margin: 0 10px;

@@ -16,7 +16,7 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrap\">\n  <header>\n     <div class=\"logo\">PST</div>\n     <div class=\"nav\">\n       <a [routerLink]=\"['master']\" routerLinkActive=\"cur\" class=\"index\"><i class=\"icon\"></i><span>首页</span></a>\n       <a [routerLink]=\"['data']\" routerLinkActive=\"cur\" class=\"data\"><i class=\"icon \"></i><span>实时数据</span></a>\n       <a [routerLink]=\"['warning']\" routerLinkActive=\"cur\" class=\"warning\"><i class=\"icon \"></i><span>报警信息</span></a>\n       <a [routerLink]=\"['mistake']\" routerLinkActive=\"cur\" class=\"error\"><i class=\"icon \"></i><span>故障信息</span></a>\n       <a [routerLink]=\"['dashboard']\" routerLinkActive=\"cur\" class=\"dashboard\"><i class=\"icon \"></i><span>监控中心</span></a>\n       <a [routerLink]=\"['danger']\" routerLinkActive=\"cur\" class=\"bug\"><i class=\"icon \"></i><span>隐患曝光</span></a>\n     </div>\n     <div class=\"setting\">\n       <div class=\"account\">\n         <img class=\"avatar\" src=\"https://0.gravatar.com/avatar/cd59176540d404323eb7ed64760db991?s=90&d=identicon&r=G\">\n         <span class=\"name\">Gseven</span>\n         <a class=\"power\"><img src=\"./assets/image/power.png\"></a>\n       </div>\n     </div>\n  </header>\n  <main>\n    <router-outlet></router-outlet>\n  </main>\n</div>"
+module.exports = "<div class=\"wrap\">\n\n  <main>\n    <router-outlet></router-outlet>\n  </main>\n</div>\n"
 
 /***/ }),
 
@@ -28,7 +28,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "main {\n  min-width: 1250px;\n  background: #f1f1f1; }\n\n.content-wrap {\n  overflow: hidden; }\n\n.wrap {\n  margin: 15px;\n  background: #f1f1f1; }\n  .wrap header {\n    overflow: hidden;\n    background: #272b2e;\n    min-width: 1250px; }\n  .wrap .logo {\n    width: 186px;\n    height: 85px;\n    float: left;\n    text-indent: -9999em;\n    background: #e5e5e5 url(" + __webpack_require__("../../../../../src/assets/image/logo.png") + ") no-repeat 0 0; }\n  .wrap .nav {\n    float: left;\n    margin-left: 15px; }\n    .wrap .nav a {\n      float: left;\n      width: 112px;\n      height: 70px;\n      font-size: 15px;\n      margin-right: 8px;\n      background: #276cb1;\n      text-align: center;\n      color: #fff;\n      text-decoration: none; }\n      .wrap .nav a.index {\n        background: #276cb1 url(" + __webpack_require__("../../../../../src/assets/image/nav1.png") + ") no-repeat 0 0; }\n      .wrap .nav a.data {\n        background: #12b461 url(" + __webpack_require__("../../../../../src/assets/image/nav2.png") + ") no-repeat 0 0; }\n      .wrap .nav a.warning {\n        background: #ea7a18 url(" + __webpack_require__("../../../../../src/assets/image/nav3.png") + ") no-repeat 0 0; }\n      .wrap .nav a.error {\n        background: #f45d4c url(" + __webpack_require__("../../../../../src/assets/image/nav4.png") + ") no-repeat 0 0; }\n      .wrap .nav a.dashboard {\n        background: #7f75e6 url(" + __webpack_require__("../../../../../src/assets/image/nav5.png") + ") no-repeat 0 0; }\n      .wrap .nav a.bug {\n        background: #4e5d70 url(" + __webpack_require__("../../../../../src/assets/image/nav6.png") + ") no-repeat 0 0; }\n    .wrap .nav .icon {\n      display: block;\n      width: 24px;\n      height: 24px;\n      margin: 10px auto; }\n  .wrap .setting {\n    float: right;\n    color: #fff; }\n    .wrap .setting .avatar {\n      width: 34px;\n      height: 34px;\n      border-radius: 50%;\n      float: left;\n      margin: 18px; }\n    .wrap .setting .name {\n      font-size: 16px;\n      line-height: 70px;\n      position: relative;\n      border-right: 1px solid #888;\n      padding-right: 15px; }\n    .wrap .setting .power {\n      float: right;\n      margin: 26px; }\n", ""]);
+exports.push([module.i, "main {\n  min-width: 1250px; }\n\n.content-wrap {\n  overflow: hidden; }\n", ""]);
 
 // exports
 
@@ -43,6 +43,8 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_user_service__ = __webpack_require__("../../../../../src/app/service/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_project_service__ = __webpack_require__("../../../../../src/app/service/project.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -50,21 +52,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(userService, projectService) {
+        var _this = this;
+        this.userService = userService;
+        this.projectService = projectService;
         this.title = 'app';
+        this.projectService.getProjectList().then(function (data) {
+            _this.userService.setProjectList(data.project_list);
+        });
     }
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/app.component.scss")]
-    })
+        styles: [__webpack_require__("../../../../../src/app/app.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_2__service_project_service__["a" /* ProjectService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__service_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__service_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__service_project_service__["a" /* ProjectService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__service_project_service__["a" /* ProjectService */]) === "function" && _b || Object])
 ], AppComponent);
 
+var _a, _b;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -75,21 +91,27 @@ AppComponent = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ngx_cookie__ = __webpack_require__("../../../../ngx-cookie/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_echarts__ = __webpack_require__("../../../../ngx-echarts/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__auth_guard__ = __webpack_require__("../../../../../src/app/auth-guard.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__service_extended_http_service__ = __webpack_require__("../../../../../src/app/service/extended-http.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__master_page_master_page_component__ = __webpack_require__("../../../../../src/app/master-page/master-page.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__data_page_data_page_component__ = __webpack_require__("../../../../../src/app/data-page/data-page.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__data_page_branch_branch_component__ = __webpack_require__("../../../../../src/app/data-page/branch/branch.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__data_page_device_device_component__ = __webpack_require__("../../../../../src/app/data-page/device/device.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__warning_page_warning_page_component__ = __webpack_require__("../../../../../src/app/warning-page/warning-page.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__error_page_error_page_component__ = __webpack_require__("../../../../../src/app/error-page/error-page.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__dashboard_page_dashboard_page_component__ = __webpack_require__("../../../../../src/app/dashboard-page/dashboard-page.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__danger_page_danger_page_component__ = __webpack_require__("../../../../../src/app/danger-page/danger-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ngx_cookie__ = __webpack_require__("../../../../ngx-cookie/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ngx_echarts__ = __webpack_require__("../../../../ngx-echarts/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__service_err_msg__ = __webpack_require__("../../../../../src/app/service/err-msg.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__service_lib_service__ = __webpack_require__("../../../../../src/app/service/lib.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__service_user_service__ = __webpack_require__("../../../../../src/app/service/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_guard__ = __webpack_require__("../../../../../src/app/auth-guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__service_extended_http_service__ = __webpack_require__("../../../../../src/app/service/extended-http.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__master_page_master_page_component__ = __webpack_require__("../../../../../src/app/master-page/master-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__data_page_data_page_component__ = __webpack_require__("../../../../../src/app/data-page/data-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__data_page_branch_branch_component__ = __webpack_require__("../../../../../src/app/data-page/branch/branch.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__data_page_device_device_component__ = __webpack_require__("../../../../../src/app/data-page/device/device.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__warning_page_warning_page_component__ = __webpack_require__("../../../../../src/app/warning-page/warning-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__error_page_error_page_component__ = __webpack_require__("../../../../../src/app/error-page/error-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__dashboard_page_dashboard_page_component__ = __webpack_require__("../../../../../src/app/dashboard-page/dashboard-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__danger_page_danger_page_component__ = __webpack_require__("../../../../../src/app/danger-page/danger-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__login_page_login_page_component__ = __webpack_require__("../../../../../src/app/login-page/login-page.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__parent_container_parent_container_component__ = __webpack_require__("../../../../../src/app/parent-container/parent-container.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -104,7 +126,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-// import { UserService } from './service/user.service';
+
+
+
+
+
+
 
 
 
@@ -116,17 +143,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 var appRoutes = [
-    { path: '', redirectTo: 'master', pathMatch: 'full' },
-    // { path: 'login', component: LoginPageComponent },
-    // { path: 'echarts',component:EchartsComponent}
-    { path: 'master', component: __WEBPACK_IMPORTED_MODULE_9__master_page_master_page_component__["a" /* MasterPageComponent */] },
-    { path: 'data', component: __WEBPACK_IMPORTED_MODULE_10__data_page_data_page_component__["a" /* DataPageComponent */] },
-    { path: 'data/branch/:branch_id', component: __WEBPACK_IMPORTED_MODULE_11__data_page_branch_branch_component__["a" /* BranchComponent */] },
-    { path: 'data/device/:device_id', component: __WEBPACK_IMPORTED_MODULE_12__data_page_device_device_component__["a" /* DeviceComponent */] },
-    { path: 'warning', component: __WEBPACK_IMPORTED_MODULE_13__warning_page_warning_page_component__["a" /* WarningPageComponent */] },
-    { path: 'mistake', component: __WEBPACK_IMPORTED_MODULE_14__error_page_error_page_component__["a" /* ErrorPageComponent */] },
-    { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_15__dashboard_page_dashboard_page_component__["a" /* DashboardPageComponent */] },
-    { path: 'danger', component: __WEBPACK_IMPORTED_MODULE_16__danger_page_danger_page_component__["a" /* DangerPageComponent */] },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: 'login', component: __WEBPACK_IMPORTED_MODULE_21__login_page_login_page_component__["a" /* LoginPageComponent */] },
+];
+var adminRoutes = [
+    {
+        path: 'admin', component: __WEBPACK_IMPORTED_MODULE_22__parent_container_parent_container_component__["a" /* ParentContainerComponent */], children: [
+            { path: 'master', component: __WEBPACK_IMPORTED_MODULE_13__master_page_master_page_component__["a" /* MasterPageComponent */] },
+            { path: 'data', component: __WEBPACK_IMPORTED_MODULE_14__data_page_data_page_component__["a" /* DataPageComponent */] },
+            { path: 'data/branch/:branch_id', component: __WEBPACK_IMPORTED_MODULE_15__data_page_branch_branch_component__["a" /* BranchComponent */] },
+            { path: 'data/device/:device_id', component: __WEBPACK_IMPORTED_MODULE_16__data_page_device_device_component__["a" /* DeviceComponent */] },
+            { path: 'warning', component: __WEBPACK_IMPORTED_MODULE_17__warning_page_warning_page_component__["a" /* WarningPageComponent */] },
+            { path: 'mistake', component: __WEBPACK_IMPORTED_MODULE_18__error_page_error_page_component__["a" /* ErrorPageComponent */] },
+            { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_19__dashboard_page_dashboard_page_component__["a" /* DashboardPageComponent */] },
+            { path: 'danger', component: __WEBPACK_IMPORTED_MODULE_20__danger_page_danger_page_component__["a" /* DangerPageComponent */] },
+        ],
+        canActivate: [__WEBPACK_IMPORTED_MODULE_10__auth_guard__["a" /* AuthGuard */]]
+    }
 ];
 var AppModule = (function () {
     function AppModule() {
@@ -136,28 +169,35 @@ var AppModule = (function () {
 AppModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["b" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__master_page_master_page_component__["a" /* MasterPageComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__data_page_data_page_component__["a" /* DataPageComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__warning_page_warning_page_component__["a" /* WarningPageComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__error_page_error_page_component__["a" /* ErrorPageComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__dashboard_page_dashboard_page_component__["a" /* DashboardPageComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__danger_page_danger_page_component__["a" /* DangerPageComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__data_page_branch_branch_component__["a" /* BranchComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__data_page_device_device_component__["a" /* DeviceComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__master_page_master_page_component__["a" /* MasterPageComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__data_page_data_page_component__["a" /* DataPageComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__warning_page_warning_page_component__["a" /* WarningPageComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__error_page_error_page_component__["a" /* ErrorPageComponent */],
+            __WEBPACK_IMPORTED_MODULE_19__dashboard_page_dashboard_page_component__["a" /* DashboardPageComponent */],
+            __WEBPACK_IMPORTED_MODULE_20__danger_page_danger_page_component__["a" /* DangerPageComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__data_page_branch_branch_component__["a" /* BranchComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__data_page_device_device_component__["a" /* DeviceComponent */],
+            __WEBPACK_IMPORTED_MODULE_21__login_page_login_page_component__["a" /* LoginPageComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__parent_container_parent_container_component__["a" /* ParentContainerComponent */],
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_5_ngx_echarts__["a" /* AngularEchartsModule */],
-            __WEBPACK_IMPORTED_MODULE_4_ngx_cookie__["a" /* CookieModule */].forRoot(),
-            __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* RouterModule */].forRoot(appRoutes)
+            __WEBPACK_IMPORTED_MODULE_6_ngx_echarts__["a" /* AngularEchartsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_5_ngx_cookie__["a" /* CookieModule */].forRoot(),
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(appRoutes),
+            __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forChild(adminRoutes)
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_6__auth_guard__["a" /* AuthGuard */],
-            // UserService,
-            { provide: __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */], useClass: __WEBPACK_IMPORTED_MODULE_7__service_extended_http_service__["a" /* ExtendedHttpService */] }
+            __WEBPACK_IMPORTED_MODULE_7__service_err_msg__["a" /* errCodeMsgHash */],
+            __WEBPACK_IMPORTED_MODULE_10__auth_guard__["a" /* AuthGuard */],
+            __WEBPACK_IMPORTED_MODULE_8__service_lib_service__["a" /* LibService */],
+            __WEBPACK_IMPORTED_MODULE_9__service_user_service__["a" /* UserService */],
+            { provide: __WEBPACK_IMPORTED_MODULE_3__angular_http__["b" /* Http */], useClass: __WEBPACK_IMPORTED_MODULE_11__service_extended_http_service__["a" /* ExtendedHttpService */] }
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* AppComponent */]]
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
 
@@ -260,7 +300,7 @@ var DangerPageComponent = (function () {
     return DangerPageComponent;
 }());
 DangerPageComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-danger-page',
         template: __webpack_require__("../../../../../src/app/danger-page/danger-page.component.html"),
         styles: [__webpack_require__("../../../../../src/app/danger-page/danger-page.component.scss")]
@@ -321,7 +361,7 @@ var DashboardPageComponent = (function () {
     return DashboardPageComponent;
 }());
 DashboardPageComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-dashboard-page',
         template: __webpack_require__("../../../../../src/app/dashboard-page/dashboard-page.component.html"),
         styles: [__webpack_require__("../../../../../src/app/dashboard-page/dashboard-page.component.scss")]
@@ -336,7 +376,7 @@ DashboardPageComponent = __decorate([
 /***/ "../../../../../src/app/data-page/branch/branch.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"data\">\n\n  <div class=\"left\">\n    <ul class=\"device-list\">\n      <li class=\"cur\">设备一</li>\n      <li>设备一</li>\n      <li>设备一设备一</li>\n      <li>设df备一</li>\n      <li>设备a一</li>\n      <li>设备一</li>\n      <li>设备一a</li>\n    </ul>\n  </div>\n\n  <div class=\"right\">\n    <div class=\"info-bar\">\n      <p class=\"bread-crumb\">报警信息 > 全部</p>\n\n      <div class=\"fr\">\n        报警：0 正常：1\n        <div class=\"search-box\">\n          <input class=\"search\" placeholder=\"设备ID或设备名称\">\n          <img src=\"../assets/image/search_w.png\" class=\"icon\">\n        </div>\n      </div>\n\n      <div class=\"switch-box\">\n        <span class=\"fl\">全部</span>\n        <div class=\"fl toggle\">\n          <input class=\"tgl tgl-ios\" id=\"cb2\" type=\"checkbox\">\n          <label class=\"tgl-btn\" for=\"cb2\"></label>\n        </div>\n        <span class=\"fl\">报警</span>\n      </div>\n    </div>\n    <div class=\"content\">\n      <div class=\"device-list\">\n        <a class=\"section\" *ngFor=\"let device of deviceList\" [routerLink]=\"['../../device/'+device.id]\">\n          <h3 class=\"device-name\">{{device.name}}</h3>\n          <div class=\"ctx\" *ngIf=\"device.online\">\n            <div class=\"fl\">\n              <img src=\"../assets/image/device_online.png\">\n            </div>\n            <div class=\"fr\">\n              在线\n              <img src=\"../assets/image/icon_online.png\">\n            </div>\n          </div>\n          <div class=\"ctx\" *ngIf=\"!device.online\">\n            <div class=\"fl\">\n              <img src=\"../assets/image/device_off.png\">\n            </div>\n            <div class=\"fr\">\n              离线\n              <img src=\"../assets/image/icon_off.png\">\n            </div>\n          </div>\n        </a>\n      </div>\n    </div>\n\n    <div class=\"pagination\">\n      共1页 / 1条数据 （当前第1页）\n      <a class=\"btn disabled\">上一页</a>\n      <a class=\"btn\">下一页</a> 前往\n      <input placeholder=\"跳转到\" class=\"page-input\"> 页\n      <a class=\"btn\">GO</a>\n    </div>\n\n  </div>\n\n</div>"
+module.exports = "<div class=\"data\">\n\n  <div class=\"left\">\n    <ul class=\"device-list\">\n      <li class=\"cur\">设备一</li>\n      <li>设备一</li>\n      <li>设备一设备一</li>\n      <li>设df备一</li>\n      <li>设备a一</li>\n      <li>设备一</li>\n      <li>设备一a</li>\n    </ul>\n  </div>\n\n  <div class=\"right\">\n    <div class=\"info-bar\">\n      <p class=\"bread-crumb\"> <a [routerLink]=\"['/admin/data']\">实时数据</a> > {{project?.efairyproject_name}}</p>\n\n      <div class=\"fr\">\n        <!-- 报警：0 正常：1 -->\n        <div class=\"search-box\">\n          <input class=\"search\" placeholder=\"设备ID或设备名称\" [(ngModel)]=\"keyword\">\n          <img src=\"../assets/image/search_w.png\" class=\"icon\" (click)=\"search()\">\n        </div>\n      </div>\n\n      <!-- <div class=\"switch-box\">\n        <span class=\"fl\">全部</span>\n        <div class=\"fl toggle\">\n          <input class=\"tgl tgl-ios\" id=\"cb2\" type=\"checkbox\">\n          <label class=\"tgl-btn\" for=\"cb2\"></label>\n        </div>\n        <span class=\"fl\">报警</span>\n      </div> -->\n    </div>\n    <div class=\"content\">\n      <div class=\"loading\" *ngIf=\"loading\">\n        <div class=\"sk-wave\">\n          <div class=\"sk-rect sk-rect1\"></div>\n          <div class=\"sk-rect sk-rect2\"></div>\n          <div class=\"sk-rect sk-rect3\"></div>\n          <div class=\"sk-rect sk-rect4\"></div>\n          <div class=\"sk-rect sk-rect5\"></div>\n        </div>\n      </div>\n\n\n      <p *ngIf=\"deviceListPageShow.length==0&&!loading\" class=\"no-data\">暂无数据</p>\n      <div class=\"device-list\">\n        <a class=\"section\" *ngFor=\"let device of deviceListPageShow\" [routerLink]=\"['../../device/'+device.efairydevice_id]\">\n          <h3 class=\"device-name\">{{device.efairydevice_name}}</h3>\n          <div class=\"ctx\" *ngIf=\"device.efairydevice_is_online\">\n            <div class=\"fl\">\n              <img src=\"../assets/image/device_online.png\">\n            </div>\n            <div class=\"fr\">\n              在线\n              <img src=\"../assets/image/icon_online.png\">\n            </div>\n          </div>\n          <div class=\"ctx\" *ngIf=\"!device.efairydevice_is_online\">\n            <div class=\"fl\">\n              <img src=\"../assets/image/device_off.png\">\n            </div>\n            <div class=\"fr\">\n              离线\n              <img src=\"../assets/image/icon_off.png\">\n            </div>\n          </div>\n        </a>\n      </div>\n    </div>\n\n    <div class=\"pagination\">\n      共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）\n      <a class=\"btn \" (click)=\"prevPage()\" [ngClass]=\"{btn:true,disabled:page<=1}\">上一页</a>\n      <a class=\"btn\" (click)=\"nextPage()\" [ngClass]=\"{btn:true,disabled:page>=pageMax}\">下一页</a> 前往\n      <input placeholder=\"跳转到\" class=\"page-input\" [(ngModel)]=\"jumpPage\"> 页\n      <a class=\"btn\" (click)=\"changePage()\">GO</a>\n    </div>\n\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -348,7 +388,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".data {\n  overflow: hidden; }\n  .data p {\n    margin: 0; }\n  .data .fl {\n    float: left; }\n  .data .fr {\n    float: right; }\n  .data .left {\n    width: 186px;\n    float: left;\n    background: #2f3438;\n    margin-bottom: -99999px;\n    padding-bottom: 99999px; }\n    .data .left ul {\n      padding: 0;\n      margin: 0; }\n      .data .left ul li {\n        list-style: none;\n        height: 55px;\n        line-height: 55px;\n        color: #666a6d;\n        text-align: center;\n        font-size: 16px;\n        border-bottom: 1px solid #292d30;\n        box-sizing: border-box; }\n        .data .left ul li.cur {\n          background: #276ab0;\n          color: #eee; }\n  .data .right {\n    padding-left: 186px; }\n    .data .right .info-bar {\n      height: 55px;\n      background: #f1f1f1;\n      border-bottom: 1px solid #ddd;\n      line-height: 55px;\n      padding: 0 20px; }\n      .data .right .info-bar .bread-crumb {\n        float: left; }\n      .data .right .info-bar .switch-box {\n        float: right;\n        margin-right: 5%; }\n        .data .right .info-bar .switch-box .toggle {\n          margin: 13px 5px; }\n      .data .right .info-bar .search-box {\n        position: relative;\n        display: inline-block; }\n        .data .right .info-bar .search-box .icon {\n          width: 16px;\n          position: absolute;\n          right: 18px;\n          top: 18px; }\n      .data .right .info-bar .search {\n        margin: 0 10px;\n        border: 0;\n        background: #276ab0;\n        height: 28px;\n        border-radius: 14px;\n        padding: 0 10px;\n        color: #ddd;\n        outline: 0;\n        width: 120px;\n        padding-right: 30px; }\n        .data .right .info-bar .search::-webkit-input-placeholder {\n          color: #ddd; }\n    .data .right .content {\n      padding: 35px 30px; }\n      .data .right .content .device-list {\n        overflow: hidden; }\n        .data .right .content .device-list .section {\n          float: left;\n          background: #fff;\n          border: 1px solid #dfdfdf;\n          width: 18%;\n          margin: 0 1% 2%;\n          box-sizing: border-box;\n          color: #666;\n          text-decoration: none; }\n        .data .right .content .device-list .device-name {\n          text-align: center;\n          font-weight: normal;\n          margin-bottom: 8px;\n          font-size: 15px; }\n        .data .right .content .device-list .ctx {\n          overflow: hidden;\n          margin: 15px 15px 20px; }\n          .data .right .content .device-list .ctx .fl, .data .right .content .device-list .ctx .fr {\n            width: 50%; }\n          .data .right .content .device-list .ctx .fl img {\n            width: 90%;\n            float: right; }\n          .data .right .content .device-list .ctx .fr {\n            text-align: center;\n            padding-top: 6px;\n            font-size: 15px; }\n            .data .right .content .device-list .ctx .fr img {\n              display: block;\n              margin: 19% auto 0; }\n    .data .right .pagination {\n      text-align: center;\n      margin-bottom: 50px; }\n      .data .right .pagination .btn {\n        background: #36c2ff;\n        color: #fff;\n        display: inline-block;\n        padding: 5px 20px;\n        border-radius: 30px;\n        margin: 0 4px; }\n        .data .right .pagination .btn.disabled {\n          background: #cacaca;\n          color: #9b9fa2; }\n      .data .right .pagination .page-input {\n        background: #fff;\n        height: 24px;\n        padding: 0 10px;\n        border-radius: 13px;\n        width: 60px;\n        text-align: center;\n        outline: 0;\n        border: 1px solid #36c2ff; }\n", ""]);
+exports.push([module.i, ".data {\n  overflow: hidden; }\n  .data p {\n    margin: 0; }\n  .data p.no-data {\n    text-align: center;\n    border: 1px solid #ddd;\n    background: #fff;\n    padding: 80px;\n    font-size: 26px; }\n  .data .fl {\n    float: left; }\n  .data .fr {\n    float: right; }\n  .data .left {\n    width: 186px;\n    float: left;\n    background: #2f3438;\n    margin-bottom: -99999px;\n    padding-bottom: 99999px; }\n    .data .left ul {\n      padding: 0;\n      margin: 0; }\n      .data .left ul li {\n        list-style: none;\n        height: 55px;\n        line-height: 55px;\n        color: #666a6d;\n        text-align: center;\n        font-size: 16px;\n        border-bottom: 1px solid #292d30;\n        box-sizing: border-box; }\n        .data .left ul li.cur {\n          background: #276ab0;\n          color: #eee; }\n  .data .right {\n    padding-left: 186px; }\n    .data .right .info-bar {\n      height: 55px;\n      background: #f1f1f1;\n      border-bottom: 1px solid #ddd;\n      line-height: 55px;\n      padding: 0 20px; }\n      .data .right .info-bar .bread-crumb {\n        float: left; }\n      .data .right .info-bar .switch-box {\n        float: right;\n        margin-right: 5%; }\n        .data .right .info-bar .switch-box .toggle {\n          margin: 13px 5px; }\n      .data .right .info-bar .search-box {\n        position: relative;\n        display: inline-block; }\n        .data .right .info-bar .search-box .icon {\n          width: 16px;\n          position: absolute;\n          right: 18px;\n          top: 18px; }\n      .data .right .info-bar .search {\n        margin: 0 10px;\n        border: 0;\n        background: #276ab0;\n        height: 28px;\n        border-radius: 14px;\n        padding: 0 10px;\n        color: #ddd;\n        outline: 0;\n        width: 120px;\n        padding-right: 30px; }\n        .data .right .info-bar .search::-webkit-input-placeholder {\n          color: #ddd; }\n    .data .right .content {\n      padding: 35px 30px; }\n      .data .right .content .device-list {\n        overflow: hidden; }\n        .data .right .content .device-list .section {\n          float: left;\n          background: #fff;\n          border: 1px solid #dfdfdf;\n          width: 18%;\n          margin: 0 1% 2%;\n          box-sizing: border-box;\n          color: #666;\n          text-decoration: none; }\n        .data .right .content .device-list .device-name {\n          text-align: center;\n          font-weight: normal;\n          margin-bottom: 8px;\n          font-size: 15px;\n          height: 17px; }\n        .data .right .content .device-list .ctx {\n          overflow: hidden;\n          margin: 15px 15px 20px; }\n          .data .right .content .device-list .ctx .fl, .data .right .content .device-list .ctx .fr {\n            width: 50%; }\n          .data .right .content .device-list .ctx .fl img {\n            width: 90%;\n            float: right; }\n          .data .right .content .device-list .ctx .fr {\n            text-align: center;\n            padding-top: 6px;\n            font-size: 15px; }\n            .data .right .content .device-list .ctx .fr img {\n              display: block;\n              margin: 19% auto 0; }\n    .data .right .pagination {\n      text-align: center;\n      margin-bottom: 50px; }\n      .data .right .pagination .btn {\n        background: #36c2ff;\n        color: #fff;\n        display: inline-block;\n        padding: 5px 20px;\n        border-radius: 30px;\n        margin: 0 4px;\n        cursor: pointer; }\n        .data .right .pagination .btn.disabled {\n          background: #cacaca;\n          color: #9b9fa2;\n          cursor: default; }\n      .data .right .pagination .page-input {\n        background: #fff;\n        height: 24px;\n        padding: 0 10px;\n        border-radius: 13px;\n        width: 60px;\n        text-align: center;\n        outline: 0;\n        border: 1px solid #36c2ff; }\n", ""]);
 
 // exports
 
@@ -363,6 +403,9 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_device_service__ = __webpack_require__("../../../../../src/app/service/device.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_user_service__ = __webpack_require__("../../../../../src/app/service/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BranchComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -374,30 +417,92 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var BranchComponent = (function () {
-    function BranchComponent() {
+    function BranchComponent(deviceService, route, router, userService) {
+        this.deviceService = deviceService;
+        this.route = route;
+        this.router = router;
+        this.userService = userService;
         this.deviceList = [];
+        this.deviceListPageShow = [];
+        this.deviceListSearch = [];
+        this.total = 0;
+        this.loading = true;
+        this.pageSize = 15;
+        this.page = 1;
+        this.jumpPage = 1;
+        this.pageMax = 1;
     }
     BranchComponent.prototype.ngOnInit = function () {
-        for (var i = 0; i < 14; i++) {
-            this.deviceList.push({
-                name: '设备编号' + i,
-                online: Math.random() * 100 + 1 > 50 ? true : false,
-                id: i
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            if (params && params.branch_id) {
+                _this.projectId = params.branch_id;
+                _this.getData();
+                _this.project = _this.userService.getProjectById(_this.projectId);
+                console.log(_this.project);
+            }
+        });
+    };
+    BranchComponent.prototype.getData = function () {
+        var _this = this;
+        this.deviceService.getDeviceList(this.projectId).then(function (data) {
+            _this.deviceList = data.device_list;
+            _this.total = data.total_rows;
+            _this.loading = false;
+            _this.pageMax = Math.ceil(_this.total / _this.pageSize);
+            _this.renderData();
+        });
+    };
+    BranchComponent.prototype.renderData = function () {
+        this.deviceListPageShow = this.deviceList.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    };
+    BranchComponent.prototype.prevPage = function () {
+        if (this.page <= 1)
+            return false;
+        this.page--;
+        this.renderData();
+    };
+    BranchComponent.prototype.nextPage = function () {
+        if (this.page >= this.pageMax)
+            return false;
+        this.page++;
+        this.renderData();
+    };
+    BranchComponent.prototype.changePage = function () {
+        this.page = this.jumpPage;
+        this.renderData();
+    };
+    BranchComponent.prototype.search = function () {
+        var _this = this;
+        if (this.keyword !== '') {
+            this.deviceListSearch = [];
+            this.deviceList.forEach(function (item) {
+                if (item.efairydevice_name.indexOf(_this.keyword) !== -1 || item.efairydevice_id.toString().indexOf(_this.keyword) !== -1)
+                    _this.deviceListSearch.push(item);
             });
+            this.deviceListPageShow = this.deviceListSearch;
+        }
+        else {
+            this.renderData();
         }
     };
     return BranchComponent;
 }());
 BranchComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-branch',
         template: __webpack_require__("../../../../../src/app/data-page/branch/branch.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/data-page/branch/branch.component.scss")]
+        styles: [__webpack_require__("../../../../../src/app/data-page/branch/branch.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_1__service_device_service__["a" /* DeviceService */]]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__service_device_service__["a" /* DeviceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__service_device_service__["a" /* DeviceService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */]) === "function" && _d || Object])
 ], BranchComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=branch.component.js.map
 
 /***/ }),
@@ -405,7 +510,7 @@ BranchComponent = __decorate([
 /***/ "../../../../../src/app/data-page/data-page.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"data\">\n    \n      <div class=\"left\">\n        <ul class=\"device-list\">\n          <li class=\"cur\">设备一</li>\n          <li>设备一</li>\n          <li>设备一设备一</li>\n          <li>设df备一</li>\n          <li>设备a一</li>\n          <li>设备一</li>\n          <li>设备一a</li>\n        </ul>\n      </div>\n    \n      <div class=\"right\">\n        <div class=\"info-bar\">\n          <p class=\"bread-crumb\">报警信息 > 全部</p>\n          \n          <div class=\"fr\">\n            报警：0 正常：1\n            <div class=\"search-box\">\n              <input class=\"search\" placeholder=\"设备ID或设备名称\">\n              <img src=\"../assets/image/search_w.png\" class=\"icon\">\n            </div>\n          </div>\n    \n          <div class=\"switch-box\">\n              <span class=\"fl\">全部</span>\n              <div class=\"fl toggle\">\n                <input class=\"tgl tgl-ios\" id=\"cb2\" type=\"checkbox\">\n                <label class=\"tgl-btn\" for=\"cb2\"></label>\n              </div>\n              <span class=\"fl\">报警</span>\n            </div>\n    \n    \n        </div>\n        <div class=\"content\">\n          <div class=\"device-list\">\n            <a *ngFor=\"let branch of branchList\" class=\"section\"  [routerLink]=\"['branch/'+branch.id]\">\n              <h3 class=\"device-name\">{{branch.name}}</h3>\n              <div class=\"device-pic\">\n                <img [src]=\"branch.pic\" >\n              </div>\n              <footer class=\"device-info\">\n                <div class=\"fl\">\n                  <p class=\"num\">{{branch.num}}</p>\n                  <p class=\"desc\">报警/台</p>\n                </div>\n                <div class=\"fr\">\n                  <p class=\"num\">{{branch.percent}}</p>\n                  <p class=\"desc\">在线/设备总数</p>\n                </div>\n              </footer>\n            </a>\n          </div>\n        </div>\n    \n        <div class=\"pagination\">\n            共1页 / 1条数据 （当前第1页） \n            <a class=\"btn disabled\">上一页</a>\n            <a class=\"btn\">下一页</a>\n            前往\n            <input placeholder=\"跳转到\" class=\"page-input\"> 页\n            <a class=\"btn\">GO</a>\n        </div>\n    \n      </div>\n    \n    </div>"
+module.exports = "<div class=\"data\">\n    \n      <div class=\"left\">\n        <ul class=\"device-list\">\n          <li class=\"cur\">设备一</li>\n          <li>设备一</li>\n          <li>设备一设备一</li>\n          <li>设df备一</li>\n          <li>设备a一</li>\n          <li>设备一</li>\n          <li>设备一a</li>\n        </ul>\n      </div>\n    \n      <div class=\"right\">\n        <div class=\"info-bar\">\n          <p class=\"bread-crumb\">实时数据 > 全部</p>\n          \n          <!-- <div class=\"fr\">\n            报警：0 正常：1\n            <div class=\"search-box\">\n              <input class=\"search\" placeholder=\"设备ID或设备名称\" [(ngModel)]=\"keyword\">\n              <img src=\"../assets/image/search_w.png\" class=\"icon\" (click)=\"search()\">\n            </div>\n          </div> -->\n    \n          <!-- <div class=\"switch-box\">\n              <span class=\"fl\">全部</span>\n              <div class=\"fl toggle\">\n                <input class=\"tgl tgl-ios\" id=\"cb2\" type=\"checkbox\">\n                <label class=\"tgl-btn\" for=\"cb2\"></label>\n              </div>\n              <span class=\"fl\">报警</span>\n            </div> -->\n    \n    \n        </div>\n        <div class=\"content\">\n\n            <div class=\"loading\" *ngIf=\"loading\" >\n                <div class=\"sk-wave\">\n                    <div class=\"sk-rect sk-rect1\"></div>\n                    <div class=\"sk-rect sk-rect2\"></div>\n                    <div class=\"sk-rect sk-rect3\"></div>\n                    <div class=\"sk-rect sk-rect4\"></div>\n                    <div class=\"sk-rect sk-rect5\"></div>\n                  </div>\n            </div>\n\n\n          <div class=\"device-list\">\n            <a *ngFor=\"let branch of branchListPageShow\" class=\"section\"  [routerLink]=\"['branch/'+branch.efairyproject_id]\">\n              <h3 class=\"device-name\">{{branch.efairyproject_name}}</h3>\n              <div class=\"device-pic\">\n                <!-- <img [src]=\"branch.pic\" > -->\n                <img src=\"../../assets/image/device.png\" >\n              </div>\n              <footer class=\"device-info\">\n                <div class=\"fl\">\n                  <p class=\"num\">{{branch.efairyproject_fire_number}}</p>\n                  <p class=\"desc\">报警/台</p>\n                </div>\n                <div class=\"fr\">\n                  <p class=\"num\">{{branch.efairyproject_device_online_number}}/{{branch.efairyproject_total_devices}}</p>\n                  <p class=\"desc\">在线/设备总数</p>\n                </div>\n              </footer>\n            </a>\n          </div>\n\n          <p *ngIf=\"branchListPageShow.length==0&&!loading\" class=\"no-data\">暂无数据</p>\n\n        </div>\n    \n        <div class=\"pagination\">\n            共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）\n            <a class=\"btn \" (click)=\"prevPage()\" [ngClass]=\"{btn:true,disabled:page<=1}\" >上一页</a>\n            <a class=\"btn\" (click)=\"nextPage()\" [ngClass]=\"{btn:true,disabled:page>=pageMax}\">下一页</a> 前往\n            <input placeholder=\"跳转到\" class=\"page-input\" [(ngModel)]=\"jumpPage\"> 页\n            <a class=\"btn\" (click)=\"changePage()\">GO</a>\n          </div>\n    \n      </div>\n    \n    </div>"
 
 /***/ }),
 
@@ -417,7 +522,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".data {\n  overflow: hidden; }\n  .data p {\n    margin: 0; }\n  .data .fl {\n    float: left; }\n  .data .fr {\n    float: right; }\n  .data .left {\n    width: 186px;\n    float: left;\n    background: #2f3438;\n    margin-bottom: -99999px;\n    padding-bottom: 99999px; }\n    .data .left ul {\n      padding: 0;\n      margin: 0; }\n      .data .left ul li {\n        list-style: none;\n        height: 55px;\n        line-height: 55px;\n        color: #666a6d;\n        text-align: center;\n        font-size: 16px;\n        border-bottom: 1px solid #292d30;\n        box-sizing: border-box; }\n        .data .left ul li.cur {\n          background: #276ab0;\n          color: #eee; }\n  .data .right {\n    padding-left: 186px; }\n    .data .right .info-bar {\n      height: 55px;\n      background: #f1f1f1;\n      border-bottom: 1px solid #ddd;\n      line-height: 55px;\n      padding: 0 20px; }\n      .data .right .info-bar .bread-crumb {\n        float: left; }\n      .data .right .info-bar .switch-box {\n        float: right;\n        margin-right: 5%; }\n        .data .right .info-bar .switch-box .toggle {\n          margin: 13px 5px; }\n      .data .right .info-bar .search-box {\n        position: relative;\n        display: inline-block; }\n        .data .right .info-bar .search-box .icon {\n          width: 16px;\n          position: absolute;\n          right: 18px;\n          top: 18px; }\n      .data .right .info-bar .search {\n        margin: 0 10px;\n        border: 0;\n        background: #276ab0;\n        height: 28px;\n        border-radius: 14px;\n        padding: 0 10px;\n        color: #ddd;\n        outline: 0;\n        width: 120px;\n        padding-right: 30px; }\n        .data .right .info-bar .search::-webkit-input-placeholder {\n          color: #ddd; }\n    .data .right .content {\n      padding: 35px 40px; }\n      .data .right .content .device-list {\n        overflow: hidden; }\n        .data .right .content .device-list .section {\n          float: left;\n          background: #fff;\n          box-shadow: 2px 2px 2px #ddd;\n          width: 23%;\n          margin: 0 1% 5%;\n          color: #666;\n          text-decoration: none; }\n        .data .right .content .device-list .device-name {\n          text-align: center;\n          font-weight: normal;\n          margin-bottom: 5px; }\n        .data .right .content .device-list .device-pic {\n          width: 70%;\n          margin: 0 auto;\n          height: 0;\n          padding-bottom: 50%;\n          overflow: hidden;\n          position: relative; }\n          .data .right .content .device-list .device-pic img {\n            width: 100%;\n            position: absolute;\n            top: 50%;\n            -webkit-transform: translate(-50%, -50%);\n                    transform: translate(-50%, -50%);\n            left: 50%; }\n        .data .right .content .device-list .device-info {\n          overflow: hidden;\n          text-align: center;\n          margin: 0 0 8px; }\n          .data .right .content .device-list .device-info .fl, .data .right .content .device-list .device-info .fr {\n            width: 50%; }\n            .data .right .content .device-list .device-info .fl .num, .data .right .content .device-list .device-info .fr .num {\n              font-size: 20px;\n              color: #fa8562;\n              font-weight: bold; }\n            .data .right .content .device-list .device-info .fl p, .data .right .content .device-list .device-info .fr p {\n              line-height: 1.5; }\n    .data .right .pagination {\n      text-align: center;\n      margin-bottom: 50px; }\n      .data .right .pagination .btn {\n        background: #36c2ff;\n        color: #fff;\n        display: inline-block;\n        padding: 5px 20px;\n        border-radius: 30px;\n        margin: 0 4px; }\n        .data .right .pagination .btn.disabled {\n          background: #cacaca;\n          color: #9b9fa2; }\n      .data .right .pagination .page-input {\n        background: #fff;\n        height: 24px;\n        padding: 0 10px;\n        border-radius: 13px;\n        width: 60px;\n        text-align: center;\n        outline: 0;\n        border: 1px solid #36c2ff; }\n", ""]);
+exports.push([module.i, ".data {\n  overflow: hidden; }\n  .data p {\n    margin: 0; }\n  .data p.no-data {\n    text-align: center;\n    border: 1px solid #ddd;\n    background: #fff;\n    padding: 80px;\n    font-size: 26px; }\n  .data .fl {\n    float: left; }\n  .data .fr {\n    float: right; }\n  .data .left {\n    width: 186px;\n    float: left;\n    background: #2f3438;\n    margin-bottom: -99999px;\n    padding-bottom: 99999px; }\n    .data .left ul {\n      padding: 0;\n      margin: 0; }\n      .data .left ul li {\n        list-style: none;\n        height: 55px;\n        line-height: 55px;\n        color: #666a6d;\n        text-align: center;\n        font-size: 16px;\n        border-bottom: 1px solid #292d30;\n        box-sizing: border-box; }\n        .data .left ul li.cur {\n          background: #276ab0;\n          color: #eee; }\n  .data .right {\n    padding-left: 186px; }\n    .data .right .info-bar {\n      height: 55px;\n      background: #f1f1f1;\n      border-bottom: 1px solid #ddd;\n      line-height: 55px;\n      padding: 0 20px; }\n      .data .right .info-bar .bread-crumb {\n        float: left; }\n      .data .right .info-bar .switch-box {\n        float: right;\n        margin-right: 5%; }\n        .data .right .info-bar .switch-box .toggle {\n          margin: 13px 5px; }\n      .data .right .info-bar .search-box {\n        position: relative;\n        display: inline-block; }\n        .data .right .info-bar .search-box .icon {\n          width: 16px;\n          position: absolute;\n          right: 18px;\n          top: 18px; }\n      .data .right .info-bar .search {\n        margin: 0 10px;\n        border: 0;\n        background: #276ab0;\n        height: 28px;\n        border-radius: 14px;\n        padding: 0 10px;\n        color: #ddd;\n        outline: 0;\n        width: 120px;\n        padding-right: 30px; }\n        .data .right .info-bar .search::-webkit-input-placeholder {\n          color: #ddd; }\n    .data .right .content {\n      padding: 35px 40px; }\n      .data .right .content .device-list {\n        overflow: hidden; }\n        .data .right .content .device-list .section {\n          float: left;\n          background: #fff;\n          box-shadow: 2px 2px 2px #ddd;\n          width: 23%;\n          margin: 0 1% 5%;\n          color: #666;\n          text-decoration: none; }\n        .data .right .content .device-list .device-name {\n          text-align: center;\n          font-weight: normal;\n          margin-bottom: 5px;\n          height: 18px; }\n        .data .right .content .device-list .device-pic {\n          width: 70%;\n          margin: 0 auto;\n          height: 0;\n          padding-bottom: 50%;\n          overflow: hidden;\n          position: relative; }\n          .data .right .content .device-list .device-pic img {\n            width: 100%;\n            position: absolute;\n            top: 50%;\n            -webkit-transform: translate(-50%, -50%);\n                    transform: translate(-50%, -50%);\n            left: 50%; }\n        .data .right .content .device-list .device-info {\n          overflow: hidden;\n          text-align: center;\n          margin: 0 0 8px; }\n          .data .right .content .device-list .device-info .fl, .data .right .content .device-list .device-info .fr {\n            width: 50%; }\n            .data .right .content .device-list .device-info .fl .num, .data .right .content .device-list .device-info .fr .num {\n              font-size: 20px;\n              color: #fa8562;\n              font-weight: bold; }\n            .data .right .content .device-list .device-info .fl p, .data .right .content .device-list .device-info .fr p {\n              line-height: 1.5; }\n    .data .right .pagination {\n      text-align: center;\n      margin-bottom: 50px; }\n      .data .right .pagination .btn {\n        background: #36c2ff;\n        color: #fff;\n        display: inline-block;\n        padding: 5px 20px;\n        border-radius: 30px;\n        margin: 0 4px;\n        cursor: pointer; }\n        .data .right .pagination .btn.disabled {\n          background: #cacaca;\n          color: #9b9fa2;\n          cursor: default; }\n      .data .right .pagination .page-input {\n        background: #fff;\n        height: 24px;\n        padding: 0 10px;\n        border-radius: 13px;\n        width: 60px;\n        text-align: center;\n        outline: 0;\n        border: 1px solid #36c2ff; }\n", ""]);
 
 // exports
 
@@ -432,6 +537,7 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_project_service__ = __webpack_require__("../../../../../src/app/service/project.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DataPageComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -443,32 +549,67 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+// import { UserService } from '../service/user.service';
 var DataPageComponent = (function () {
-    function DataPageComponent() {
+    function DataPageComponent(projectService) {
+        this.projectService = projectService;
         this.branchList = [];
+        this.branchListPageShow = [];
+        this.loading = true;
+        this.total = 0;
+        this.pageSize = 12;
+        this.page = 1;
+        this.jumpPage = 1;
+        this.pageMax = 1;
     }
     DataPageComponent.prototype.ngOnInit = function () {
-        for (var i = 0; i < 8; i++) {
-            this.branchList.push({
-                name: '天地会总舵',
-                pic: '../assets/image/device.png',
-                num: 3,
-                percent: '4/5',
-                id: i
-            });
-        }
+        var _this = this;
+        this.projectService.getProjectList().then(function (data) {
+            _this.branchList = data.project_list;
+            _this.total = data.total_rows;
+            _this.loading = false;
+            // this.userService.setProjectList(data.project_list);
+            _this.pageMax = Math.ceil(_this.total / _this.pageSize);
+            _this.renderData();
+        });
+        this.projectService.getAgencyList().then(function (data) {
+            console.log(data);
+        });
+    };
+    DataPageComponent.prototype.renderData = function () {
+        this.branchListPageShow = this.branchList.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+    };
+    DataPageComponent.prototype.prevPage = function () {
+        if (this.page <= 1)
+            return false;
+        this.page--;
+        this.renderData();
+    };
+    DataPageComponent.prototype.nextPage = function () {
+        if (this.page >= this.pageMax)
+            return false;
+        this.page++;
+        this.renderData();
+    };
+    DataPageComponent.prototype.changePage = function () {
+        this.page = this.jumpPage;
+        this.renderData();
+    };
+    DataPageComponent.prototype.search = function () {
     };
     return DataPageComponent;
 }());
 DataPageComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-data-page',
         template: __webpack_require__("../../../../../src/app/data-page/data-page.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/data-page/data-page.component.scss")]
+        styles: [__webpack_require__("../../../../../src/app/data-page/data-page.component.scss")],
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__service_project_service__["a" /* ProjectService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__service_project_service__["a" /* ProjectService */]) === "function" && _a || Object])
 ], DataPageComponent);
 
+var _a;
 //# sourceMappingURL=data-page.component.js.map
 
 /***/ }),
@@ -476,7 +617,7 @@ DataPageComponent = __decorate([
 /***/ "../../../../../src/app/data-page/device/device.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"data\">\n\n  <div class=\"left\">\n    <ul class=\"device-list\">\n      <li class=\"cur\">设备一</li>\n      <li>设备一</li>\n      <li>设备一设备一</li>\n      <li>设df备一</li>\n      <li>设备a一</li>\n      <li>设备一</li>\n      <li>设备一a</li>\n    </ul>\n  </div>\n\n  <div class=\"right\">\n    <div class=\"info-bar\">\n      <p class=\"bread-crumb\">报警信息 > 全部</p>\n\n      <div class=\"fr\">\n        报警：0 正常：1\n        <div class=\"search-box\">\n          <input class=\"search\" placeholder=\"设备ID或设备名称\">\n          <img src=\"../assets/image/search_w.png\" class=\"icon\">\n        </div>\n      </div>\n\n      <div class=\"switch-box\">\n        <span class=\"fl\">全部</span>\n        <div class=\"fl toggle\">\n          <input class=\"tgl tgl-ios\" id=\"cb2\" type=\"checkbox\">\n          <label class=\"tgl-btn\" for=\"cb2\"></label>\n        </div>\n        <span class=\"fl\">报警</span>\n      </div>\n    </div>\n    <div class=\"content\">\n\n      <div class=\"box\">\n        <header class=\"red\">\n          基础信息\n          <div class=\"fr\" (click)=\"editDevice()\">\n            <img src=\"assets/image/pencil.png\">\n          </div>\n        </header>\n        <div class=\"ctx\">\n          <div class=\"fl pic-box\">\n            <img src=\"assets/image/device_online.png\">\n          </div>\n          <div class=\"fr desc-box\">\n            <p class=\"title\">设备名：<span class=\"b\">设备300389</span></p>\n            <div class=\"info-list\">\n              <label class=\"item\">设备id：300323</label>\n              <label class=\"item\">设备类型：300323</label>\n              <label class=\"item\">物联网卡号：300323</label> <label class=\"item\">物联网卡号：300323</label>\n              <label class=\"item\">安装日期：2013-09-09</label>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"box\">\n        <header class=\"green\">\n          状态\n          <div class=\"fr\">\n            <img src=\"assets/image/roll.png\">\n          </div>\n        </header>\n        <div class=\"ctx\">\n          <div class=\"fl pic-box\">\n            <img src=\"assets/image/wifi.png\">\n          </div>\n          <div class=\"fr desc-box\">\n            <p class=\"title\">报警状态：<span class=\"b\">正常</span></p>\n            <div class=\"info-list\">\n              <label class=\"item\">设备通讯状态：离线</label>\n              <label class=\"item\">无线通讯状态：在线</label>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"box\">\n        <header class=\"blue\">\n          数据\n          <div class=\"fr\">\n            <img src=\"assets/image/clock.png\">\n          </div>\n        </header>\n        <div class=\"ctx\">\n          <p class=\"time\">2017/06/01 11:19:36</p>\n          <div class=\"data-box\">\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n            <label class=\"row\">电压A <span class=\"number\">225.2V</span></label>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"box\">\n        <header class=\"pink\">\n          一周警报\n        </header>\n        <div class=\"ctx\">\n          <div echarts [options]=\"option\" theme=\"macarons\" class=\"chart\" style=\"height:214px;\"></div>\n        </div>\n      </div>\n\n    </div>\n\n    <!-- <div class=\"pagination\">\n      共1页 / 1条数据 （当前第1页）\n      <a class=\"btn disabled\">上一页</a>\n      <a class=\"btn\">下一页</a> 前往\n      <input placeholder=\"跳转到\" class=\"page-input\"> 页\n      <a class=\"btn\">GO</a>\n    </div> -->\n\n  </div>\n\n  <div class=\"pop-bg\" [hidden]=\"!isDeviceEditing\"></div>\n  <div class=\"pop\" [hidden]=\"!isDeviceEditing\">\n    <div class=\"header\">\n      修改设备\n      <span class=\"fr close\" (click)=\"closePop()\">&times;</span>\n    </div>\n    <div class=\"form\">\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n    </div>\n    <div class=\"footer\">\n        <a class=\"btn\">确定修改</a>\n        <a class=\"btn\" (click)=\"closePop()\">取消</a>\n    </div>\n  </div>\n\n\n</div>"
+module.exports = "<div class=\"data\">\n\n  <div class=\"left\">\n    <ul class=\"device-list\">\n      <li class=\"cur\">设备一</li>\n      <li>设备一</li>\n      <li>设备一设备一</li>\n      <li>设df备一</li>\n      <li>设备a一</li>\n      <li>设备一</li>\n      <li>设备一a</li>\n    </ul>\n  </div>\n\n  <div class=\"right\">\n    <div class=\"info-bar\">\n      <p class=\"bread-crumb\"><a [routerLink]=\"['/admin/data']\">实时数据</a> > <a [routerLink]=\"['/admin/data/branch/'+deviceDetails.device_info.efairydevice_project_id]\">{{project?.efairyproject_name}}</a>        > {{deviceDetails.device_info.efairydevice_name}}</p>\n\n      <!-- <div class=\"fr\">\n        报警：0 正常：1\n        <div class=\"search-box\">\n          <input class=\"search\" placeholder=\"设备ID或设备名称\">\n          <img src=\"../assets/image/search_w.png\" class=\"icon\">\n        </div>\n      </div>\n\n      <div class=\"switch-box\">\n        <span class=\"fl\">全部</span>\n        <div class=\"fl toggle\">\n          <input class=\"tgl tgl-ios\" id=\"cb2\" type=\"checkbox\">\n          <label class=\"tgl-btn\" for=\"cb2\"></label>\n        </div>\n        <span class=\"fl\">报警</span>\n      </div> -->\n    </div>\n    <div class=\"content\">\n\n      <div class=\"box\">\n        <header class=\"red\">\n          基础信息\n          <div class=\"fr\" (click)=\"editDevice()\">\n            <img src=\"assets/image/pencil.png\">\n          </div>\n        </header>\n        <div class=\"ctx\">\n          <div class=\"loading\" *ngIf=\"loading\">\n            <div class=\"sk-wave\">\n              <div class=\"sk-rect sk-rect1\"></div>\n              <div class=\"sk-rect sk-rect2\"></div>\n              <div class=\"sk-rect sk-rect3\"></div>\n              <div class=\"sk-rect sk-rect4\"></div>\n              <div class=\"sk-rect sk-rect5\"></div>\n            </div>\n          </div>\n          <div *ngIf=\"!loading\">\n            <div class=\"fl pic-box\">\n              <img src=\"assets/image/device_online.png\">\n            </div>\n            <div class=\"fr desc-box\">\n              <p class=\"title\">设备名：<span class=\"b\">{{deviceDetails.device_info.efairydevice_name}}</span></p>\n              <div class=\"info-list\">\n                <label class=\"item\">设备ID：{{deviceDetails.device_info.efairydevice_id}}</label>\n                <label class=\"item\">设备软件版本：{{deviceDetails.device_info.efairydevice_version}}</label>\n                <label class=\"item\">设备主编码：{{deviceDetails.device_info.efairydevice_uuid}}</label>\n                <label class=\"item\">设备从编码：{{deviceDetails.device_info.efairydevice_belong_system}}</label>\n                <label class=\"item\">安装时间：{{deviceDetails.device_info.efairydevice_install_time}}</label>\n                <label class=\"item\">设备地址：{{deviceDetails.device_info.efairydevice_address}}</label>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"box\">\n        <header class=\"green\">\n          状态\n          <div class=\"fr\">\n            <img src=\"assets/image/roll.png\">\n          </div>\n        </header>\n        <div class=\"ctx\">\n          <div class=\"fl pic-box\">\n            <img src=\"assets/image/wifi.png\">\n          </div>\n          <div class=\"fr desc-box\">\n            <p class=\"title\">报警状态：<span class=\"b\">{{stateHash[deviceDetails.device_info.efairydevice_state]}}</span></p>\n            <div class=\"info-list\">\n              <label class=\"item\">设备通讯状态：{{deviceDetails.device_info.efairydevice_is_online?'在线':'离线'}}</label>\n              <label class=\"item\">无线通讯状态：在线</label>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"box\">\n        <header class=\"blue\">\n          数据\n          <div class=\"fr\">\n            <img src=\"assets/image/clock.png\">\n          </div>\n        </header>\n        <div class=\"ctx\">\n          <div class=\"loading\" *ngIf=\"loading\">\n            <div class=\"sk-wave\">\n              <div class=\"sk-rect sk-rect1\"></div>\n              <div class=\"sk-rect sk-rect2\"></div>\n              <div class=\"sk-rect sk-rect3\"></div>\n              <div class=\"sk-rect sk-rect4\"></div>\n              <div class=\"sk-rect sk-rect5\"></div>\n            </div>\n          </div>\n          <div *ngIf=\"!loading\">\n            <p class=\"time\">{{dataUpdateTime}}</p>\n            <div class=\"data-box\">\n              <label class=\"row\" *ngIf=\"dataList.length==0\">暂无数据</label>\n              <label class=\"row\" *ngFor=\"let item of dataList\">{{item.itemName}}<span class=\"number\">{{item.itemValue}}</span></label>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"box\">\n        <header class=\"pink\">\n          一周警报\n        </header>\n        <div class=\"ctx\">\n          <div echarts [options]=\"option\" theme=\"macarons\" class=\"chart\" style=\"height:214px;\"></div>\n        </div>\n      </div>\n\n    </div>\n\n    <!-- <div class=\"pagination\">\n      共1页 / 1条数据 （当前第1页）\n      <a class=\"btn disabled\">上一页</a>\n      <a class=\"btn\">下一页</a> 前往\n      <input placeholder=\"跳转到\" class=\"page-input\"> 页\n      <a class=\"btn\">GO</a>\n    </div> -->\n\n  </div>\n\n  <div class=\"pop-bg\" [hidden]=\"!isDeviceEditing\"></div>\n  <div class=\"pop\" [hidden]=\"!isDeviceEditing\">\n    <div class=\"header\">\n      修改设备\n      <span class=\"fr close\" (click)=\"closePop()\">&times;</span>\n    </div>\n    <div class=\"form\">\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n      <div class=\"row\">\n        <label>设备名称：</label><input>\n      </div>\n    </div>\n    <div class=\"footer\">\n      <a class=\"btn\">确定修改</a>\n      <a class=\"btn\" (click)=\"closePop()\">取消</a>\n    </div>\n  </div>\n\n\n</div>"
 
 /***/ }),
 
@@ -488,7 +629,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".data {\n  overflow: hidden; }\n  .data p {\n    margin: 0; }\n  .data .fl {\n    float: left; }\n  .data .fr {\n    float: right; }\n  .data .left {\n    width: 186px;\n    float: left;\n    background: #2f3438;\n    margin-bottom: -99999px;\n    padding-bottom: 99999px; }\n    .data .left ul {\n      padding: 0;\n      margin: 0; }\n      .data .left ul li {\n        list-style: none;\n        height: 55px;\n        line-height: 55px;\n        color: #666a6d;\n        text-align: center;\n        font-size: 16px;\n        border-bottom: 1px solid #292d30;\n        box-sizing: border-box; }\n        .data .left ul li.cur {\n          background: #276ab0;\n          color: #eee; }\n  .data .right {\n    padding-left: 186px; }\n    .data .right .info-bar {\n      height: 55px;\n      background: #f1f1f1;\n      border-bottom: 1px solid #ddd;\n      line-height: 55px;\n      padding: 0 20px; }\n      .data .right .info-bar .bread-crumb {\n        float: left; }\n      .data .right .info-bar .switch-box {\n        float: right;\n        margin-right: 5%; }\n        .data .right .info-bar .switch-box .toggle {\n          margin: 13px 5px; }\n      .data .right .info-bar .search-box {\n        position: relative;\n        display: inline-block; }\n        .data .right .info-bar .search-box .icon {\n          width: 16px;\n          position: absolute;\n          right: 18px;\n          top: 18px; }\n      .data .right .info-bar .search {\n        margin: 0 10px;\n        border: 0;\n        background: #276ab0;\n        height: 28px;\n        border-radius: 14px;\n        padding: 0 10px;\n        color: #ddd;\n        outline: 0;\n        width: 120px;\n        padding-right: 30px; }\n        .data .right .info-bar .search::-webkit-input-placeholder {\n          color: #ddd; }\n    .data .right .content {\n      padding: 30px 15px;\n      overflow: hidden; }\n      .data .right .content .box {\n        float: left;\n        width: 48%;\n        margin: 0 1% 25px;\n        box-sizing: border-box;\n        border: 1px solid #dfdfdf;\n        background: #fff; }\n        .data .right .content .box header {\n          height: 52px;\n          line-height: 52px;\n          padding-left: 30px;\n          font-weight: bold;\n          font-size: 15px;\n          border-bottom: 1px solid;\n          color: #333; }\n          .data .right .content .box header .fr {\n            padding: 0 20px; }\n          .data .right .content .box header.red {\n            border-color: #f45d4c; }\n          .data .right .content .box header.green {\n            border-color: #12b461; }\n          .data .right .content .box header.blue {\n            border-color: #266bb0; }\n          .data .right .content .box header.pink {\n            border-color: #7f75e6; }\n        .data .right .content .box .ctx {\n          height: 214px;\n          overflow: hidden; }\n          .data .right .content .box .ctx .pic-box {\n            width: 35%;\n            padding: 70px 0;\n            box-sizing: border-box;\n            text-align: center; }\n          .data .right .content .box .ctx .desc-box {\n            width: 65%;\n            padding: 70px 0; }\n            .data .right .content .box .ctx .desc-box .title {\n              font-size: 16px;\n              line-height: 1.5;\n              margin-bottom: 8px; }\n            .data .right .content .box .ctx .desc-box .b {\n              color: #266bb0; }\n            .data .right .content .box .ctx .desc-box .info-list {\n              overflow: hidden; }\n              .data .right .content .box .ctx .desc-box .info-list .item {\n                float: left;\n                width: 50%;\n                line-height: 1.5; }\n          .data .right .content .box .ctx .data-box {\n            overflow: hidden;\n            margin: 0 6%; }\n            .data .right .content .box .ctx .data-box .row {\n              float: left;\n              width: 33.33333%;\n              line-height: 1.8;\n              margin-bottom: 10px; }\n              .data .right .content .box .ctx .data-box .row .number {\n                color: #266bb0;\n                margin: 0 10px; }\n          .data .right .content .box .ctx .time {\n            font-size: 13px;\n            color: #999;\n            line-height: 2;\n            margin: 20px 6% 10px; }\n    .data .right .pagination {\n      text-align: center;\n      margin-bottom: 50px; }\n      .data .right .pagination .btn {\n        background: #36c2ff;\n        color: #fff;\n        display: inline-block;\n        padding: 5px 20px;\n        border-radius: 30px;\n        margin: 0 4px; }\n        .data .right .pagination .btn.disabled {\n          background: #cacaca;\n          color: #9b9fa2; }\n      .data .right .pagination .page-input {\n        background: #fff;\n        height: 24px;\n        padding: 0 10px;\n        border-radius: 13px;\n        width: 60px;\n        text-align: center;\n        outline: 0;\n        border: 1px solid #36c2ff; }\n\n.pop-bg {\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  background: #000;\n  opacity: .6;\n  position: fixed;\n  left: 0;\n  top: 0; }\n\n.pop {\n  position: fixed;\n  width: 40%;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 100; }\n  .pop .header {\n    height: 50px;\n    background: #36c2ff;\n    border-top-right-radius: 20px;\n    border-top-left-radius: 20px;\n    line-height: 50px;\n    font-size: 16px;\n    text-indent: 2em; }\n  .pop .close {\n    margin-right: 1em;\n    font-size: 1.4em; }\n  .pop .form {\n    background: #fff;\n    overflow: hidden; }\n    .pop .form .row {\n      overflow: hidden;\n      line-height: 2;\n      margin: 15px 0; }\n      .pop .form .row label {\n        float: left;\n        width: 30%;\n        text-align: right;\n        height: 32px;\n        line-height: 32px; }\n      .pop .form .row input {\n        float: left;\n        width: 50%;\n        height: 30px;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        outline: 0;\n        padding: 0 6px; }\n  .pop .footer {\n    padding-bottom: 10px;\n    height: 60px;\n    line-height: 60px;\n    background: #fff;\n    border-bottom-right-radius: 20px;\n    border-bottom-left-radius: 20px;\n    text-align: center; }\n    .pop .footer .btn {\n      padding: 8px 20px;\n      color: #fff;\n      background: #36c2ff;\n      border-radius: 5px;\n      margin: 5px; }\n", ""]);
+exports.push([module.i, ".data {\n  overflow: hidden; }\n  .data p {\n    margin: 0; }\n  .data p.no-data {\n    text-align: center;\n    border: 1px solid #ddd;\n    background: #fff;\n    padding: 100px;\n    font-size: 30px; }\n  .data .fl {\n    float: left; }\n  .data .fr {\n    float: right; }\n  .data .left {\n    width: 186px;\n    float: left;\n    background: #2f3438;\n    margin-bottom: -99999px;\n    padding-bottom: 99999px; }\n    .data .left ul {\n      padding: 0;\n      margin: 0; }\n      .data .left ul li {\n        list-style: none;\n        height: 55px;\n        line-height: 55px;\n        color: #666a6d;\n        text-align: center;\n        font-size: 16px;\n        border-bottom: 1px solid #292d30;\n        box-sizing: border-box; }\n        .data .left ul li.cur {\n          background: #276ab0;\n          color: #eee; }\n  .data .right {\n    padding-left: 186px; }\n    .data .right .info-bar {\n      height: 55px;\n      background: #f1f1f1;\n      border-bottom: 1px solid #ddd;\n      line-height: 55px;\n      padding: 0 20px; }\n      .data .right .info-bar .bread-crumb {\n        float: left; }\n      .data .right .info-bar .switch-box {\n        float: right;\n        margin-right: 5%; }\n        .data .right .info-bar .switch-box .toggle {\n          margin: 13px 5px; }\n      .data .right .info-bar .search-box {\n        position: relative;\n        display: inline-block; }\n        .data .right .info-bar .search-box .icon {\n          width: 16px;\n          position: absolute;\n          right: 18px;\n          top: 18px; }\n      .data .right .info-bar .search {\n        margin: 0 10px;\n        border: 0;\n        background: #276ab0;\n        height: 28px;\n        border-radius: 14px;\n        padding: 0 10px;\n        color: #ddd;\n        outline: 0;\n        width: 120px;\n        padding-right: 30px; }\n        .data .right .info-bar .search::-webkit-input-placeholder {\n          color: #ddd; }\n    .data .right .content {\n      padding: 30px 15px;\n      overflow: hidden; }\n      .data .right .content .box {\n        float: left;\n        width: 48%;\n        margin: 0 1% 25px;\n        box-sizing: border-box;\n        border: 1px solid #dfdfdf;\n        background: #fff; }\n        .data .right .content .box header {\n          height: 52px;\n          line-height: 52px;\n          padding-left: 30px;\n          font-weight: bold;\n          font-size: 15px;\n          border-bottom: 1px solid;\n          color: #333; }\n          .data .right .content .box header .fr {\n            padding: 0 20px; }\n          .data .right .content .box header.red {\n            border-color: #f45d4c; }\n          .data .right .content .box header.green {\n            border-color: #12b461; }\n          .data .right .content .box header.blue {\n            border-color: #266bb0; }\n          .data .right .content .box header.pink {\n            border-color: #7f75e6; }\n        .data .right .content .box .ctx {\n          height: 214px;\n          overflow: hidden;\n          position: relative; }\n          .data .right .content .box .ctx .pic-box {\n            width: 35%;\n            padding: 70px 0;\n            box-sizing: border-box;\n            text-align: center; }\n          .data .right .content .box .ctx .desc-box {\n            width: 65%;\n            position: absolute;\n            right: 0;\n            top: 50%;\n            -webkit-transform: translateY(-50%);\n                    transform: translateY(-50%); }\n            .data .right .content .box .ctx .desc-box .title {\n              font-size: 16px;\n              line-height: 1.5;\n              margin-bottom: 8px; }\n            .data .right .content .box .ctx .desc-box .b {\n              color: #266bb0; }\n            .data .right .content .box .ctx .desc-box .info-list {\n              overflow: hidden; }\n              .data .right .content .box .ctx .desc-box .info-list .item {\n                float: left;\n                width: 100%;\n                line-height: 1.7; }\n          .data .right .content .box .ctx .data-box {\n            overflow: hidden;\n            margin: 0 6%; }\n            .data .right .content .box .ctx .data-box .row {\n              float: left;\n              width: 33.33333%;\n              line-height: 1.8;\n              margin-bottom: 10px;\n              height: 25px;\n              overflow: hidden; }\n              .data .right .content .box .ctx .data-box .row .number {\n                color: #266bb0;\n                margin: 0 10px; }\n          .data .right .content .box .ctx .time {\n            font-size: 13px;\n            color: #999;\n            line-height: 2;\n            margin: 20px 6% 10px; }\n    .data .right .pagination {\n      text-align: center;\n      margin-bottom: 50px; }\n      .data .right .pagination .btn {\n        background: #36c2ff;\n        color: #fff;\n        display: inline-block;\n        padding: 5px 20px;\n        border-radius: 30px;\n        margin: 0 4px; }\n        .data .right .pagination .btn.disabled {\n          background: #cacaca;\n          color: #9b9fa2; }\n      .data .right .pagination .page-input {\n        background: #fff;\n        height: 24px;\n        padding: 0 10px;\n        border-radius: 13px;\n        width: 60px;\n        text-align: center;\n        outline: 0;\n        border: 1px solid #36c2ff; }\n\n.pop-bg {\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n  background: #000;\n  opacity: .6;\n  position: fixed;\n  left: 0;\n  top: 0; }\n\n.pop {\n  position: fixed;\n  width: 40%;\n  left: 50%;\n  top: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  z-index: 100; }\n  .pop .header {\n    height: 50px;\n    background: #36c2ff;\n    border-top-right-radius: 20px;\n    border-top-left-radius: 20px;\n    line-height: 50px;\n    font-size: 16px;\n    text-indent: 2em; }\n  .pop .close {\n    margin-right: 1em;\n    font-size: 1.4em; }\n  .pop .form {\n    background: #fff;\n    overflow: hidden; }\n    .pop .form .row {\n      overflow: hidden;\n      line-height: 2;\n      margin: 15px 0; }\n      .pop .form .row label {\n        float: left;\n        width: 30%;\n        text-align: right;\n        height: 32px;\n        line-height: 32px; }\n      .pop .form .row input {\n        float: left;\n        width: 50%;\n        height: 30px;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        outline: 0;\n        padding: 0 6px; }\n  .pop .footer {\n    padding-bottom: 10px;\n    height: 60px;\n    line-height: 60px;\n    background: #fff;\n    border-bottom-right-radius: 20px;\n    border-bottom-left-radius: 20px;\n    text-align: center; }\n    .pop .footer .btn {\n      padding: 8px 20px;\n      color: #fff;\n      background: #36c2ff;\n      border-radius: 5px;\n      margin: 5px; }\n", ""]);
 
 // exports
 
@@ -503,6 +644,9 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_device_service__ = __webpack_require__("../../../../../src/app/service/device.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_user_service__ = __webpack_require__("../../../../../src/app/service/user.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DeviceComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -514,13 +658,115 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var DeviceComponent = (function () {
-    function DeviceComponent() {
+    function DeviceComponent(deviceService, route, router, userService) {
+        this.deviceService = deviceService;
+        this.route = route;
+        this.router = router;
+        this.userService = userService;
         this.isDeviceEditing = false;
+        this.deviceDetails = {
+            device_info: {}
+        };
+        this.loading = true;
+        this.stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
+        this.dataHash = {
+            1: ['高度', 0.01, 'm'],
+            2: ['温度', 0.1, '℃'],
+            3: ['压力', 0.1, 'MPa'],
+            4: ['压力', 0.1, 'kPa'],
+            5: ['气体浓度', 0.1, '%LEL'],
+            6: ['气体浓度', 0.1, '%VOL'],
+            7: ['气体浓度', 1, '10^-6体积分数'],
+            8: ['气体浓度', 1, 'mg/m3'],
+            9: ['时间', 1, 's'],
+            10: ['电压', 0.1, 'V'],
+            11: ['电流', 0.1, 'A'],
+            12: ['流量', 0.1, 'L/s'],
+            13: ['风量', 0.1, 'm3/min'],
+            14: ['风速', 0.1, 'm/s'],
+            15: ['剩余电流', 0.1, 'mA'],
+            16: ['烟参量', 0.1, ''],
+            128: ['输入检测', 1, ''],
+            129: ['输出控制', 1, '']
+        };
+        this.dataList = [];
+    }
+    DeviceComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            if (params && params.device_id) {
+                _this.deviceId = params.device_id;
+                _this.getData();
+                setInterval(function () {
+                    _this.loading = true;
+                    _this.getData();
+                }, 30000);
+            }
+        });
+        this.getAlarmData();
+        this.formatChartData([1, 2, 3, 4, 5], [1, 2, 3, 4, 5]);
+    };
+    DeviceComponent.prototype.getData = function () {
+        var _this = this;
+        this.deviceService.getDeviceDetails(this.deviceId).then(function (data) {
+            _this.loading = false;
+            _this.deviceDetails = data;
+            _this.formatDataList(data);
+            _this.project = _this.userService.getProjectById(data.device_info.efairydevice_project_id);
+        });
+    };
+    DeviceComponent.prototype.getAlarmData = function () {
+        var _this = this;
+        this.deviceService.getDeviceAlarmData(this.deviceId, '1').then(function (data) {
+            var tmpDayObj = {};
+            var dayList = [];
+            var dayValueList = [];
+            for (var i = 6; i >= 0; i--) {
+                tmpDayObj[moment().add(-i, 'd').format('YYYY-MM-DD')] = 0;
+            }
+            data.device_alarm_data_list.forEach(function (item) {
+                var time = item.efairydevice_alarm_time.split(' ')[0];
+                if (time && tmpDayObj.hasOwnProperty(time)) {
+                    tmpDayObj[time]++;
+                }
+            });
+            Object.keys(tmpDayObj).forEach(function (k) {
+                dayList.push(k);
+                dayValueList.push(tmpDayObj[k]);
+            });
+            _this.formatChartData(dayList, dayValueList);
+        });
+    };
+    DeviceComponent.prototype.editDevice = function () {
+        this.isDeviceEditing = !this.isDeviceEditing;
+    };
+    DeviceComponent.prototype.closePop = function () {
+        this.isDeviceEditing = false;
+    };
+    DeviceComponent.prototype.formatDataList = function (data) {
+        var _this = this;
+        if (data.realtime_data && data.realtime_data.data && data.realtime_data.data.length > 0) {
+            this.dataList = [];
+            data.realtime_data.data.forEach(function (element) {
+                if (element.cid != 0 && _this.dataHash[element.pt]) {
+                    //{cid: 0, st: 30, pt: 1, rtv: 0, thv: 0}
+                    _this.dataList.push({
+                        itemName: _this.dataHash[element.pt][0] + '' + element.cid,
+                        itemValue: [(element.rtv * _this.dataHash[element.pt][1]), _this.dataHash[element.pt][2], '/', (element.thv * _this.dataHash[element.pt][1]), _this.dataHash[element.pt][2]].join('')
+                    });
+                }
+            });
+        }
+        if (data.realtime_data && data.realtime_data.ts) {
+            this.dataUpdateTime = moment(data.realtime_data.ts * 1000).format('YYYY/MM/DD HH:mm:ss');
+        }
+    };
+    DeviceComponent.prototype.formatChartData = function (xData, yData) {
         this.option = {
-            title: {
-                text: ''
-            },
             tooltip: {
                 trigger: 'axis',
                 axisPointer: {
@@ -530,8 +776,6 @@ var DeviceComponent = (function () {
                     }
                 }
             },
-            legend: {},
-            toolbox: {},
             grid: {
                 top: '10%',
                 left: '5%',
@@ -543,7 +787,7 @@ var DeviceComponent = (function () {
                 {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    data: xData,
                 }
             ],
             yAxis: [
@@ -553,41 +797,28 @@ var DeviceComponent = (function () {
             ],
             series: [
                 {
-                    name: '邮件营销',
+                    name: '报警次数',
                     type: 'line',
                     stack: '总量',
                     // areaStyle: { normal: {} },
-                    data: [120, 132, 101, 134, 90, 230, 210]
+                    data: yData
                 },
-                {
-                    name: '联盟广告',
-                    type: 'line',
-                    stack: '总量',
-                    // areaStyle: { normal: {} },
-                    data: [220, 182, 191, 234, 290, 330, 310]
-                }
             ]
         };
-    }
-    DeviceComponent.prototype.ngOnInit = function () {
-    };
-    DeviceComponent.prototype.editDevice = function () {
-        this.isDeviceEditing = !this.isDeviceEditing;
-    };
-    DeviceComponent.prototype.closePop = function () {
-        this.isDeviceEditing = false;
     };
     return DeviceComponent;
 }());
 DeviceComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-device',
         template: __webpack_require__("../../../../../src/app/data-page/device/device.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/data-page/device/device.component.scss")]
+        styles: [__webpack_require__("../../../../../src/app/data-page/device/device.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_1__service_device_service__["a" /* DeviceService */]]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__service_device_service__["a" /* DeviceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__service_device_service__["a" /* DeviceService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */]) === "function" && _d || Object])
 ], DeviceComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=device.component.js.map
 
 /***/ }),
@@ -641,7 +872,7 @@ var ErrorPageComponent = (function () {
     return ErrorPageComponent;
 }());
 ErrorPageComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-error-page',
         template: __webpack_require__("../../../../../src/app/error-page/error-page.component.html"),
         styles: [__webpack_require__("../../../../../src/app/error-page/error-page.component.scss")]
@@ -653,10 +884,109 @@ ErrorPageComponent = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/login-page/login-page.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"login-page\" [style.min-height]=\"navMinHeight\">\n  <div class=\"top\">\n    <div class=\"box\">\n      <img src='../../assets/image/logo.png'>\n      <p>德派森—智慧用电安全隐患监管服务平台</p>\n    </div>\n  </div>\n  <div class=\"ctx\">\n    <div class=\"form\">\n      <h3 class=\"title\">用户登录</h3>\n      <div class=\"row\">\n        <input type=\"text\" placeholder=\"用户名\" [(ngModel)]=\"username\" id=\"name\">\n      </div>\n      <div class=\"row\">\n        <input placeholder=\"验证码\" id=\"pass\" [(ngModel)]=\"pass\">\n        <a class=\"btn\" id=\"sms-code\" (click)=\"getSmsCode()\">获取验证码</a>\n      </div>\n      <!--<div class=\"row\" id=\"box\"><label><input type=\"checkbox\" id=\"auto\"><span>下次自动登录</span></label></div>-->\n      <a class=\"login-btn\" (click)=\"adminLogin()\">登录</a>\n    </div>\n    <p class=\"copyright\">Copyright  2017 德派森物联网科技  粤ICP备8888888号</p>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/login-page/login-page.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".login-page {\n  background: #fff url(" + __webpack_require__("../../../../../src/assets/image/login_bg.jpg") + ") no-repeat 50% 0; }\n  .login-page .top {\n    height: 80px;\n    background: #e5e5e5; }\n    .login-page .top .box {\n      max-width: 1050px;\n      margin: 0 auto; }\n      .login-page .top .box img {\n        height: 80px;\n        float: left;\n        margin-right: 10px; }\n      .login-page .top .box p {\n        line-height: 80px;\n        color: #333;\n        font-size: 22px;\n        margin: 0; }\n\n.copyright {\n  font-size: 14px;\n  color: #6b6b6b;\n  text-align: center;\n  margin-top: 420px; }\n\n.ctx {\n  max-width: 1050px;\n  margin: 0 auto;\n  min-height: 900px;\n  position: relative;\n  overflow: hidden; }\n\n.form {\n  width: 400px;\n  position: absolute;\n  right: 5px;\n  top: 40px;\n  border-radius: 5px;\n  background: #fff;\n  box-sizing: border-box;\n  padding: 25px;\n  font-size: 16px; }\n  .form .row {\n    overflow: hidden; }\n  .form input {\n    border: 1px solid #ececec;\n    background: none;\n    outline: none;\n    display: block;\n    margin: 0;\n    height: 50px;\n    line-height: 50px;\n    padding: 0 8px;\n    width: 100%;\n    box-sizing: border-box;\n    margin-bottom: 10px;\n    padding-left: 45px;\n    color: #444; }\n  .form label {\n    font-size: 14px;\n    overflow: hidden; }\n    .form label span {\n      display: inline-block;\n      margin-left: 5px;\n      color: #555; }\n  .form #name {\n    background: url(" + __webpack_require__("../../../../../src/assets/image/login_avatar.png") + ") no-repeat 10px 11px; }\n  .form #pass {\n    background: url(" + __webpack_require__("../../../../../src/assets/image/login_pass.png") + ") no-repeat 10px 11px;\n    width: 58%;\n    float: left; }\n  .form #sms-code {\n    width: 38%;\n    margin-left: 4%;\n    float: left;\n    border: 1px solid #ccc;\n    box-sizing: border-box;\n    height: 40px;\n    line-height: 40px;\n    text-align: center;\n    border-radius: 5px;\n    font-size: 14px;\n    margin-top: 5px; }\n\n.title {\n  text-align: center;\n  color: #555;\n  font-size: 20px;\n  line-height: 1.5;\n  margin: 0;\n  margin-bottom: 20px;\n  font-weight: normal; }\n\n#box {\n  margin: 20px 0; }\n\n#auto {\n  width: auto;\n  height: auto;\n  display: inline-block; }\n\n.login-btn {\n  display: block;\n  margin-top: 15px;\n  text-align: center;\n  color: #fff;\n  height: 50px;\n  line-height: 50px;\n  border-radius: 5px;\n  background: #44b549;\n  font-size: 18px; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/login-page/login-page.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_user_service__ = __webpack_require__("../../../../../src/app/service/user.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPageComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var LoginPageComponent = (function () {
+    function LoginPageComponent(userService, router) {
+        this.userService = userService;
+        this.router = router;
+        this.username = '13751066522';
+        this.pass = '1234';
+    }
+    LoginPageComponent.prototype.ngOnInit = function () {
+        this.navMinHeight = (window.innerHeight) + 'px';
+    };
+    LoginPageComponent.prototype.keyboardInput = function (event) {
+        if (event.keyCode === 13) {
+            this.adminLogin();
+        }
+    };
+    LoginPageComponent.prototype.adminLogin = function () {
+        var _this = this;
+        this.userService.adminLogin(this.username, this.pass).then(function (data) {
+            _this.router.navigate(['/admin/master']);
+        }).catch(function (e) {
+            alert(e);
+        });
+    };
+    LoginPageComponent.prototype.getSmsCode = function () {
+        var _this = this;
+        this.userService.getSmsCode(this.username).then(function (data) {
+            _this.pass = data.check_code;
+        }).catch(function (e) {
+            alert(e);
+        });
+    };
+    return LoginPageComponent;
+}());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* HostListener */])('window:keydown', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], LoginPageComponent.prototype, "keyboardInput", null);
+LoginPageComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
+        selector: 'app-login-page',
+        template: __webpack_require__("../../../../../src/app/login-page/login-page.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/login-page/login-page.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
+], LoginPageComponent);
+
+var _a, _b;
+//# sourceMappingURL=login-page.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/master-page/master-page.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"master\">\n  <div class=\"content-wrap\">\n\n    <div class=\"left\">\n      <div class=\"row grid3\">\n        <div class=\"item blue\">\n          <div class=\"header\">\n            <div class=\"l\">个人信息</div>\n          </div>\n          <div class=\"ctx\">\n            <img src=\"https://0.gravatar.com/avatar/cd59176540d404323eb7ed64760db991?s=90&d=identicon&r=G\" class=\"avatar\">\n            <div class=\"profile\">\n              天地会 管理员<br>天地会总舵<br><br>2017年06月28日 周三\n            </div>\n          </div>\n        </div>\n        <div class=\"item red\">\n          <div class=\"header\">\n            <div class=\"l\">报警数据</div>\n            <div class=\"r\">3</div>\n          </div>\n          <div class=\"ctx\">\n            <ul class=\"info-list\">\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"item orange\">\n          <div class=\"header\">\n            <div class=\"l\">设备故障</div>\n            <div class=\"r\">3</div>\n          </div>\n          <div class=\"ctx\">\n            <ul class=\"info-list\">\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n            </ul>\n          </div>\n        </div>\n      </div>\n      <div class=\"row grid2\">\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/file.png\" class=\"map-icon\">基础信息\n          </div>\n          <div class=\"box\">\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n          </div>\n        </div>\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/map.png\" class=\"map-icon\">地图\n            <img src=\"assets/image/edit.png\" class=\"right-icon\">\n          </div>\n          <div class=\"box\">\n\n          </div>\n        </div>\n\n      </div>\n      <div class=\"row grid1\">\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/dash.png\" class=\"map-icon\">电气安全综合隐患指数top1\n            <img src=\"assets/image/edit.png\" class=\"right-icon\">\n          </div>\n          <div class=\"box\"></div>\n        </div>\n      </div>\n    </div>\n\n\n    <div class=\"right\">\n      <div class=\"row grid1\">\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/dash.png\" class=\"map-icon\">最近10次告警\n            <img src=\"assets/image/edit.png\" class=\"right-icon\">\n          </div>\n          <div class=\"box\">\n            <section class=\"block\">\n              <div class=\"time\">\n                  <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n           \n            <section class=\"block\">\n              <div class=\"time\">\n                <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n            <section class=\"block\">\n              <div class=\"time\">\n                <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n            <section class=\"block\">\n              <div class=\"time\">\n                <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n\n          </div>\n        </div>\n      </div>\n    </div>\n\n  </div>\n</div>"
+module.exports = "<div class=\"master\">\n  <div class=\"content-wrap\">\n\n    <div class=\"left\">\n      <div class=\"row grid3\">\n        <div class=\"item blue\">\n          <div class=\"header\">\n            <div class=\"l\">个人信息</div>\n          </div>\n          <div class=\"ctx\">\n            <img src=\"https://0.gravatar.com/avatar/cd59176540d404323eb7ed64760db991?s=90&d=identicon&r=G\" class=\"avatar\">\n            <div class=\"profile\">\n              {{userInfo.efairyuser_nickname}} 管理员<br>{{userInfo.efairyuser_company}}<br><br>{{time}}\n            </div>\n          </div>\n        </div>\n        <div class=\"item red\">\n          <div class=\"header\">\n            <div class=\"l\">报警数据</div>\n            <div class=\"r\">3</div>\n          </div>\n          <div class=\"ctx\">\n            <ul class=\"info-list\">\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"item orange\">\n          <div class=\"header\">\n            <div class=\"l\">设备故障</div>\n            <div class=\"r\">3</div>\n          </div>\n          <div class=\"ctx\">\n            <ul class=\"info-list\">\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n              <li>没有更多的数据</li>\n            </ul>\n          </div>\n        </div>\n      </div>\n      <div class=\"row grid2\">\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/file.png\" class=\"map-icon\">基础信息\n          </div>\n          <div class=\"box\">\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n            <p>单位名称：天地会总舵</p>\n          </div>\n        </div>\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/map.png\" class=\"map-icon\">地图\n            <img src=\"assets/image/edit.png\" class=\"right-icon\">\n          </div>\n          <div class=\"box\">\n\n          </div>\n        </div>\n\n      </div>\n      <div class=\"row grid1\">\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/dash.png\" class=\"map-icon\">电气安全综合隐患指数top1\n            <img src=\"assets/image/edit.png\" class=\"right-icon\">\n          </div>\n          <div class=\"box\"></div>\n        </div>\n      </div>\n    </div>\n\n\n    <div class=\"right\">\n      <div class=\"row grid1\">\n        <div class=\"item\">\n          <div class=\"title\">\n            <img src=\"assets/image/dash.png\" class=\"map-icon\">最近10次告警\n            <img src=\"assets/image/edit.png\" class=\"right-icon\">\n          </div>\n          <div class=\"box\">\n            <section class=\"block\">\n              <div class=\"time\">\n                  <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n           \n            <section class=\"block\">\n              <div class=\"time\">\n                <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n            <section class=\"block\">\n              <div class=\"time\">\n                <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n            <section class=\"block\">\n              <div class=\"time\">\n                <span class=\"blue\">06-02</span> 10:00\n              </div>\n              <div class=\"ctx\">\n                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33\n              </div>\n            </section>\n\n          </div>\n        </div>\n      </div>\n    </div>\n\n  </div>\n</div>"
 
 /***/ }),
 
@@ -683,6 +1013,8 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_user_service__ = __webpack_require__("../../../../../src/app/service/user.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MasterPageComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -694,23 +1026,210 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var MasterPageComponent = (function () {
-    function MasterPageComponent() {
+    function MasterPageComponent(userService, router) {
+        this.userService = userService;
+        this.router = router;
     }
     MasterPageComponent.prototype.ngOnInit = function () {
+        this.userInfo = this.userService.getAdminInfo();
+        this.time = moment().format('YYYY年MM月DD日');
     };
     return MasterPageComponent;
 }());
 MasterPageComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-master-page',
         template: __webpack_require__("../../../../../src/app/master-page/master-page.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/master-page/master-page.component.scss")]
+        styles: [__webpack_require__("../../../../../src/app/master-page/master-page.component.scss")],
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
 ], MasterPageComponent);
 
+var _a, _b;
 //# sourceMappingURL=master-page.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/parent-container/parent-container.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <header>\n    <div class=\"logo\">PST</div>\n    <div class=\"nav\">\n      <a [routerLink]=\"['master']\" routerLinkActive=\"cur\" class=\"index\"><i class=\"icon\"></i><span>首页</span></a>\n      <a [routerLink]=\"['data']\" routerLinkActive=\"cur\" class=\"data\"><i class=\"icon \"></i><span>实时数据</span></a>\n      <a [routerLink]=\"['warning']\" routerLinkActive=\"cur\" class=\"warning\"><i class=\"icon \"></i><span>报警信息</span></a>\n      <a [routerLink]=\"['mistake']\" routerLinkActive=\"cur\" class=\"error\"><i class=\"icon \"></i><span>故障信息</span></a>\n      <a [routerLink]=\"['dashboard']\" routerLinkActive=\"cur\" class=\"dashboard\"><i class=\"icon \"></i><span>监控中心</span></a>\n      <a [routerLink]=\"['danger']\" routerLinkActive=\"cur\" class=\"bug\"><i class=\"icon \"></i><span>隐患曝光</span></a>\n    </div>\n    <div class=\"setting\">\n      <div class=\"account\">\n        <img class=\"avatar\" [src]=\"userInfo.efairyuser_headimg_url\">\n        <span class=\"name\">{{userInfo.efairyuser_nickname}}</span>\n        <a class=\"power\" (click)=\"logout()\"><img src=\"./assets/image/power.png\"></a>\n      </div>\n    </div>\n  </header>\n  <router-outlet></router-outlet>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/parent-container/parent-container.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".container {\n  margin: 15px;\n  background: #f1f1f1; }\n\nheader {\n  overflow: hidden;\n  background: #272b2e;\n  min-width: 1250px; }\n\n.logo {\n  width: 186px;\n  height: 85px;\n  float: left;\n  text-indent: -9999em;\n  background: #e5e5e5 url(" + __webpack_require__("../../../../../src/assets/image/logo.png") + ") no-repeat 0 0; }\n\n.nav {\n  float: left;\n  margin-left: 15px; }\n  .nav a {\n    float: left;\n    width: 112px;\n    height: 70px;\n    font-size: 15px;\n    margin-right: 8px;\n    background: #276cb1;\n    text-align: center;\n    color: #fff;\n    text-decoration: none; }\n    .nav a.index {\n      background: #276cb1 url(" + __webpack_require__("../../../../../src/assets/image/nav1.png") + ") no-repeat 0 0; }\n    .nav a.data {\n      background: #12b461 url(" + __webpack_require__("../../../../../src/assets/image/nav2.png") + ") no-repeat 0 0; }\n    .nav a.warning {\n      background: #ea7a18 url(" + __webpack_require__("../../../../../src/assets/image/nav3.png") + ") no-repeat 0 0; }\n    .nav a.error {\n      background: #f45d4c url(" + __webpack_require__("../../../../../src/assets/image/nav4.png") + ") no-repeat 0 0; }\n    .nav a.dashboard {\n      background: #7f75e6 url(" + __webpack_require__("../../../../../src/assets/image/nav5.png") + ") no-repeat 0 0; }\n    .nav a.bug {\n      background: #4e5d70 url(" + __webpack_require__("../../../../../src/assets/image/nav6.png") + ") no-repeat 0 0; }\n  .nav .icon {\n    display: block;\n    width: 24px;\n    height: 24px;\n    margin: 10px auto; }\n\n.setting {\n  float: right;\n  color: #fff; }\n  .setting .avatar {\n    width: 34px;\n    height: 34px;\n    border-radius: 50%;\n    float: left;\n    margin: 18px; }\n  .setting .name {\n    font-size: 16px;\n    line-height: 70px;\n    position: relative;\n    border-right: 1px solid #888;\n    padding-right: 15px; }\n  .setting .power {\n    float: right;\n    margin: 26px;\n    cursor: pointer; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/parent-container/parent-container.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__service_user_service__ = __webpack_require__("../../../../../src/app/service/user.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ParentContainerComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ParentContainerComponent = (function () {
+    function ParentContainerComponent(userService, router) {
+        this.userService = userService;
+        this.router = router;
+    }
+    ParentContainerComponent.prototype.ngOnInit = function () {
+        this.userInfo = this.userService.getAdminInfo();
+    };
+    ParentContainerComponent.prototype.logout = function () {
+        this.userService.logOut();
+        this.router.navigate(['/login']);
+    };
+    return ParentContainerComponent;
+}());
+ParentContainerComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
+        selector: 'app-parent-container',
+        template: __webpack_require__("../../../../../src/app/parent-container/parent-container.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/parent-container/parent-container.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__service_user_service__["a" /* UserService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
+], ParentContainerComponent);
+
+var _a, _b;
+//# sourceMappingURL=parent-container.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/service/device.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__ = __webpack_require__("../../../../ngx-cookie/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__err_msg__ = __webpack_require__("../../../../../src/app/service/err-msg.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_service__ = __webpack_require__("../../../../../src/app/service/lib.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap__ = __webpack_require__("../../../../rxjs/add/operator/switchMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/add/operator/catch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DeviceService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+var DeviceService = (function () {
+    function DeviceService(cookieService, http, libService, codeHashObj) {
+        this.cookieService = cookieService;
+        this.http = http;
+        this.libService = libService;
+        this.codeHashObj = codeHashObj;
+        this.serviceUrl = {
+            list: '/webapi/device_list',
+            details: '/webapi/device',
+            alarmData: '/webapi/device_alarm_data'
+        };
+        this.codeHash = codeHashObj.codeHash;
+    }
+    DeviceService.prototype.getDeviceList = function (pid, alarmId) {
+        return this.libService.createGetRequest(this.serviceUrl['list'], {
+            efairyproject_id: pid,
+            alarm_id: alarmId
+        });
+    };
+    DeviceService.prototype.getDeviceDetails = function (deviceId, startTime, days) {
+        return this.libService.createGetRequest(this.serviceUrl['details'], {
+            efairydevice_id: deviceId,
+            start_time: startTime,
+            days: days
+        });
+    };
+    DeviceService.prototype.getDeviceAlarmData = function (deviceId, alarmId, startTime, days) {
+        return this.libService.createGetRequest(this.serviceUrl['alarmData'], {
+            efairydevice_id: deviceId,
+            alarm_id: alarmId || 1,
+            start_time: startTime,
+            days: days || 7
+        });
+    };
+    return DeviceService;
+}());
+DeviceService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__lib_service__["a" /* LibService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__lib_service__["a" /* LibService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__err_msg__["a" /* errCodeMsgHash */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__err_msg__["a" /* errCodeMsgHash */]) === "function" && _d || Object])
+], DeviceService);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=device.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/service/err-msg.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return errCodeMsgHash; });
+var errCodeMsgHash = (function () {
+    function errCodeMsgHash() {
+        this.codeHash = {
+            11001: '参数错误',
+            11002: '用户不存在',
+            11003: '验证码错误',
+            11004: '数据库初始化出错',
+            11005: '获取用户信息失败',
+            11006: '创建密钥出错',
+            11007: '生成accesstoken出错',
+            11008: '初始化redis出错'
+        };
+    }
+    return errCodeMsgHash;
+}());
+
+//# sourceMappingURL=err-msg.js.map
 
 /***/ }),
 
@@ -768,7 +1287,7 @@ var ExtendedHttpService = (function (_super) {
         //do whatever 
         if (typeof url === 'string') {
             if (!options) {
-                options = { headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]() };
+                options = { headers: new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]() };
             }
             this.setHeaders(options);
         }
@@ -787,7 +1306,7 @@ var ExtendedHttpService = (function (_super) {
             '500': '服务器错误'
         };
         return function (res) {
-            if (res.status === 444) {
+            if (res.status === 444 || res.status === 445) {
                 //handle authorization errors
                 //in this example I am navigating to logout route which brings the login screen
                 alert('鉴权失败,请重新登录');
@@ -805,10 +1324,10 @@ var ExtendedHttpService = (function (_super) {
         // objectToSetHeadersTo.headers.set('Token', this.authService.getToken());
     };
     return ExtendedHttpService;
-}(__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]));
+}(__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]));
 ExtendedHttpService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* XHRBackend */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* XHRBackend */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* XHRBackend */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* XHRBackend */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* RequestOptions */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["e" /* RequestOptions */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _c || Object])
 ], ExtendedHttpService);
 
 var _a, _b, _c;
@@ -816,7 +1335,7 @@ var _a, _b, _c;
 
 /***/ }),
 
-/***/ "../../../../../src/app/service/user.service.ts":
+/***/ "../../../../../src/app/service/lib.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -831,6 +1350,179 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/add/operator/catch.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LibService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var LibService = (function () {
+    function LibService(cookieService, http) {
+        this.cookieService = cookieService;
+        this.http = http;
+    }
+    LibService.prototype.generateHttpGetSearchParams = function (opts) {
+        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* URLSearchParams */]();
+        // params.set('access_token', (this.cookieService.get('pst_token')))
+        params.set('efairyuser_id', this.cookieService.getObject('pst_admin_info')['efairyuser_id']);
+        console.log(this.cookieService.get('pst_token'));
+        if (opts) {
+            Object.keys(opts).forEach(function (key) {
+                if (opts[key])
+                    params.set(key, opts[key].toString());
+            });
+        }
+        return {
+            token: encodeURIComponent(this.cookieService.get('pst_token')),
+            search: params,
+        };
+    };
+    LibService.prototype.generateHttpPostSearchParams = function (opts) {
+        var token = this.cookieService.get('pst_token');
+        var postData = Object.assign({
+            efairyuser_id: this.cookieService.getObject('pst_admin_info')['efairyuser_id'],
+            access_token: token
+        }, opts);
+        return postData;
+    };
+    LibService.prototype.createGetRequest = function (uri, opts) {
+        var param = this.generateHttpGetSearchParams(opts);
+        return this.http
+            .get(uri + "?access_token=" + param.token, { search: param.search })
+            .map(function (res) { return res.json(); }).toPromise()
+            .then(function (data) {
+            if (data.err_code === 200) {
+                return data.result;
+            }
+            return Promise.reject(data.msg || '返回数据格式出错！');
+        });
+    };
+    return LibService;
+}());
+LibService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _b || Object])
+], LibService);
+
+var _a, _b;
+//# sourceMappingURL=lib.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/service/project.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__ = __webpack_require__("../../../../ngx-cookie/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__err_msg__ = __webpack_require__("../../../../../src/app/service/err-msg.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_service__ = __webpack_require__("../../../../../src/app/service/lib.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap__ = __webpack_require__("../../../../rxjs/add/operator/switchMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/add/operator/catch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+var ProjectService = (function () {
+    function ProjectService(cookieService, http, libService, codeHashObj) {
+        this.cookieService = cookieService;
+        this.http = http;
+        this.libService = libService;
+        this.codeHashObj = codeHashObj;
+        this.serviceUrl = {
+            list: '/webapi/project_list',
+            getCode: '/webapi/login_checkcode',
+            getAgencyList: '/webapi/agency_list'
+        };
+        this.projectList = {};
+        this.codeHash = codeHashObj.codeHash;
+    }
+    ProjectService.prototype.getProjectList = function () {
+        var param = this.libService.generateHttpGetSearchParams();
+        return this.http.get(this.serviceUrl['list'] + "?access_token=" + param.token, { search: param.search }).map(function (res) { return res.json(); }).toPromise()
+            .then(function (data) {
+            if (data.err_code === 200) {
+                return data.result;
+            }
+            else {
+                return Promise.reject(data.msg || '返回数据格式出错！');
+            }
+        });
+    };
+    ProjectService.prototype.getAgencyList = function () {
+        var param = this.libService.generateHttpGetSearchParams();
+        return this.http.get(this.serviceUrl['getAgencyList'] + "?access_token=" + param.token, { search: param.search }).map(function (res) { return res.json(); }).toPromise()
+            .then(function (data) {
+            if (data.err_code === 200) {
+                return data.result;
+            }
+            else {
+                return Promise.reject(data.msg || '返回数据格式出错！');
+            }
+        });
+    };
+    return ProjectService;
+}());
+ProjectService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__lib_service__["a" /* LibService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__lib_service__["a" /* LibService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__err_msg__["a" /* errCodeMsgHash */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__err_msg__["a" /* errCodeMsgHash */]) === "function" && _d || Object])
+], ProjectService);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=project.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/service/user.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__ = __webpack_require__("../../../../ngx-cookie/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__err_msg__ = __webpack_require__("../../../../../src/app/service/err-msg.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_service__ = __webpack_require__("../../../../../src/app/service/lib.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap__ = __webpack_require__("../../../../rxjs/add/operator/switchMap.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_switchMap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/add/operator/catch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_catch__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -848,56 +1540,91 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var UserService = (function () {
-    function UserService(cookieService, http) {
+    function UserService(cookieService, http, libService, codeHashObj) {
         this.cookieService = cookieService;
         this.http = http;
+        this.libService = libService;
+        this.codeHashObj = codeHashObj;
         this.serviceUrl = {
-            login: '/sgmapi/sgm_login'
+            login: '/webapi/login',
+            getCode: '/webapi/login_checkcode',
+            getUserCenter: '/webapi/user_center',
         };
+        this.projectListForGlobal = {};
+        this.codeHash = codeHashObj.codeHash;
     }
     UserService.prototype.adminLogin = function (username, pass) {
         var _this = this;
-        return this.http.post(this.serviceUrl['login'], {
-            account: username,
-            token: pass
-        }).map(function (res) { return res.json(); }).toPromise()
+        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* URLSearchParams */]();
+        params.set('efairy_phonenumber', username);
+        params.set('check_code', pass);
+        return this.http.get(this.serviceUrl['login'], { search: params }).map(function (res) { return res.json(); }).toPromise()
             .then(function (data) {
             if (data.err_code === 200) {
-                _this.cookieService.put('kg_stoken', data.result.access_token);
-                _this.cookieService.putObject('kg_sadmin_info', {
-                    "supergm_user_id": data.result.supergm_user_id,
-                    "supergm_name": data.result.supergm_name,
-                    "supergm_account": data.result.supergm_account
-                });
+                _this.cookieService.put('pst_token', data.result.access_token);
+                _this.cookieService.putObject('pst_admin_info', data.result.user_info);
                 return data.result;
             }
             else {
-                return Promise.reject(data.msg);
+                return Promise.reject(_this.codeHash[data.err_code] || '系统出错，请联系管理员');
             }
         });
     };
+    UserService.prototype.getSmsCode = function (phone) {
+        var _this = this;
+        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["f" /* URLSearchParams */]();
+        params.set('phonenumber', phone);
+        return this.http.get(this.serviceUrl['getCode'], { search: params }).map(function (res) { return res.json(); }).toPromise()
+            .then(function (data) {
+            if (data.err_code === 200) {
+                return data.result;
+            }
+            else {
+                return Promise.reject(_this.codeHash[data.err_code] || '系统出错，请联系管理员');
+            }
+        });
+    };
+    UserService.prototype.getUserCenter = function () {
+        var param = this.libService.generateHttpGetSearchParams();
+        return this.http.get(this.serviceUrl['getUserCenter'] + "?access_token=" + param.token, { search: param.search }).map(function (res) { return res.json(); }).toPromise()
+            .then(function (data) {
+        });
+    };
     UserService.prototype.logOut = function () {
-        this.cookieService.remove('kgs_sgm_accesstoken');
-        this.cookieService.remove('kg_sadmin_info');
-        this.cookieService.remove('kg_stoken');
+        this.cookieService.remove('pst_token');
+        this.cookieService.remove('pst_admin_info');
     };
     UserService.prototype.checkAdminLogin = function () {
-        return !!this.cookieService.get('kgs_sgm_accesstoken');
+        return !!this.cookieService.get('pst_token');
     };
     UserService.prototype.getAdminInfo = function () {
-        return {
-            accountName: this.cookieService.get('kgs_sgm_account')
-        };
+        console.log(this.codeHash);
+        return this.cookieService.getObject('pst_admin_info');
+    };
+    UserService.prototype.setProjectList = function (list) {
+        var _this = this;
+        // this.projectListForGlobal=list;
+        if (list) {
+            this.projectListForGlobal = {};
+            list.forEach(function (item) {
+                _this.projectListForGlobal[item.efairyproject_id] = item;
+            });
+        }
+    };
+    UserService.prototype.getProjectById = function (id) {
+        return this.projectListForGlobal[id];
     };
     return UserService;
 }());
 UserService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ngx_cookie__["b" /* CookieService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__lib_service__["a" /* LibService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__lib_service__["a" /* LibService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__err_msg__["a" /* errCodeMsgHash */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__err_msg__["a" /* errCodeMsgHash */]) === "function" && _d || Object])
 ], UserService);
 
-var _a, _b;
+var _a, _b, _c, _d;
 //# sourceMappingURL=user.service.js.map
 
 /***/ }),
@@ -961,7 +1688,7 @@ var WarningPageComponent = (function () {
     return WarningPageComponent;
 }());
 WarningPageComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* Component */])({
         selector: 'app-warning-page',
         template: __webpack_require__("../../../../../src/app/warning-page/warning-page.component.html"),
         styles: [__webpack_require__("../../../../../src/app/warning-page/warning-page.component.scss")]
@@ -970,6 +1697,27 @@ WarningPageComponent = __decorate([
 ], WarningPageComponent);
 
 //# sourceMappingURL=warning-page.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/assets/image/login_avatar.png":
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAaCAIAAADT1lApAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjg1QzU5ODQzOUY3RTExRTc4Mzg3RUEyNDIwQTBFMjBEIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjg1QzU5ODQ0OUY3RTExRTc4Mzg3RUEyNDIwQTBFMjBEIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QkM0MjJCQ0M5RjY3MTFFNzgzODdFQTI0MjBBMEUyMEQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6ODVDNTk4NDI5RjdFMTFFNzgzODdFQTI0MjBBMEUyMEQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5nPhjmAAABHElEQVR42uxVPYuEQAzdkfMTxeIQFC0sRPD//xgbtVCxsVFQ8dsNe3DsOZk7h9viikthkYQ3yctLJMdx3H5twu0V9pdQ3liBruuqqoIvIUTXddd1NU1jJROU3bZtkyR5DgmCEIYhwHF0lOf5CX3f96IoOHgZx3GaJtrf9/26rldRWKlg27ZdRRFFkYXCCiEosiwrikL7DcMAjjnYdRyHdtq2zae694edIEzT5Nau7/ugt88ePc/j3gAY9rPqYPBZlqHjx7UL6irLsq5rWtNQmmVZUBTN8RcUeC1N02EYvileVdUgCKBHHGVZljiO53n+cYNBNVEUSZKE8AK7cwXi4z1Ixtltmub6QYGlx1G4DvAp+TW3jvz/A1C7CzAAa26JZdb7UUIAAAAASUVORK5CYII="
+
+/***/ }),
+
+/***/ "../../../../../src/assets/image/login_bg.jpg":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "login_bg.b990406e20fc0304b4c5.jpg";
+
+/***/ }),
+
+/***/ "../../../../../src/assets/image/login_pass.png":
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAaCAYAAABctMd+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjg1QzU5ODQ3OUY3RTExRTc4Mzg3RUEyNDIwQTBFMjBEIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjg1QzU5ODQ4OUY3RTExRTc4Mzg3RUEyNDIwQTBFMjBEIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODVDNTk4NDU5RjdFMTFFNzgzODdFQTI0MjBBMEUyMEQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6ODVDNTk4NDY5RjdFMTFFNzgzODdFQTI0MjBBMEUyMEQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4omQOvAAABBElEQVR42uyVTcuDMAzH/5WB4svFk6BXvfj9P4onrwoqqAfBl4vdEtjYi92ePtDDYIESaJNfkyY0QkoJU3K6LFN0YcGgGIWf3h3u+462bdH3PbZt4z3bthGGIaIogmW9j01IRUXXdUVZljfos9AlaZrCcRwl+xBOERdFweAgCBDHMVzX5bN5nlHXNaZp4gvyPFdlcFzQrusY7Ps+sixjTQBa93tkQ7ZaBR3HkXWSJJfcxEG+grMhGYZBD74sC2vP85SOFPm1NlpwevNrhOpqiQfbP3VLVVVomkarn6kt6Qk/FpT6WldUPi/w/3xkKp/v/Vt+8B9cY4hKc+P/ywe0MAU/CzAASSxruEBzTbAAAAAASUVORK5CYII="
 
 /***/ }),
 

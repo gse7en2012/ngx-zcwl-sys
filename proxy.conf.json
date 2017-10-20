@@ -1,0 +1,6 @@
+{
+    "/webapi/*": {
+      "target": "https://efairyts.tokabu.com/webapi/*",
+      "secure": false
+    }
+  }

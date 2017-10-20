@@ -1,0 +1,21 @@
+<div class="container">
+  <header>
+    <div class="logo">PST</div>
+    <div class="nav">
+      <a [routerLink]="['master']" routerLinkActive="cur" class="index"><i class="icon"></i><span>首页</span></a>
+      <a [routerLink]="['data']" routerLinkActive="cur" class="data"><i class="icon "></i><span>实时数据</span></a>
+      <a [routerLink]="['warning']" routerLinkActive="cur" class="warning"><i class="icon "></i><span>报警信息</span></a>
+      <a [routerLink]="['mistake']" routerLinkActive="cur" class="error"><i class="icon "></i><span>故障信息</span></a>
+      <a [routerLink]="['dashboard']" routerLinkActive="cur" class="dashboard"><i class="icon "></i><span>监控中心</span></a>
+      <a [routerLink]="['danger']" routerLinkActive="cur" class="bug"><i class="icon "></i><span>隐患曝光</span></a>
+    </div>
+    <div class="setting">
+      <div class="account">
+        <img class="avatar" [src]="userInfo.efairyuser_headimg_url">
+        <span class="name">{{userInfo.efairyuser_nickname}}</span>
+        <a class="power" (click)="logout()"><img src="./assets/image/power.png"></a>
+      </div>
+    </div>
+  </header>
+  <router-outlet></router-outlet>
+</div>

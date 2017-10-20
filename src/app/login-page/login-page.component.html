@@ -1,0 +1,23 @@
+<div class="login-page" [style.min-height]="navMinHeight">
+  <div class="top">
+    <div class="box">
+      <img src='../../assets/image/logo.png'>
+      <p>德派森—智慧用电安全隐患监管服务平台</p>
+    </div>
+  </div>
+  <div class="ctx">
+    <div class="form">
+      <h3 class="title">用户登录</h3>
+      <div class="row">
+        <input type="text" placeholder="用户名" [(ngModel)]="username" id="name">
+      </div>
+      <div class="row">
+        <input placeholder="验证码" id="pass" [(ngModel)]="pass">
+        <a class="btn" id="sms-code" (click)="getSmsCode()">获取验证码</a>
+      </div>
+      <!--<div class="row" id="box"><label><input type="checkbox" id="auto"><span>下次自动登录</span></label></div>-->
+      <a class="login-btn" (click)="adminLogin()">登录</a>
+    </div>
+    <p class="copyright">Copyright  2017 德派森物联网科技  粤ICP备8888888号</p>
+  </div>
+</div>

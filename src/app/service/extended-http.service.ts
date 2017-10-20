@@ -41,7 +41,7 @@ export class ExtendedHttpService extends Http {
     }
 
     return (res: Response) => {
-      if (res.status === 444) {
+      if (res.status === 444||res.status === 445) {
         //handle authorization errors
         //in this example I am navigating to logout route which brings the login screen
         alert('鉴权失败,请重新登录')

@@ -1,6 +1,13 @@
 .data{
     overflow: hidden;
     p{margin: 0;}
+    p.no-data{
+        text-align: center;
+        border: 1px solid #ddd;
+        background: #fff;
+        padding: 80px;
+        font-size: 26px;
+    }
     .fl{float: left}
     .fr{float: right}
     .left{
@@ -91,6 +98,7 @@
                     text-align: center;
                     font-weight: normal;
                     margin-bottom: 5px;
+                    height:18px;
                 }
                 .device-pic{
                     width: 70%;
@@ -136,9 +144,11 @@
                 padding: 5px 20px;
                 border-radius:30px;
                 margin: 0 4px; 
+                cursor: pointer;
                 &.disabled{
                     background: #cacaca;
                     color: #9b9fa2;
+                    cursor: default;
                 }
             }
             .page-input{
