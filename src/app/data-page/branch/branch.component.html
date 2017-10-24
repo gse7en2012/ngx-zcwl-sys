@@ -1,26 +1,13 @@
-<div class="data">
-
-  <div class="left">
-    <ul class="device-list">
-      <li class="cur">设备一</li>
-      <li>设备一</li>
-      <li>设备一设备一</li>
-      <li>设df备一</li>
-      <li>设备a一</li>
-      <li>设备一</li>
-      <li>设备一a</li>
-    </ul>
-  </div>
 
   <div class="right">
     <div class="info-bar">
-      <p class="bread-crumb"> <a [routerLink]="['/admin/data']">实时数据</a> > {{project?.efairyproject_name}}</p>
+      <p class="bread-crumb"> <a [routerLink]="['/admin/data/']">实时数据</a> > {{project?.efairyproject_name}}</p>
 
       <div class="fr">
         <!-- 报警：0 正常：1 -->
         <div class="search-box">
           <input class="search" placeholder="设备ID或设备名称" [(ngModel)]="keyword">
-          <img src="../assets/image/search_w.png" class="icon" (click)="search()">
+          <img src="assets/image/search_w.png" class="icon" (click)="search()">
         </div>
       </div>
 
@@ -51,20 +38,20 @@
           <h3 class="device-name">{{device.efairydevice_name}}</h3>
           <div class="ctx" *ngIf="device.efairydevice_is_online">
             <div class="fl">
-              <img src="../assets/image/device_online.png">
+              <img src="assets/image/device_online.png">
             </div>
             <div class="fr">
               在线
-              <img src="../assets/image/icon_online.png">
+              <img src="assets/image/icon_online.png">
             </div>
           </div>
           <div class="ctx" *ngIf="!device.efairydevice_is_online">
             <div class="fl">
-              <img src="../assets/image/device_off.png">
+              <img src="assets/image/device_off.png">
             </div>
             <div class="fr">
               离线
-              <img src="../assets/image/icon_off.png">
+              <img src="assets/image/icon_off.png">
             </div>
           </div>
         </a>
@@ -80,5 +67,3 @@
     </div>
 
   </div>
-
-</div>

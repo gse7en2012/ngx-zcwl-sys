@@ -1,88 +1,35 @@
 <div class="warning">
 
+  <div class="loading" *ngIf="loading">
+    <div class="sk-wave">
+      <div class="sk-rect sk-rect1"></div>
+      <div class="sk-rect sk-rect2"></div>
+      <div class="sk-rect sk-rect3"></div>
+      <div class="sk-rect sk-rect4"></div>
+      <div class="sk-rect sk-rect5"></div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading">
   <div class="left">
-    <ul class="device-list">
-      <li class="cur">设备一</li>
-      <li>设备一</li>
-      <li>设备一设备一</li>
-      <li>设df备一</li>
-      <li>设备a一</li>
-      <li>设备一</li>
-      <li>设备一a</li>
-    </ul>
-  </div>
-
-  <div class="right">
-    <div class="info-bar">
-      <p class="bread-crumb">报警信息 > 全部</p>
-      
-      <div class="fr">
-        报警：0 正常：1
-        <div class="search-box">
-          <input class="search" placeholder="设备ID或设备名称">
-          <img src="../assets/image/search_w.png" class="icon">
-        </div>
-      </div>
-
-      <div class="switch-box">
-          <span class="fl">全部</span>
-          <div class="fl toggle">
-            <input class="tgl tgl-ios" id="cb2" type="checkbox">
-            <label class="tgl-btn" for="cb2"></label>
+    <div class="left">
+      <div class="agency-list">
+        <section *ngFor="let item of agencyList">
+          <div [ngClass]="{'row-header':true,cur:item.current}" (click)="getLv2AgencyList(item.efairyuser_id)">
+            {{item.efairyuser_device_supplier}}
+            <span *ngIf="!item.current" class="right-arrow"></span>
+            <span *ngIf="item.current" class="down-arrow"></span>
           </div>
-          <span class="fl">报警</span>
-        </div>
+          <div [ngClass]="{'row-item':true,cur:secondItem.current}" *ngFor="let secondItem of item.secondList" [hidden]="!item.showChildren"
+            [routerLink]="['agency/'+secondItem.efairyuser_id]" routerLinkActive="cur">
+            {{secondItem.efairyuser_device_supplier}}
+          </div>
+        </section>
 
-
+      </div>
     </div>
-    <div class="content">
-       <table class="table">
-          <tr>
-              <th>设备编号</th>
-              <th>单位</th>
-              <th>报警时间</th>
-              <th>报警类型</th>
-              <th>报警值</th>
-              <th>阈值</th>
-              <th>安装位置</th>
-              <th>查看</th>
-          </tr>
-          <tr>
-              <td>898602b1191750078049010101</td>
-              <td>台州市黄岩兴基元商务宾馆</td>
-              <td>2017-09-30 15:44:43</td>
-              <td>漏电报警</td>
-              <td>3</td>
-              <td>21</td>
-              <td>13</td>
-              <td>
-                  <img src="assets/image/view.png">
-              </td>
-          </tr>
-          <tr>
-              <td>898602b1191750078049010101</td>
-              <td>台州市黄岩兴基元商务宾馆</td>
-              <td>2017-09-30 15:44:43</td>
-              <td>漏电报警</td>
-              <td>3</td>
-              <td>21</td>
-              <td>13</td>
-              <td>
-                  <img src="assets/image/view.png">
-              </td>
-          </tr>
-       </table>
-    </div>
-
-    <div class="pagination">
-        共1页 / 1条数据 （当前第1页） 
-        <a class="btn disabled">上一页</a>
-        <a class="btn">下一页</a>
-        前往
-        <input placeholder="跳转到" class="page-input"> 页
-        <a class="btn">GO</a>
-    </div>
-
   </div>
+  <router-outlet></router-outlet>
+</div>
 
 </div>

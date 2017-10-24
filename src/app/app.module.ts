@@ -31,8 +31,8 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { DangerPageComponent } from './danger-page/danger-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { ParentContainerComponent } from './parent-container/parent-container.component';
-
-
+import { ProjectComponent } from './data-page/project/project.component';
+import { ListComponent } from './warning-page/list/list.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -42,14 +42,24 @@ const appRoutes: Routes = [
 ];
 
 
+const dataRoutes:Routes=[
+  { path: 'agency/:agency_id', component: ProjectComponent },
+  { path: 'agency/:agency_id/branch/:branch_id', component: BranchComponent },
+  { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
+]
+
+const warningRoutes:Routes=[
+  { path: 'agency/:agency_id', component: ProjectComponent },
+  { path: 'agency/:agency_id/branch/:branch_id', component: ListComponent },
+  { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
+]
+
 const adminRoutes: Routes = [
   {
     path: 'admin', component: ParentContainerComponent, children: [
       { path: 'master', component: MasterPageComponent },
-      { path: 'data', component: DataPageComponent },
-      { path: 'data/branch/:branch_id', component: BranchComponent },
-      { path: 'data/device/:device_id', component: DeviceComponent },
-      { path: 'warning', component: WarningPageComponent },
+      { path: 'data', component: DataPageComponent,children:dataRoutes },
+      { path: 'warning', component: WarningPageComponent,children:warningRoutes },
       { path: 'mistake', component: ErrorPageComponent },
       { path: 'dashboard', component: DashboardPageComponent },
       { path: 'danger', component: DangerPageComponent },
@@ -71,7 +81,8 @@ const adminRoutes: Routes = [
     DeviceComponent,
     LoginPageComponent,
     ParentContainerComponent,
-
+    ProjectComponent,
+    ListComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +91,8 @@ const adminRoutes: Routes = [
     HttpModule,
     CookieModule.forRoot(),
     RouterModule.forRoot(appRoutes),
-    RouterModule.forChild(adminRoutes)
+    RouterModule.forChild(adminRoutes),
+    RouterModule.forChild(dataRoutes)
   ],
   providers: [
     errCodeMsgHash,

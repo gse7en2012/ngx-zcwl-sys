@@ -1,0 +1,58 @@
+<div class="right">
+    <div class="info-bar">
+      <p class="bread-crumb">报警信息 > 全部</p>
+      
+      <div class="fr">
+        报警：0 正常：1
+        <div class="search-box">
+          <input class="search" placeholder="设备ID或设备名称">
+          <img src="../assets/image/search_w.png" class="icon">
+        </div>
+      </div>
+
+      <div class="switch-box">
+          <span class="fl">全部</span>
+          <div class="fl toggle">
+            <input class="tgl tgl-ios" id="cb2" type="checkbox">
+            <label class="tgl-btn" for="cb2"></label>
+          </div>
+          <span class="fl">报警</span>
+        </div>
+
+
+    </div>
+    <div class="content">
+       <table class="table">
+          <tr>
+              <th>设备编号</th>
+              <th>单位</th>
+              <th>报警时间</th>
+              <th>报警类型</th>
+              <th>报警值</th>
+              <th>阈值</th>
+              <th>查看</th>
+          </tr>
+          <tr *ngFor="let item of alarmList" >
+              <td>{{item.efairydevice_uuid}}</td>
+              <td>{{item.efairydevice_name}}</td>
+              <td>{{item.efairydevice_alarm_time}}</td>
+              <td>{{item.label}}</td>
+              <td>{{item.efairydevice_alarm_rtv}}</td>
+              <td>{{item.efairydevice_alarm_thv}}</td>
+              <td>
+                  <img src="assets/image/view.png">
+              </td>
+          </tr>
+       </table>
+    </div>
+
+    <div class="pagination">
+        共1页 / 1条数据 （当前第1页） 
+        <a class="btn disabled">上一页</a>
+        <a class="btn">下一页</a>
+        前往
+        <input placeholder="跳转到" class="page-input"> 页
+        <a class="btn">GO</a>
+    </div>
+
+  </div>

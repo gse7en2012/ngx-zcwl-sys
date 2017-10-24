@@ -1,6 +1,13 @@
 .warning{
     overflow: hidden;
     p{margin: 0;}
+    p.no-data{
+        text-align: center;
+        border: 1px solid #ddd;
+        background: #fff;
+        padding: 80px;
+        font-size: 26px;
+    }
     .fl{float: left}
     .fr{float: right}
     .left{
@@ -9,11 +16,11 @@
         background: #2f3438;
         margin-bottom: -99999px;
         padding-bottom: 99999px;
-        ul{
+        .agency-list{
             padding: 0;
             margin: 0;
-            li{
-                list-style: none;
+            .row-header{
+                cursor: pointer;
                 height:55px;
                 line-height: 55px;
                 color: #666a6d;
@@ -21,107 +28,55 @@
                 font-size: 16px;
                 border-bottom: 1px solid #292d30;
                 box-sizing: border-box;
-                &.cur{
+                transition: all ease-in-out .2s;
+                &.cur,&:hover{
                     background: #276ab0;
                     color: #eee;
                 }
             }
-        }
-    }
-
-    .right{
-        padding-left:186px; 
-        .info-bar{
-            height: 55px;
-            background: #f1f1f1;
-            border-bottom: 1px solid #ddd;
-            line-height: 55px;
-            padding: 0 20px;
-            .bread-crumb{
-                float: left;
+            .right-arrow{
+                display: inline-block;
+                border: 2px solid #eee;
+                height: 10px;
+                line-height: 12px;
+                transform: rotate(45deg);
+                width: 10px;
+                box-sizing: border-box;
+                border-left: 0;
+                border-bottom: 0;
             }
-            .switch-box{
-                float: right;
-                margin-right: 5%;
-                .toggle{
-                    margin: 13px 5px;
-                }
-            }
-            .search-box{
+            .down-arrow{
+                display: inline-block;
+                border: 2px solid #eee;
+                height: 10px;
+                line-height: 12px;
+                transform: rotate(135deg);
+                width: 10px;
+                box-sizing: border-box;
+                border-left: 0;
+                border-bottom: 0;
                 position: relative;
-                display: inline-block;
-                .icon{
-                    width: 16px;
-                    position: absolute;
-                    right: 18px;
-                    top: 18px;
-                }
+                left: 4px;
+                top: -2px;
             }
-            .search{
-                margin: 0 10px;
-                border: 0;
-                background: #276ab0;
-                height: 28px;
-                border-radius: 14px;
-                padding: 0 10px;
-                color: #ddd;
+            .row-item{
                 outline: 0;
-                width: 120px;
-                padding-right: 30px;
-                &::-webkit-input-placeholder{
-                    color: #ddd;
-                }
-            }
-        }
-
-        .content{
-            padding: 35px 40px;
-            .table{
-
-                width: 100%;
-                margin:auto;
-                background: #fff;
-                box-shadow: 2px 2px 2px #e8e8e8;
-                border: 1px solid #ddd;
-                td,th{
-                    font-size: 14px;
-                    height:40px;line-height: 40px;text-align: center;
-                    border-bottom:1px solid #eaeaea;
-                }
-                th{
-                    font-size: 16px;
-                    font-weight: normal;
-                    height: 46px;
-                    line-height: 46px;
-                }
-            }
-        }
-
-        .pagination{
-            text-align: center;
-            margin-bottom: 50px;
-            .btn{
-                background: #36c2ff;
-                color: #fff;
-                display: inline-block;
-                padding: 5px 20px;
-                border-radius:30px;
-                margin: 0 4px; 
-                &.disabled{
-                    background: #cacaca;
-                    color: #9b9fa2;
-                }
-            }
-            .page-input{
-                background: #fff;
-                height: 24px;
-                padding: 0 10px;
-                border-radius: 13px;
-                width: 60px;
+                height: 48px;
+                line-height: 48px;
+                color: #888;
                 text-align: center;
-                outline: 0;
-                border: 1px solid #36c2ff;
+                font-size: 15px;
+                box-sizing: border-box;
+                background: #272b2e;
+                transition: all ease-in-out .2s;
+                cursor: pointer;
+                &.cur,&:hover{
+                    background: #f1f1f1;
+                    color: #276ab0;
+                }
             }
         }
     }
+
+
 }

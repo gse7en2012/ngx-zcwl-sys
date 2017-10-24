@@ -1,85 +1,36 @@
 <div class="data">
-    
-      <div class="left">
-        <ul class="device-list">
-          <li class="cur">设备一</li>
-          <li>设备一</li>
-          <li>设备一设备一</li>
-          <li>设df备一</li>
-          <li>设备a一</li>
-          <li>设备一</li>
-          <li>设备一a</li>
-        </ul>
-      </div>
-    
-      <div class="right">
-        <div class="info-bar">
-          <p class="bread-crumb">实时数据 > 全部</p>
-          
-          <!-- <div class="fr">
-            报警：0 正常：1
-            <div class="search-box">
-              <input class="search" placeholder="设备ID或设备名称" [(ngModel)]="keyword">
-              <img src="../assets/image/search_w.png" class="icon" (click)="search()">
-            </div>
-          </div> -->
-    
-          <!-- <div class="switch-box">
-              <span class="fl">全部</span>
-              <div class="fl toggle">
-                <input class="tgl tgl-ios" id="cb2" type="checkbox">
-                <label class="tgl-btn" for="cb2"></label>
-              </div>
-              <span class="fl">报警</span>
-            </div> -->
-    
-    
-        </div>
-        <div class="content">
 
-            <div class="loading" *ngIf="loading" >
-                <div class="sk-wave">
-                    <div class="sk-rect sk-rect1"></div>
-                    <div class="sk-rect sk-rect2"></div>
-                    <div class="sk-rect sk-rect3"></div>
-                    <div class="sk-rect sk-rect4"></div>
-                    <div class="sk-rect sk-rect5"></div>
-                  </div>
-            </div>
-
-
-          <div class="device-list">
-            <a *ngFor="let branch of branchListPageShow" class="section"  [routerLink]="['branch/'+branch.efairyproject_id]">
-              <h3 class="device-name">{{branch.efairyproject_name}}</h3>
-              <div class="device-pic">
-                <!-- <img [src]="branch.pic" > -->
-                <img src="../../assets/image/device.png" >
-              </div>
-              <footer class="device-info">
-                <div class="fl">
-                  <p class="num">{{branch.efairyproject_fire_number}}</p>
-                  <p class="desc">报警/台</p>
-                </div>
-                <div class="fr">
-                  <p class="num">{{branch.efairyproject_device_online_number}}/{{branch.efairyproject_total_devices}}</p>
-                  <p class="desc">在线/设备总数</p>
-                </div>
-              </footer>
-            </a>
-          </div>
-
-          <p *ngIf="branchListPageShow.length==0&&!loading" class="no-data">暂无数据</p>
-
-        </div>
-    
-        <div class="pagination">
-            共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
-            <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}" >上一页</a>
-            <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
-            <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
-            <a class="btn" (click)="changePage()">GO</a>
-          </div>
-    
-      </div>
-    
+  <div class="loading" *ngIf="loading">
+    <div class="sk-wave">
+      <div class="sk-rect sk-rect1"></div>
+      <div class="sk-rect sk-rect2"></div>
+      <div class="sk-rect sk-rect3"></div>
+      <div class="sk-rect sk-rect4"></div>
+      <div class="sk-rect sk-rect5"></div>
     </div>
+  </div>
+
+
+  <div *ngIf="!loading">
+    <div class="left">
+      <div class="agency-list">
+        <section *ngFor="let item of agencyList">
+          <div [ngClass]="{'row-header':true,cur:item.current}" (click)="getLv2AgencyList(item.efairyuser_id)">
+            {{item.efairyuser_device_supplier}}
+            <span *ngIf="!item.current" class="right-arrow"></span>
+            <span *ngIf="item.current" class="down-arrow"></span>
+          </div>
+          <div [ngClass]="{'row-item':true,cur:secondItem.current}" *ngFor="let secondItem of item.secondList" [hidden]="!item.showChildren"
+            [routerLink]="['agency/'+secondItem.efairyuser_id]" routerLinkActive="cur">
+            {{secondItem.efairyuser_device_supplier}}
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+</div>

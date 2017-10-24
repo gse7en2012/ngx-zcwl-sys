@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProjectService } from '../service/project.service';
 // import { UserService } from '../service/user.service';
 
@@ -11,60 +12,58 @@ import { ProjectService } from '../service/project.service';
 })
 export class DataPageComponent implements OnInit {
 
-  public branchList = [];
-  public branchListPageShow=[];
-  public loading:boolean=true;
-  public total:number=0;
-  public pageSize:number=12;
-  public page:number=1;
-  public jumpPage:number=1;
-  public pageMax:number=1;
 
-  constructor(
-    private projectService: ProjectService,
-    // private userService:UserService
-  ) { }
+  public loading: boolean = true;
+  public agencyList = [];
+
+  constructor( private projectService: ProjectService,private router: Router,) { }
 
   ngOnInit() {
 
-    this.projectService.getProjectList().then((data) => {
-      this.branchList = data.project_list;
-      this.total = data.total_rows
+    console.log('init');
+    
+    this.projectService.getAgencyList().then((data) => {
       this.loading=false;
+      this.agencyList = data.agency_list;
+      this.agencyList[0]['current'] = true;
+      this.agencyList[0]['showChildren'] = true;
+      //0-超级管理员 1-一级经销商 2-二级经销商 3-项目管理员 4-普通用户
+      if (data.level == 0) {
+        this.getLv2AgencyList(this.agencyList[0]['efairyuser_id'])
+      }
 
-      // this.userService.setProjectList(data.project_list);
-      this.pageMax=Math.ceil(this.total/this.pageSize)
-      this.renderData();
+    })
+  }
+  
+
+  getLv2AgencyList(parentId) {
+
+    this.agencyList.forEach((item) => {
+      item.showChildren = false;
+      item.current = false;
+      if (item.efairyuser_id == parentId) {
+        item.showChildren = true;
+        item.current = true;
+      }
     })
 
-    this.projectService.getAgencyList().then((data)=>{
-      console.log(data);
+    this.projectService.getAgencyListLv2(parentId).then((data) => {
+     
+      this.agencyList.forEach((parentAgency) => {
+        if (parentAgency.efairyuser_id == parentId) {
+          parentAgency.secondList = data.agency_list;
+        }
+      })      
+      console.log('/admin/data/agency/'+data.agency_list[0].efairyuser_id);
       
+      this.router.navigate(['/admin/data/agency/'+data.agency_list[0].efairyuser_id]);
+
+      this.loading=false;
     })
-  }
-
-  renderData(){
-    this.branchListPageShow=this.branchList.slice((this.page-1)*this.pageSize,this.page*this.pageSize);
-  }
-  prevPage(){
-    if(this.page<=1) return false;
-    this.page--;
-    this.renderData();
-  }
-
-  nextPage(){
-    if(this.page>=this.pageMax) return false;
-    this.page++;
-    this.renderData();
-  }
-
-  changePage(){
-    this.page=this.jumpPage;
-    this.renderData();
-  }
-
-  search(){
 
   }
+
+
+  
 
 }

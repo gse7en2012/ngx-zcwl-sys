@@ -17,9 +17,13 @@ export class DeviceComponent implements OnInit {
   public isDeviceEditing: boolean = false;
   public deviceId: string;
   public deviceDetails: any = {
-    device_info: {}
+    device_info: {
+      efairydevice_name:''
+    }
   };
-  public project:object;
+  public project: any={
+    efairyproject_name:''
+  };
   public dataUpdateTime: any;
   public loading: boolean = true;
 
@@ -162,7 +166,8 @@ export class DeviceComponent implements OnInit {
       ],
       yAxis: [
         {
-          type: 'value'
+          type: 'value',
+          minInterval: 1
         }
       ],
       series: [

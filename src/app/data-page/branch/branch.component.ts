@@ -25,7 +25,9 @@ export class BranchComponent implements OnInit {
   public projectId: string;
   public keyword;
 
-  public project: object;
+  public project: any={
+    efairyproject_name:''
+  };
 
   constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 

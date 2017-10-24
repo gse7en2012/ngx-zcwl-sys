@@ -9,7 +9,11 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class ExtendedHttpService extends Http {
-
+  private apiVersion='1.1';
+  defaultHeaders=new Headers({
+    'version':this.apiVersion
+  })
+ 
   constructor(backend: XHRBackend, defaultOptions: RequestOptions, private router: Router,
     // private authService: AuthService
   ) {
@@ -18,15 +22,19 @@ export class ExtendedHttpService extends Http {
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     //do whatever 
+    console.log(typeof url,url);
+    
     if (typeof url === 'string') {
       if (!options) {
-        options = { headers: new Headers() };
+        options = { headers: this.defaultHeaders };
+      }else{
+        options.headers.set('version',this.apiVersion);
       }
       this.setHeaders(options);
     } else {
+      url.headers.set('version',this.apiVersion);
       this.setHeaders(url);
     }
-
     return super.request(url, options).catch(this.catchErrors());
   }
 
@@ -41,10 +49,10 @@ export class ExtendedHttpService extends Http {
     }
 
     return (res: Response) => {
-      if (res.status === 444||res.status === 445) {
+      if (res.status === 401|| res.status === 444||res.status === 445) {
         //handle authorization errors
         //in this example I am navigating to logout route which brings the login screen
-        alert('鉴权失败,请重新登录')
+        alert(errMsg[res.status]);
         this.router.navigate(['/login']);
         return Observable.of(res);
       } else {

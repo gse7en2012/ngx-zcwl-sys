@@ -23,10 +23,6 @@ export class LibService {
     // params.set('access_token', (this.cookieService.get('pst_token')))
     params.set('efairyuser_id', this.cookieService.getObject('pst_admin_info')['efairyuser_id']);
 
-    console.log(this.cookieService.get('pst_token'));
-
-
-
     if (opts) {
       Object.keys(opts).forEach((key) => {
         if (opts[key]) params.set(key, opts[key].toString());
