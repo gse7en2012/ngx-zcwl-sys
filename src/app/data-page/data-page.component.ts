@@ -28,13 +28,17 @@ export class DataPageComponent implements OnInit {
       this.agencyList[0]['current'] = true;
       this.agencyList[0]['showChildren'] = true;
       //0-超级管理员 1-一级经销商 2-二级经销商 3-项目管理员 4-普通用户
-      if (data.level == 0) {
+      if (data.level == 0||data.level == 1) {
         this.getLv2AgencyList(this.agencyList[0]['efairyuser_id'])
       }
 
     })
   }
   
+  onRedirectToFirstTab(){
+    console.log(444);
+    
+  }
 
   getLv2AgencyList(parentId) {
 
@@ -54,7 +58,6 @@ export class DataPageComponent implements OnInit {
           parentAgency.secondList = data.agency_list;
         }
       })      
-      console.log('/admin/data/agency/'+data.agency_list[0].efairyuser_id);
       
       this.router.navigate(['/admin/data/agency/'+data.agency_list[0].efairyuser_id]);
 

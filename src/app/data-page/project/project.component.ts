@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectService } from '../../service/project.service';
 
@@ -20,6 +20,7 @@ export class ProjectComponent implements OnInit {
   public jumpPage: number = 1;
   public pageMax: number = 1;
  
+  @Output() onRedirectToFirstTab = new EventEmitter<boolean>();
 
   constructor( private projectService: ProjectService,private route: ActivatedRoute, private router: Router ) { }
 
@@ -27,9 +28,12 @@ export class ProjectComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params && params.agency_id) {
         this.agencyId = params.agency_id;
-        this.getData();
-
-    
+        if(this.agencyId!=='init'){
+          this.getData(); 
+        }else{
+          console.log('emit');
+          this.onRedirectToFirstTab.emit(true);
+        }
       }
     });
   }

@@ -87,17 +87,14 @@ export class ProjectService {
       efairyproject_id: pid,
       alarm_id: aid||1,
     });
-    var mock={"result":{"project_alarm_data_list":[{"efairydevice_alarm_cid":1,"efairydevice_id":267,"efairydevice_uuid":"898602b1191750078013010101","efairydevice_alarm_thv":990,"efairydevice_name":"兴基元商务宾馆楼层2","efairydevice_alarm_pt":15,"efairydevice_alarm_time":"2017-10-24 12:06:28","efairydevice_detail_state":143,"efairydevice_alarm_rtv":999}],"total_rows":1},"err_code":200}
-    return Promise.resolve(mock.result)
-    // return this.http.get(`${this.serviceUrl['getProjectAlarmData']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-    // .then((data) => {
-    //   if (data.err_code === 200) {
-    //     return data.result;
-    //   } else {
-    //     return Promise.reject(data.msg || '返回数据格式出错！');
-    //   }
-    // })
-
+    return this.http.get(`${this.serviceUrl['getProjectAlarmData']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
+    .then((data) => {
+      if (data.err_code === 200) {
+        return data.result;
+      } else {
+        return Promise.reject(data.msg || '返回数据格式出错！');
+      }
+    })
   }
 
 

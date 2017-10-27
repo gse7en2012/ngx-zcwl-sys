@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { DeviceService } from '../../service/device.service';
 import { UserService } from '../../service/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -12,7 +12,7 @@ declare var moment;
   styleUrls: ['./device.component.scss'],
   providers: [DeviceService]
 })
-export class DeviceComponent implements OnInit {
+export class DeviceComponent implements OnInit,OnDestroy {
 
   public isDeviceEditing: boolean = false;
   public deviceId: string;
@@ -53,7 +53,7 @@ export class DeviceComponent implements OnInit {
 
 
   public option: object;
-
+  public stId;
 
   constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router,private userService:UserService) { }
 
@@ -63,7 +63,7 @@ export class DeviceComponent implements OnInit {
       if (params && params.device_id) {
         this.deviceId = params.device_id;
         this.getData();
-        setInterval(() => {
+        this.stId=setInterval(() => {
           this.loading = true;
           this.getData();
         }, 30000);
@@ -71,10 +71,13 @@ export class DeviceComponent implements OnInit {
       }
     });
     this.getAlarmData();
-    this.formatChartData(
-      [1,2,3,4,5],
-      [1,2,3,4,5]
-    );
+  
+  }
+
+  ngOnDestroy(){
+    console.log('leave device');
+    
+    clearInterval(this.stId);
   }
 
   getData() {

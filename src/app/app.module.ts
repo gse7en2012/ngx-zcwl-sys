@@ -33,6 +33,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { ParentContainerComponent } from './parent-container/parent-container.component';
 import { ProjectComponent } from './data-page/project/project.component';
 import { ListComponent } from './warning-page/list/list.component';
+import { DetailsTableComponent } from './warning-page/details-table/details-table.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -43,15 +44,17 @@ const appRoutes: Routes = [
 
 
 const dataRoutes:Routes=[
+  { path: '',   component:DataPageComponent },
   { path: 'agency/:agency_id', component: ProjectComponent },
   { path: 'agency/:agency_id/branch/:branch_id', component: BranchComponent },
   { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
 ]
 
 const warningRoutes:Routes=[
+  { path: '',   component:WarningPageComponent },
   { path: 'agency/:agency_id', component: ProjectComponent },
   { path: 'agency/:agency_id/branch/:branch_id', component: ListComponent },
-  { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
+  { path: 'agency/:agency_id/device/:device_id', component: DetailsTableComponent },
 ]
 
 const adminRoutes: Routes = [
@@ -83,12 +86,14 @@ const adminRoutes: Routes = [
     ParentContainerComponent,
     ProjectComponent,
     ListComponent,
+    DetailsTableComponent,
   ],
   imports: [
     BrowserModule,
     AngularEchartsModule,
     FormsModule,
     HttpModule,
+    MyDatePickerModule,
     CookieModule.forRoot(),
     RouterModule.forRoot(appRoutes),
     RouterModule.forChild(adminRoutes),

@@ -85,7 +85,7 @@ export class UserService {
   }
 
   public getAdminInfo() {
-    console.log(this.codeHash);
+
     return this.cookieService.getObject('pst_admin_info')
 
   }

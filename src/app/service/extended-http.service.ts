@@ -21,9 +21,7 @@ export class ExtendedHttpService extends Http {
   }
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    //do whatever 
-    console.log(typeof url,url);
-    
+    //do whatever     
     if (typeof url === 'string') {
       if (!options) {
         options = { headers: this.defaultHeaders };

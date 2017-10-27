@@ -16,6 +16,7 @@ export class DeviceService {
   private serviceUrl: object = {
     list: '/webapi/device_list',
     details: '/webapi/device',
+    historyData:'/webapi/device_data',
     alarmData:'/webapi/device_alarm_data'
   };
 
@@ -47,12 +48,21 @@ export class DeviceService {
     })
   }
 
-  getDeviceAlarmData(deviceId: string,alarmId:string,startTime?:string,days?:number) {
+  getDeviceHistoryData(deviceId: string, startTime?: string, endTime?:string) {
+    return this.libService.createGetRequest(this.serviceUrl['historyData'],{
+      efairydevice_id: deviceId,
+      start_time: startTime,
+      end_time:endTime
+    })
+  }
+
+  getDeviceAlarmData(deviceId: string,alarmId:string,startTime?:string,endTime?:string,days?:number) {
     return this.libService.createGetRequest(this.serviceUrl['alarmData'],{
       efairydevice_id: deviceId,
       alarm_id:alarmId||1,
       start_time: startTime,
-      days:days||7
+      end_time: endTime,
+      days:days||30
     })
   }
 

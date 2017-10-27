@@ -134,7 +134,6 @@ export class ListComponent implements OnInit {
     hashArray[164]='系统故障恢复';
     hashArray[165]='反馈';
     hashArray[166]='停止反馈';   
-    console.log(hashArray);
     return hashArray;         
   }
 
@@ -145,6 +144,7 @@ export class ListComponent implements OnInit {
       this.loading = false;
       this.alarmList.forEach((item)=>{
         item.label=this.dataHash[item.efairydevice_alarm_pt][0];
+        item.state=this.stateHashList[item.efairydevice_detail_state];
         item.efairydevice_alarm_rtv=(item.efairydevice_alarm_rtv*this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2)+this.dataHash[item.efairydevice_alarm_pt][2]
         item.efairydevice_alarm_thv=(item.efairydevice_alarm_thv*this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2)+this.dataHash[item.efairydevice_alarm_pt][2]
       })
@@ -174,6 +174,7 @@ export class ListComponent implements OnInit {
     this.page = this.jumpPage;
     this.renderData();
   }
+ 
 
   search() {
     if (this.keyword !== '') {

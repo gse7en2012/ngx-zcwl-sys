@@ -22,7 +22,7 @@
           </div>
           <div [ngClass]="{'row-item':true,cur:secondItem.current}" *ngFor="let secondItem of item.secondList" [hidden]="!item.showChildren"
             [routerLink]="['agency/'+secondItem.efairyuser_id]" routerLinkActive="cur">
-            {{secondItem.efairyuser_device_supplier}}
+            {{secondItem.efairyuser_nickname}}
           </div>
         </section>
 
