@@ -176,3 +176,22 @@ p.no-data{
 .datepicker{
     margin-right: 30px;
 }
+
+
+.charts-box{
+    opacity: 0;
+    &.active{
+        opacity: 1;
+    }
+}
+.table-box{
+    position: absolute;
+    opacity: 0;
+    width: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 85px;
+    &.active{
+        opacity: 1;
+    }
+}

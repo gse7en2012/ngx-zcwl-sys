@@ -59,9 +59,10 @@ export class DetailsTableComponent implements OnInit {
 
   public option: any;
   public optionList: any = [];
+  // public optionListForShow:any=[];
   public dataViewTypeIsChart: boolean = false;
 
-  private defaultDays = 30;
+  private defaultDays = 2;
   constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
   ngOnInit() {
@@ -91,7 +92,7 @@ export class DetailsTableComponent implements OnInit {
       }
     });
     this.getAlarmData(this.startTimeFormat, this.endTimeFormat);
-    this.getHistoryData();
+    this.getHistoryData(this.startTimeFormat, this.endTimeFormat);
   }
 
 
@@ -172,7 +173,8 @@ export class DetailsTableComponent implements OnInit {
     }
     this.startTimeFormat = `${event.formatted} 00:00:00`;
     const diff = Math.abs(moment(this.endTimeFormat).diff(moment(this.startTimeFormat), 'days'));
-    this.getAlarmData(this.startTimeFormat, this.endTimeFormat)
+    this.getAlarmData(this.startTimeFormat, this.endTimeFormat);
+    this.getHistoryData(this.startTimeFormat, this.endTimeFormat);
   }
 
   onEndDateChanged(event: IMyDateModel) {
@@ -181,7 +183,8 @@ export class DetailsTableComponent implements OnInit {
     }
     this.endTimeFormat = `${event.formatted} 00:00:00`;
     const diff = Math.abs(moment(this.endTimeFormat).diff(moment(this.startTimeFormat), 'days'));
-    this.getAlarmData(this.startTimeFormat, this.endTimeFormat)
+    this.getAlarmData(this.startTimeFormat, this.endTimeFormat);
+    this.getHistoryData(this.startTimeFormat, this.endTimeFormat);
   }
 
 
@@ -199,56 +202,83 @@ export class DetailsTableComponent implements OnInit {
     })
   }
 
-  getHistoryData() {
-    // const base64Lib=new Base64();
-    this.deviceService.getDeviceHistoryData(this.deviceId).then((data) => {
-      let t=data.data_stream_list[0];
-      // t='eAHtkr0SgjAQhN8lNUUOAkl8FaBgpNDOkYyNw7t7SyT8ZWS0saHbyeTL3l62FM9KtI1rKnEqWZ6vLSuZVKJzLAqoGxTE3T3eyl0G1ScBoRGhzIwM5RGokHKGpROmRgxnayu9oLJAqQhlFYb1Iy45XB5yUZxDiBiHHJ84TBzjisCxGNZIsFiHM4tw+hcIO\/cTfuFkt1CKh9bz0ezDKHQDSXymfWhqxwTBfetU86nruGaUSzLW5Er3IjlaGpZl1dHS\/cL9o6X1C05DgU4=';
-      var c=Base64.atob(t);
-      console.log(pako.inflate(c,{to:'string'}));
-      
+  getHistoryData(startTime, endTime) {
+
+    this.deviceService.getDeviceHistoryData(this.deviceId, startTime, endTime).then((data) => {
+      if (data.data_stream_list && data.data_stream_list.length > 0) {
+        let historyData = [];
+        let tsList = [];
+        const tmpStore = {};
+
+        //临时hack
+        data.data_stream_list=[data.data_stream_list[data.data_stream_list.length-1]]
+        //等jb修复
+
+        data.data_stream_list.forEach((ele) => {
+          let eleData = (pako.inflate(window.atob(ele), { to: 'string' }));
+          let eleDataJSON = JSON.parse(eleData);
+          console.log(typeof eleData,typeof eleDataJSON,eleDataJSON.length,eleDataJSON[0],typeof eleDataJSON[0],moment(eleDataJSON[0].ts*1000).format('YYYY-MM-DD'));
+
+          historyData = historyData.concat(eleDataJSON);
+
+        })
+        // console.log(historyData);
+
+        historyData.forEach(item => {
+          tsList.push(moment(item['ts'] * 1000).format('YYYY-MM-DD HH:mm:ss'));
+          try {
+            item.data.forEach(row => {
+              if (row['cid'] == 0) return;
+              if (!tmpStore[row['pt']]) {
+                tmpStore[row['pt']] = {
+                  series: {},
+                }
+              }
+              if (!tmpStore[row.pt].series[row['cid']]) {
+                tmpStore[row.pt].series[row['cid']] = [];
+              }
+              tmpStore[row.pt].series[row['cid']].push((row.rtv*this.dataHash[row['pt']][1]).toFixed(2));
+            })
+          } catch (e) {
+
+          }
+        })
+        // console.log(tsList);
+        // console.log(tmpStore);
+
+        this.clearResponseToChartList(tmpStore, tsList);
+      }
     })
   }
 
   changeViewType(e) {
     this.dataViewTypeIsChart = !this.dataViewTypeIsChart;
-    if (this.dataViewTypeIsChart) {
-
-    }
   }
 
 
-  clearResponseToChartList(data) {
-    const tmp = {};
+  clearResponseToChartList(data, tsList) {
+    Object.keys(data).forEach(item => {
+      const row = data[item];
+      const series = [];
+      Object.keys(row['series']).forEach(k => {
+        series.push({
+          data: row['series'][k].reverse(),
+          type: 'line',
+          name: '通道' + k,
+          stack: '总量',
+        })
+      })
 
-    data.forEach((item) => {
-      if (!tmp[item.efairydevice_alarm_pt]) {
-        tmp[item.efairydevice_alarm_pt] = {
-          title: this.dataHash[item.efairydevice_alarm_pt][0],
-          unit: this.dataHash[item.efairydevice_alarm_pt][2],
-          xAxis: {
 
-          }
-        };
-      }
-      if (!tmp[item.efairydevice_alarm_pt].xAxis[item.efairydevice_alarm_time]) {
-        tmp[item.efairydevice_alarm_pt].xAxis[item.efairydevice_alarm_time] = {};
-      }
-      if (!tmp[item.efairydevice_alarm_pt].xAxis[item.efairydevice_alarm_time][item.efairydevice_alarm_cid]) {
-        tmp[item.efairydevice_alarm_pt].xAxis[item.efairydevice_alarm_time][item.efairydevice_alarm_cid] = {
-          name: '通道' + item.efairydevice_alarm_cid
-        }
-      }
-      tmp[item.efairydevice_alarm_pt].xAxis[item.efairydevice_alarm_time][item.efairydevice_alarm_cid]['value'] = item.value;
-    })
-    console.log(JSON.stringify(tmp, null, 2));
 
-    Object.keys(tmp).forEach((item) => {
-      console.log(tmp[item]);
+      this.optionList.push(this.formatChartData(
+        this.dataHash[item][0],
+        this.dataHash[item][2],
+        tsList.reverse(),
+        series
+      ))
 
     })
-
-
   }
 
 
@@ -257,9 +287,10 @@ export class DetailsTableComponent implements OnInit {
     const option = {
       title: {
         text: title,
-        left: 'center'
+        left: 'center',
       },
       tooltip: {
+        right:'10',
         trigger: 'axis',
         axisPointer: {
           type: 'cross',
@@ -269,24 +300,24 @@ export class DetailsTableComponent implements OnInit {
         }
       },
       grid: {
-        top: '5%',
-        left: '2%',
-        right: '2%',
-        bottom: '14%',
+        top: '15%',
+        left: '3%',
+        right: '3%',
+        bottom: '15%',
         containLabel: true
       },
       dataZoom: [
         {   // 这个dataZoom组件，默认控制x轴。
           type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
-          start: 10,      // 左边在 10% 的位置。
-          end: 90,         // 右边在 60% 的位置。   
+          start: 0,      // 左边在 10% 的位置。
+          end: 100,         // 右边在 60% 的位置。   
           bottom: 0
         },
-        {   // 这个dataZoom组件，也控制x轴。
-          type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
-          start: 10,      // 左边在 10% 的位置。
-          end: 90         // 右边在 60% 的位置。
-        }
+        // {   // 这个dataZoom组件，也控制x轴。
+        //   type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
+        //   start: 10,      // 左边在 10% 的位置。
+        //   end: 90         // 右边在 60% 的位置。
+        // }
       ],
       toolbox: {
         orient: 'vertical',
@@ -322,5 +353,5 @@ export class DetailsTableComponent implements OnInit {
     return option;
   }
 
- 
+
 }

@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="table-box" [hidden]="dataViewTypeIsChart">
+    <div class="table-box" [ngClass]="{active:!dataViewTypeIsChart}" >
       <table class="table">
         <tr>
           <th>报警通道号</th>
@@ -50,7 +50,9 @@
           <td>{{item.efairydevice_alarm_rtv}}</td>
           <td>{{item.efairydevice_alarm_thv}}</td>
           <td>{{item.efairydevice_alarm_time}}</td>
-
+        </tr>
+        <tr *ngIf="alarmList.length==0">
+          <td colspan="6">没有该查询条件下的数据</td>
         </tr>
       </table>
 
@@ -64,9 +66,8 @@
       </div>
     </div>
 
-    <div class="charts-box" [hidden]="!dataViewTypeIsChart">
-      YOYO CHECK IT NOW!
-        <div echarts [options]="option" theme="macarons" class="chart" style="height:214px;" *ngFor="let option of optionList" ></div>
+    <div class="charts-box" [ngClass]="{active:dataViewTypeIsChart}" >
+        <div echarts [options]="option" theme="macarons" class="chart" style="height:300px;" *ngFor="let option of optionList" ></div>
     </div>
 
   </div>

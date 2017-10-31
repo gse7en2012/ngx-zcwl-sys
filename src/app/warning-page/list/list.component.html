@@ -33,6 +33,9 @@
         <th>阈值</th>
         <th>查看</th>
       </tr>
+      <tr *ngIf="alarmList.length==0">
+          <td colspan="8">没有该查询条件下的数据</td>
+        </tr>
       <tr *ngFor="let item of alarmList">
         <td>{{item.efairydevice_uuid}}</td>
         <td>{{item.efairydevice_name}}</td>
