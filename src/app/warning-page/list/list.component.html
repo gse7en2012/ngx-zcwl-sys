@@ -36,7 +36,7 @@
       <tr *ngIf="alarmList.length==0">
           <td colspan="8">没有该查询条件下的数据</td>
         </tr>
-      <tr *ngFor="let item of alarmList">
+      <tr *ngFor="let item of alarmListPageShow">
         <td>{{item.efairydevice_uuid}}</td>
         <td>{{item.efairydevice_name}}</td>
         <td>{{item.efairydevice_alarm_time}}</td>
@@ -56,12 +56,11 @@
   </div>
 
   <div class="pagination">
-    共1页 / 1条数据 （当前第1页）
-    <a class="btn disabled">上一页</a>
-    <a class="btn">下一页</a>
-    前往
-    <input placeholder="跳转到" class="page-input"> 页
-    <a class="btn">GO</a>
-  </div>
+      共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+      <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+      <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+      <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+      <a class="btn" (click)="changePage()">GO</a>
+    </div>
 
 </div>

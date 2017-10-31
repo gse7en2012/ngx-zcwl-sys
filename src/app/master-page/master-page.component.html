@@ -89,42 +89,19 @@
         <div class="item">
           <div class="title">
             <img src="assets/image/dash.png" class="map-icon">最近10次告警
-            <img src="assets/image/edit.png" class="right-icon">
+            <!-- <img src="assets/image/edit.png" class="right-icon"> -->
           </div>
           <div class="box">
-            <section class="block">
+            <section class="block" *ngFor="let item of deviceAlarmData" >
               <div class="time">
-                  <span class="blue">06-02</span> 10:00
+                  <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}  
               </div>
               <div class="ctx">
-                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33
+                设备id：{{item.efairydevice_uuid}} <br> 设备名称：{{item.efairydevice_name}} <br>  报警类型：报警 <br>  设备状态：{{item.state}} <br> 参量值：{{item.ss}} <br> 报警值：{{item.efairydevicefiredata_rtv}} <br> 阀值：{{item.efairydevicefiredata_thv}}
               </div>
             </section>
            
-            <section class="block">
-              <div class="time">
-                <span class="blue">06-02</span> 10:00
-              </div>
-              <div class="ctx">
-                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33
-              </div>
-            </section>
-            <section class="block">
-              <div class="time">
-                <span class="blue">06-02</span> 10:00
-              </div>
-              <div class="ctx">
-                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33
-              </div>
-            </section>
-            <section class="block">
-              <div class="time">
-                <span class="blue">06-02</span> 10:00
-              </div>
-              <div class="ctx">
-                设备id：341242 <br> 设备名称：苹果机 <br> 设备类型：不知道 <br> 报警类型：报警 <br> 报警值：33
-              </div>
-            </section>
+          
 
           </div>
         </div>

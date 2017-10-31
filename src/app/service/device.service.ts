@@ -17,7 +17,8 @@ export class DeviceService {
     list: '/webapi/device_list',
     details: '/webapi/device',
     historyData:'/webapi/device_data',
-    alarmData:'/webapi/device_alarm_data'
+    alarmData:'/webapi/device_alarm_data',
+    lastAlarmData:'/webapi/last_device_alarm_data'
   };
 
   private codeHash: any;
@@ -64,6 +65,10 @@ export class DeviceService {
       end_time: endTime,
       days:days||30
     })
+  }
+
+  getLastDeviceAlarmData() {
+    return this.libService.createGetRequest(this.serviceUrl['lastAlarmData'],{})
   }
 
 

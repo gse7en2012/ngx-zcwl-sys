@@ -24,7 +24,6 @@ import { BranchComponent } from './data-page/branch/branch.component';
 import { DeviceComponent } from './data-page/device/device.component';
 
 
-
 import { WarningPageComponent } from './warning-page/warning-page.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
@@ -34,12 +33,17 @@ import { ParentContainerComponent } from './parent-container/parent-container.co
 import { ProjectComponent } from './data-page/project/project.component';
 import { ListComponent } from './warning-page/list/list.component';
 import { DetailsTableComponent } from './warning-page/details-table/details-table.component';
+import { SuperContainerComponent } from './super-container/super-container.component';
+import { UserManagePageComponent } from './user-manage-page/user-manage-page.component';
+import { ProjectManagePageComponent } from './project-manage-page/project-manage-page.component';
+import { SmsManagePageComponent } from './sms-manage-page/sms-manage-page.component';
+import { ErrorListComponent } from './error-page/error-list/error-list.component';
+import { ProjectListComponent } from './error-page/project-list/project-list.component';
+import { ErrorDetailsTableComponent } from './error-page/error-details-table/error-details-table.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
-
-
 ];
 
 
@@ -57,19 +61,38 @@ const warningRoutes:Routes=[
   { path: 'agency/:agency_id/device/:device_id', component: DetailsTableComponent },
 ]
 
+const mistakeRoutes:Routes=[
+  { path: '',   component:ErrorPageComponent },
+  { path: 'agency/:agency_id', component: ProjectListComponent },
+  { path: 'agency/:agency_id/branch/:branch_id', component: ErrorListComponent },
+  { path: 'agency/:agency_id/device/:device_id', component: ErrorDetailsTableComponent },
+]
+
+
 const adminRoutes: Routes = [
   {
     path: 'admin', component: ParentContainerComponent, children: [
+      { path: '', redirectTo: 'master', pathMatch: 'full' },
       { path: 'master', component: MasterPageComponent },
       { path: 'data', component: DataPageComponent,children:dataRoutes },
       { path: 'warning', component: WarningPageComponent,children:warningRoutes },
-      { path: 'mistake', component: ErrorPageComponent },
+      { path: 'mistake', component: ErrorPageComponent,children:mistakeRoutes },
       { path: 'dashboard', component: DashboardPageComponent },
       { path: 'danger', component: DangerPageComponent },
     ],
     canActivate: [AuthGuard]
+  },
+  {
+    path:'super',component:SuperContainerComponent,children:[
+      { path: '', redirectTo: 'user', pathMatch: 'full' },
+      { path: 'user', component: UserManagePageComponent },
+      { path: 'project', component: ProjectManagePageComponent },
+      { path: 'sms', component: SmsManagePageComponent },
+    ]
   }
 ]
+
+
 
 @NgModule({
   declarations: [
@@ -87,6 +110,13 @@ const adminRoutes: Routes = [
     ProjectComponent,
     ListComponent,
     DetailsTableComponent,
+    SuperContainerComponent,
+    UserManagePageComponent,
+    ProjectManagePageComponent,
+    SmsManagePageComponent,
+    ErrorListComponent,
+    ProjectListComponent,
+    ErrorDetailsTableComponent,
   ],
   imports: [
     BrowserModule,

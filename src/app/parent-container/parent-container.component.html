@@ -10,7 +10,9 @@
       <a [routerLink]="['danger']" routerLinkActive="cur" class="bug"><i class="icon "></i><span>隐患曝光</span></a>
     </div>
     <div class="setting">
+      
       <div class="account">
+        <a  class="super-entrance" [routerLink]="['/super']">进入管理界面</a>
         <img class="avatar" [src]="userInfo.efairyuser_headimg_url">
         <span class="name">{{userInfo.efairyuser_nickname}}</span>
         <a class="power" (click)="logout()"><img src="./assets/image/power.png"></a>

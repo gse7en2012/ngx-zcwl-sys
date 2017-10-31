@@ -1,0 +1,82 @@
+.warning{
+    overflow: hidden;
+    p{margin: 0;}
+    p.no-data{
+        text-align: center;
+        border: 1px solid #ddd;
+        background: #fff;
+        padding: 80px;
+        font-size: 26px;
+    }
+    .fl{float: left}
+    .fr{float: right}
+    .left{
+        width: 186px;
+        float:left;
+        background: #2f3438;
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+        .agency-list{
+            padding: 0;
+            margin: 0;
+            .row-header{
+                cursor: pointer;
+                height:55px;
+                line-height: 55px;
+                color: #666a6d;
+                text-align: center;
+                font-size: 16px;
+                border-bottom: 1px solid #292d30;
+                box-sizing: border-box;
+                transition: all ease-in-out .2s;
+                &.cur,&:hover{
+                    background: #276ab0;
+                    color: #eee;
+                }
+            }
+            .right-arrow{
+                display: inline-block;
+                border: 2px solid #eee;
+                height: 10px;
+                line-height: 12px;
+                transform: rotate(45deg);
+                width: 10px;
+                box-sizing: border-box;
+                border-left: 0;
+                border-bottom: 0;
+            }
+            .down-arrow{
+                display: inline-block;
+                border: 2px solid #eee;
+                height: 10px;
+                line-height: 12px;
+                transform: rotate(135deg);
+                width: 10px;
+                box-sizing: border-box;
+                border-left: 0;
+                border-bottom: 0;
+                position: relative;
+                left: 4px;
+                top: -2px;
+            }
+            .row-item{
+                outline: 0;
+                height: 48px;
+                line-height: 48px;
+                color: #888;
+                text-align: center;
+                font-size: 15px;
+                box-sizing: border-box;
+                background: #272b2e;
+                transition: all ease-in-out .2s;
+                cursor: pointer;
+                &.cur,&:hover{
+                    background: #f1f1f1;
+                    color: #276ab0;
+                }
+            }
+        }
+    }
+
+
+}

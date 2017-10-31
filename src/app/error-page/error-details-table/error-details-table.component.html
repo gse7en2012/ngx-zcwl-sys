@@ -1,0 +1,59 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">故障信息 > 全部</p>
+
+    <div class="fr">
+      <!-- 报警：0 正常：1 -->
+      <div class="search-box">
+        <input class="search" placeholder="设备ID或设备名称">
+        <img src="../assets/image/search_w.png" class="icon">
+      </div>
+    </div>
+
+    <div class="fr datepicker">
+      <span>日期范围：</span>
+      <my-date-picker name="mydateStart" [options]="myDatePickerOptions" (dateChanged)="onStartDateChanged($event)" [(ngModel)]="startTime"></my-date-picker>
+      <span>至</span>
+      <my-date-picker name="mydateEnd" [options]="myDatePickerOptions" (dateChanged)="onEndDateChanged($event)" [(ngModel)]="endTime"></my-date-picker>
+
+    </div>
+
+
+  </div>
+  <div class="content">
+
+
+    <table class="table">
+      <tr>
+        <th>报警通道号</th>
+        <th>设备状态</th>
+        <th>报警类型</th>
+        <th>报警值</th>
+        <th>阈值</th>
+        <th>报警时间</th>
+      </tr>
+      <tr *ngFor="let item of alarmList">
+        <td>通道{{item.efairydevice_alarm_cid}}</td>
+        <td>{{item.state}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.efairydevice_alarm_rtv}}</td>
+        <td>{{item.efairydevice_alarm_thv}}</td>
+        <td>{{item.efairydevice_alarm_time}}</td>
+      </tr>
+      <tr *ngIf="alarmList.length==0">
+        <td colspan="6">没有该查询条件下的数据</td>
+      </tr>
+    </table>
+
+    <div class="pagination">
+      共1页 / 1条数据 （当前第1页）
+      <a class="btn disabled">上一页</a>
+      <a class="btn">下一页</a>
+      前往
+      <input placeholder="跳转到" class="page-input"> 页
+      <a class="btn">GO</a>
+    </div>
+
+
+
+  </div>
