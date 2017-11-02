@@ -192,6 +192,8 @@ export class ErrorDetailsTableComponent implements OnInit {
       data.device_alarm_data_list.forEach(element => {
         if (element.efairydevice_alarm_cid != 0) {
           element['state'] = this['stateHashList'][element['efairydevice_detail_state']];
+          console.log(element,this['stateHashList'][138]);
+          
           this.alarmList.push(element)
         }
       });

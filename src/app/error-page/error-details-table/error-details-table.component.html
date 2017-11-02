@@ -22,26 +22,24 @@
   </div>
   <div class="content">
 
-
     <table class="table">
       <tr>
-        <th>报警通道号</th>
-        <th>设备状态</th>
-        <th>报警类型</th>
-        <th>报警值</th>
-        <th>阈值</th>
-        <th>报警时间</th>
+        <th>设备编号</th>
+        <th>设备名称</th>
+        <th>通道</th>
+        <th>故障时间</th>
+        <th>故障类型</th>
+      
       </tr>
       <tr *ngFor="let item of alarmList">
+        <td>{{item.efairydevice_uuid}}</td>
+        <td>{{item.efairydevice_name}}</td>
         <td>通道{{item.efairydevice_alarm_cid}}</td>
-        <td>{{item.state}}</td>
-        <td>{{item.type}}</td>
-        <td>{{item.efairydevice_alarm_rtv}}</td>
-        <td>{{item.efairydevice_alarm_thv}}</td>
         <td>{{item.efairydevice_alarm_time}}</td>
+        <td>{{item.state}}</td>
       </tr>
       <tr *ngIf="alarmList.length==0">
-        <td colspan="6">没有该查询条件下的数据</td>
+        <td colspan="5">没有该查询条件下的数据</td>
       </tr>
     </table>
 

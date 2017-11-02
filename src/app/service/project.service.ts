@@ -17,6 +17,7 @@ export class ProjectService {
 
   private serviceUrl: object = {
     list: '/webapi/project_list',
+    allList: '/webapi/all_project_list',
     getCode: '/webapi/login_checkcode',
     getAgencyList: '/webapi/agency_list',
     getAgencyListLv2: '/webapi/lv2_agency_list',
@@ -50,6 +51,17 @@ export class ProjectService {
           return Promise.reject(data.msg || '返回数据格式出错！');
         }
       })
+  }
+
+  getAllProjectList(){
+    const param = this.libService.generateHttpGetSearchParams({});
+    return this.http.get(`${this.serviceUrl['allList']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise().then((data) => {
+      if (data.err_code === 200) {
+        return data.result;
+      } else {
+        return Promise.reject(data.msg || '返回数据格式出错！');
+      }
+    })
   }
 
   getAgencyList() {

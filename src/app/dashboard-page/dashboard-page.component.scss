@@ -1,3 +1,94 @@
-#gmap{
-    height:700px;
+
+.dashboard{
+    overflow: hidden;
+    background: url('../../assets/image/dashboard_bg.png') repeat;
+    .header{
+        background: url('../../assets/image/dashboard_header.png') repeat;
+        height: 60px;
+        text-align: center;
+        font-size: 27px;
+        line-height: 60px;
+        color: #34a8de;
+        img{
+            margin-right: 10px;
+            position: relative;
+            top: 3px;
+        }
+    }
+    .ctx{
+        padding: 15px;
+        .fl{
+            position: relative;
+            .line{
+                width: 40px;
+                height:40px;
+                border:1px solid #999;
+                position: absolute;
+                z-index: 999;
+            }
+            .left-line{
+                left: 0;
+                top: 0;
+                border-bottom:0;
+                border-right:0;
+              
+            }
+            .right-line{
+                right: 0;
+                top: 0;
+                border-bottom:0;
+                border-left:0;
+            }
+            .top-line{
+                left: 0;
+                bottom: 0;
+                border-top:0;
+                border-right:0; 
+              
+            }
+            .bottom-line{
+                right: 0;
+                bottom: 0;
+                border-top:0;
+                border-left:0; 
+            }
+        }
+        .desc{
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            z-index: 100;
+            background: rgba(75, 87, 99, .9);
+            border: 1px solid rgba(39, 219, 187, 1);
+            color: #fff;
+            padding: 10px 15px;;
+            p{
+                margin: 5px;
+                text-align: center;
+                line-height: 24px;
+            }
+            img{
+                width: 24px;
+                height: 24px;
+                position: relative;
+                top: 5px;
+                margin-right: 8px;
+            }
+        }
+    }
+    .fl{
+        float:left;
+    }
+    .w50{
+        width: 50%;
+        box-sizing: border-box;
+    }
+    .map{
+        height: 600px;
+        border: 1px solid #222;
+    }
+    #b-map{
+        clear: both;
+        width: 100%;
+    }
 }
