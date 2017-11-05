@@ -25,10 +25,14 @@ export class ProjectService {
     getProjectReport: '/webapi/report',
     getProjectDetailsManage: '/webapi/manage_project',
     getProjectGmListManage: '/webapi/manage_project_gm_list',
+    getProjectUserListManage:'/webapi/manage_project_user_list',
     getProjectDeviceListManage:'/webapi/manage_project_device_list',
 
+    editProjectDetailsManage:'/webapi/project',
     addProjectGmManage:'/webapi/manage_project_gm',
-    deleteProjectGmManage:'/webapi/manage_project_gm'
+    deleteProjectGmManage:'/webapi/manage_project_gm',
+    addProjectUserManage:'/webapi/manage_project_user',
+    deleteProjectUserManage:'/webapi/manage_project_user'
   };
 
   private codeHash: any;
@@ -56,8 +60,9 @@ export class ProjectService {
       })
   }
   gsevenRequestViaDelete(target,opts){
-    const postData=this.libService.generateHttpPostSearchParams(opts);
-    return this.http.delete(this.serviceUrl[target], new RequestOptions({body:postData})).map(res => res.json()).toPromise()
+    const uri=this.serviceUrl[target];
+    const param = this.libService.generateHttpGetSearchParams(opts);
+    return this.http.delete(`${uri}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
       .then((data) => {
         if (data.err_code === 200) {
           return data.result;
@@ -69,6 +74,17 @@ export class ProjectService {
   gsevenRequestViaPost(target,opts){
     const postData=this.libService.generateHttpPostSearchParams(opts);
     return this.http.post(this.serviceUrl[target], postData).map(res => res.json()).toPromise()
+      .then((data) => {
+        if (data.err_code === 200) {
+          return data.result;
+        } else {
+          return Promise.reject(data.msg || '返回数据格式出错！');
+        }
+      })
+  }
+  gsevenRequestViaPut(target,opts){
+    const postData=this.libService.generateHttpPostSearchParams(opts);
+    return this.http.put(this.serviceUrl[target], postData).map(res => res.json()).toPromise()
       .then((data) => {
         if (data.err_code === 200) {
           return data.result;
@@ -200,6 +216,15 @@ export class ProjectService {
     })
   }
 
+  public getProjectUserListManage(pid:string,page?:number,size?:number,keyword?:string) {
+    return this.gsevenRequestViaGet('getProjectUserListManage', {
+      efairyproject_id: pid,
+      page: page,
+      size: size,
+      keyword:keyword
+    })
+  }
+
   public addProjectGm(pid:string,phone:string,name:string){
     return this.gsevenRequestViaPost('addProjectGmManage',{
       efairyuser_phonenumber:phone,
@@ -207,14 +232,30 @@ export class ProjectService {
       efairyproject_id:pid
     })
   }
-
   public deleteProjectGm(pid,gmId){
     return this.gsevenRequestViaDelete('deleteProjectGmManage',{
       efairyproject_id:pid,
-      efairyproject_gm_id_list:[gmId]
+      efairyproject_gm_id_list:JSON.stringify([gmId])
+    })
+  }
+  public addProjectUser(pid:string,phone:string,name:string){
+    return this.gsevenRequestViaPost('addProjectUserManage',{
+      efairyuser_phonenumber:phone,
+      efairyuser_nickname:name,
+      efairyproject_id:pid
+    })
+  }
+  public deleteProjectUser(pid,userId){
+    return this.gsevenRequestViaDelete('deleteProjectUserManage',{
+      efairyproject_id:pid,
+      efairyproject_user_id_list:JSON.stringify([userId])
     })
   }
 
+
+  public editProjectDetailsManage(opts){
+    return this.gsevenRequestViaPut('editProjectDetailsManage',opts)
+  }
 
 
 
