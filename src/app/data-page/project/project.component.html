@@ -3,19 +3,10 @@
     <p class="bread-crumb">实时数据 > 全部</p>
   </div>
   <div class="content">
+    
+    <loading *ngIf="loading"></loading>
 
-    <div class="loading" *ngIf="loading">
-      <div class="sk-wave">
-        <div class="sk-rect sk-rect1"></div>
-        <div class="sk-rect sk-rect2"></div>
-        <div class="sk-rect sk-rect3"></div>
-        <div class="sk-rect sk-rect4"></div>
-        <div class="sk-rect sk-rect5"></div>
-      </div>
-    </div>
-
-
-    <div class="device-list" *ngIf="!loading">
+    <div class="device-list" *ngIf="!loading&&projectListPageShow.length!=0">
       <a *ngFor="let branch of projectListPageShow" class="section" [routerLink]="['branch/'+branch.efairyproject_id]">
         <h3 class="device-name">{{branch.efairyproject_name}}</h3>
         <div class="device-pic">

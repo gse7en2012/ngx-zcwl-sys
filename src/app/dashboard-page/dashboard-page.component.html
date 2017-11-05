@@ -9,22 +9,49 @@
       <div class="right-line line"></div>
       <div class="bottom-line line"></div>
       <div class="left-line line"></div>
+      <img class="scale" src="assets/image/scale.png">
       <div class="desc">
-          <p>单位状态</p>
-          <p><img src="assets/image/building_green.png">正常</p>
-          <p><img src="assets/image/building_red.png">报警</p>
+        <p>单位状态</p>
+        <p>
+          <img src="assets/image/building_green.png">正常</p>
+        <p>
+          <img src="assets/image/building_red.png">报警</p>
       </div>
       <div id="l-map" class="map"></div>
     </div>
     <div class="fl w50">
-        <div class="top-line line" style="border-left:0"></div>
-        <div class="right-line line"></div>
-        <div class="bottom-line line"></div>
-        <div class="left-line line" style="border-left:0"></div>
+      <div class="top-line line" style="border-left:0"></div>
+      <div class="right-line line"></div>
+      <div class="bottom-line line"></div>
+      <img class="scale" src="assets/image/scale.png">
+      <div class="left-line line" style="border-left:0"></div>
       <div id="r-map" class="map"></div>
     </div>
-    <div class="map" id="b-map"></div>
+
   </div>
 
+  <div class="footer">
+    <div class="item pink" >
+        <h3 class="title">设备报警</h3>
+        <div class="content">
+            <section class="block" *ngFor="let item of deviceAlarmData" >
+                <div class="time">
+                    <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}  
+                </div>
+                <div class="details">
+                  设备id：{{item.efairydevice_uuid}} <br> 设备名称：{{item.efairydevice_name}} <br>  报警类型：报警 <br>  设备状态：{{item.state}} <br> 参量值：{{item.ss}} <br> 报警值：{{item.efairydevicefiredata_rtv}} <br> 阀值：{{item.efairydevicefiredata_thv}}
+                </div>
+              </section>
+        </div>
+    </div>
+    <div class="item red">
+        <h3 class="title">2017年服务数据</h3>
+        <div echarts [options]="leftChartOption" theme="macarons" class="chart" style="height:280px;"></div>
+    </div>
+    <div class="item orange">
+        <h3 class="title">2017年服务数据</h3>
+        <div echarts [options]="rightChartOption" theme="macarons" class="chart" style="height:280px;"></div>
+    </div>
+  </div>
 
 </div>

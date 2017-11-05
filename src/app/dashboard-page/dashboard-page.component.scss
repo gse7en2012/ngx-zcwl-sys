@@ -17,6 +17,7 @@
     }
     .ctx{
         padding: 15px;
+        overflow: hidden;
         .fl{
             position: relative;
             .line{
@@ -53,6 +54,12 @@
                 border-left:0; 
             }
         }
+        .scale{
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            z-index: 999;
+        }
         .desc{
             position: absolute;
             right: 20px;
@@ -76,6 +83,68 @@
             }
         }
     }
+
+    .footer{
+        overflow: hidden;
+        clear: both;
+        margin:0 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        .item{
+            float: left;
+            width: 32.5%;
+            height: 320px;
+            background: rgba(13, 16, 24, 0.8);
+            border: 1px solid #555;
+            padding: 10px;
+            box-sizing: border-box;
+            .title{
+                margin: 0;
+                line-height: 1.5;
+            }
+            .content{
+                margin-top: 10px;
+                padding: 0 20px;
+                height: 265px;
+                overflow: auto;
+                .time{
+                    font-size: 15px;
+                    color: #ccc;
+                    margin: 5px 0;
+                }
+                .details{
+                    font-size: 14px;
+                    line-height: 18px;
+                    padding-left: 15px;
+                    color: #aaa;
+                    margin-bottom: 20px;
+                }
+            }
+            &.pink{
+               .title{color: #6639a6;}
+               .content{
+                &::-webkit-scrollbar{
+                    width: 8px;
+                    background:rgba(75, 87, 99, .9);
+                }
+                &::-webkit-scrollbar-thumb{
+                    background: #6639a6;
+                }
+               }
+               border-bottom:4px solid #6639a6;
+            }
+            &.red{
+               border-bottom:4px solid #d11e5b; 
+               .title{color: #d11e5b;}
+            }
+            &.orange{
+                border-bottom:4px solid #d78716;
+                .title{color: #d78716;}
+            }
+        }
+    }
+
+
     .fl{
         float:left;
     }

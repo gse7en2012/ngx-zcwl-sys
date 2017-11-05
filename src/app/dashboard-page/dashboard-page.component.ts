@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../service/project.service';
+import { DeviceService } from '../service/device.service';
+import * as myGlobals from '../global/globals';
 
 declare var AMap;
 declare var AMapUI;
+declare var moment;
 
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.scss'],
-  providers: [ProjectService]
+  providers: [ProjectService, DeviceService]
 })
 export class DashboardPageComponent implements OnInit {
 
@@ -16,36 +19,122 @@ export class DashboardPageComponent implements OnInit {
   public rightMap: any;
   public bottomMap: any;
   public projectList: object[];
-  public locationPointLngLat:string[];
+  public locationPointLngLat: string[];
+  public deviceAlarmData: any;
+  public rightChartOption: any;
+  public leftChartOption: any;
 
-  constructor(private projectService: ProjectService) { }
+  private dataHash = myGlobals.dataHash;
+  private stateHash = myGlobals.stateHash;
+
+  constructor(private projectService: ProjectService, private deviceService: DeviceService) { }
   //API http://lbs.amap.com/api/javascript-api/reference-amap-ui/geo/district-cluster#render
   ngOnInit() {
     this.bigMap = new AMap.Map('l-map', {
       resizeEnable: true,
       zoom: 10,
+      mapStyle: "amap://styles/grey"
     });
-    this.bigMap.setMapStyle('amap://styles/' + 'grey');
 
+    this.rightChartOption = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: ['2011年', '2012年'],
+        textStyle: {
+          color: '#aaa'
+        },
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+        backgroundColor:"transparent"
+      },
+      xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01]
+      },
+      yAxis: {
+        type: 'category',
+        data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
+      },
+      series: [
+        {
+          name: '2011年',
+          type: 'bar',
+          data: [18203, 23489, 29034, 104970, 131744, 630230]
+        },
+        {
+          name: '2012年',
+          type: 'bar',
+          data: [19325, 23438, 31000, 121594, 134141, 681807]
+        }
+      ]
+    };
 
-    // this.rightMap = new AMap.Map('r-map', {
-    //   zoomEnable: false,
-    //   dragEnable: false,
-    //   zoom: 5,
-    //   features: ['bg', 'point'],
-    //   mapStyle: "amap://styles/blue"
-    // });
-
+    this.leftChartOption = {
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+      },
+      legend: {
+        orient: 'vertical',
+        x: 'right',
+        textStyle: {
+          color: '#aaa'
+        },
+        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+      },
+      series: [
+        {
+          name: '访问来源',
+          type: 'pie',
+          radius: ['50%', '70%'],
+          avoidLabelOverlap: false,
+          label: {
+            normal: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              show: true,
+              textStyle: {
+                fontSize: '30',
+                fontWeight: 'bold'
+              }
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data: [
+            { value: 335, name: '直接访问' },
+            { value: 310, name: '邮件营销' },
+            { value: 234, name: '联盟广告' },
+            { value: 135, name: '视频广告' },
+            { value: 1548, name: '搜索引擎' }
+          ]
+        }
+      ]
+    }
 
     this.rightMap = new AMap.Map('r-map', {
       zoomEnable: true,
       dragEnable: true,
       zoom: 6,
-      zooms: [4, 8],
+      zooms: [4, 12],
       features: ['bg', 'point'],
       mapStyle: "amap://styles/darkblue"
     });
-    //this.rightMap.setFitView()
+
 
     this.rightMap.on('fire', (data) => {
       this.bigMap.setCenter([data.lng, data.lat])
@@ -57,8 +146,10 @@ export class DashboardPageComponent implements OnInit {
 
     // this.testRenderMapPolygon();
     this.testMapCluster();
-   this.testClickMap();
+    this.testClickMap();
     this.getAllProject();
+
+    this.getLastAlarmDevice();
   }
 
   testRenderMapPolygon() {
@@ -95,7 +186,6 @@ export class DashboardPageComponent implements OnInit {
       });
     })
   }
-
 
 
   testClickMap() {
@@ -154,17 +244,17 @@ export class DashboardPageComponent implements OnInit {
     AMapUI.load(['ui/geo/DistrictCluster', 'lib/$'], (DistrictCluster, $) => {
       const distCluster = new DistrictCluster({
         map: this.rightMap, //所属的地图实例
-        excludedAdcodes:[810000,820000],
-        autoSetFitView:false,
+        excludedAdcodes: [810000, 820000],
+        autoSetFitView: false,
         renderOptions: {
           featureEventSupport: true,
           clusterMarkerEventSupport: true,
           featureClickToShowSub: true,
           //标注信息Marker上需要监听的事件
           clusterMarkerEventNames: ['click'],
-          featureStyle:{
-            lineWidth:1,
-            strokeStyle:'#999'
+          featureStyle: {
+            lineWidth: 1,
+            strokeStyle: '#999'
           },
           featureStyleByLevel: {
             // country: {
@@ -196,11 +286,27 @@ export class DashboardPageComponent implements OnInit {
   }
 
 
+  getProjectReport() {
+
+  }
+
+  getLastAlarmDevice() {
+    this.deviceService.getLastDeviceAlarmData().then((data) => {
+      this.deviceAlarmData = data.device_alarm_data_list;
+      this.deviceAlarmData.forEach((item) => {
+        item.blueTime = moment(item.efairydevicefiredata_time).format('MM-DD');
+        item.spanTime = moment(item.efairydevicefiredata_time).format('HH:mm');
+        item.state = this.stateHash[item.efairydevicefiredata_state];
+        item.ss = this.dataHash[item.efairydevicefiredata_parameter][0]
+      })
+    })
+  }
+
   getAllProject() {
     this.projectService.getAllProjectList().then((data) => {
       this.projectList = data.project_list;
-      this.locationPointLngLat=this.projectList.map((row)=>{
-        return [row['efairyproject_location_lng'],row['efairyproject_location_lat']].join(',')
+      this.locationPointLngLat = this.projectList.map((row) => {
+        return [row['efairyproject_location_lng'], row['efairyproject_location_lat']].join(',')
       })
       return data.project_list;
     }).then(list => {

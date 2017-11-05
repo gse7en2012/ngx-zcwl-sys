@@ -1,0 +1,102 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">项目详情</span>
+    </p>
+  </div>
+  <div class="content">
+
+    <loading *ngIf="loading"></loading>
+
+    <ul class="tab">
+      <li [ngClass]="{'cur': tabIndex==1}" (click)="changeTab(1)">项目信息</li>
+      <li [ngClass]="{'cur': tabIndex==2}" (click)="changeTab(2)">管理员列表</li>
+      <li [ngClass]="{'cur': tabIndex==3}" (click)="changeTab(3)">设备列表</li>
+    </ul>
+
+    <div class="tab-card" *ngIf="tabIndex==1">
+      <section class="form">
+        <h3 class="title">项目信息</h3>
+        <div class="row">
+          <label>项目名称</label>
+          <input type="text" [(ngModel)]="proejctInfo.efairyproject_name">
+        </div>
+        <div class="row">
+          <label>项目负责人</label>
+          <input type="text" [(ngModel)]="proejctInfo.efairyproject_user_name">
+        </div>
+        <div class="row">
+          <label>项目负责人手机</label>
+          <input type="text" [(ngModel)]="proejctInfo.efairyproject_user_phonenumber">
+        </div>
+        <div class="row">
+          <label>项目地址</label>
+          <input type="text" [(ngModel)]="proejctInfo.efairyproject_address">
+        </div>
+
+        <div class="row">
+          <label>项目备注</label>
+          <textarea [(ngModel)]="proejctInfo.efairyproject_description"></textarea>
+        </div>
+
+        <div class="row">
+          <label>&nbsp;</label>
+          <a class="btn">确认修改</a>
+          <a class="btn grey">返回</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="tab-card" *ngIf="tabIndex==2">
+      <h3 class="title">管理员列表
+        <a class="btn" (click)="addNewGm()">新增管理员</a>
+      </h3>
+      <div class="btn-box">
+
+      </div>
+      <table class="table">
+        <tr>
+          <th>管理员编号</th>
+          <th>管理员名称</th>
+          <th>管理员手机</th>
+          <th>操作</th>
+        </tr>
+        <tr *ngFor="let item of gmList">
+          <td>{{item.efairyuser_id}}</td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairyuser_nickname}}</span>
+            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyuser_nickname">
+          </td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairyuser_phonenumber}}</span>
+            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyuser_phonenumber">
+          </td>
+          <td>
+            <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a>
+            <a (click)="editGm(item)" *ngIf="item.isEdit">提交</a>
+            <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
+            <a (click)="deleteGm(item)"*ngIf="!item.isEdit">删除</a>
+          </td>
+        </tr>
+        <tr *ngIf="isAddingGm">
+          <td>系统自动生成</td>
+          <td>
+            <input [(ngModel)]="addGmNickname">
+          </td>
+          <td>
+            <input [(ngModel)]="addGmPhone">
+          </td>
+          <td>
+            <a (click)="ensureAddNewGm()">确定添加</a>
+            <a (click)="cancelAddNewGm()">取消</a>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div class="tab-card" *ngIf="tabIndex==3">
+
+    </div>
+
+  </div>

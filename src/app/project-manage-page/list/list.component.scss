@@ -19,7 +19,22 @@ p.no-data{
         line-height: 55px;
         padding: 0 20px;
         .bread-crumb{
-            float: left;
+            .title{
+                font-size: 18px;
+                color:#276bb0;
+            }
+            .btn{
+                width: 120px;
+                height:32px;
+                text-align: center;
+                color: #fff;
+                line-height: 32px;
+                font-size: 15px;
+                background: #15aeef;
+                border-radius: 5px;
+                float: right;
+                margin-top: 10px;
+            }
         }
         .switch-box{
             float: right;
@@ -56,63 +71,51 @@ p.no-data{
     }
 
     .content{
-        .table{
-            width: 100%;
-            margin:auto;
-            background: #fff;
-            box-shadow: 2px 2px 2px #e8e8e8;
-            border: 1px solid #ddd;
-            td,th{
-                font-size: 14px;
-                height:40px;line-height: 40px;text-align: center;
-                border-bottom:1px solid #eaeaea;
-            }
-            th{
-                font-size: 16px;
-                font-weight: normal;
-                height: 46px;
-                line-height: 46px;
-            }
-        }
-    }
-    .content{
-        padding: 35px 40px;
+        padding:5px 15px;
         .device-list{
             overflow: hidden;
             .section{
-                float: left;
+                display: block;
+                overflow: hidden;
                 background: #fff;
                 box-shadow: 2px 2px 2px #ddd;
-                width: 23%;
-                margin: 0 1% 5%;
+                margin: 10px 0;
+                padding: 8px;
                 color: #666;
                 text-decoration: none;
             }
             .device-name{
-                text-align: center;
+                float: left;
+                margin: 15px 30px 5px;
                 font-weight: normal;
-                margin-bottom: 5px;
-                height:18px;
+                line-height: 1.8;
+                font-size: 16px;
+                .blue{
+                    color: #276bb0;
+                }
             }
             .device-pic{
-                width: 70%;
+                width: 120px;
+                height: 80px;
+                float:left;
                 margin: 0 auto;
-                height: 0;
-                padding-bottom: 50%;
                 overflow: hidden;
                 position: relative;
                 img{
                     width: 100%;
-                    position: absolute;
+                    position: relative;
+                    transform: translateY(-50%);
                     top: 50%;
-                    transform: translate(-50%,-50%);
-                    left: 50%;
+                    background: #ccc;
                 }
             }
             .device-info{
                 overflow: hidden;
                 text-align: center;
-                margin: 0 0 8px;
+                margin: 20px 10px 0;
+                float: right;
+                width: 200px;
+                font-size: 14px;
                 .fl,.fr{
                     width: 50%;
                     .num{
@@ -122,6 +125,7 @@ p.no-data{
                     }
                     p{
                         line-height: 1.5;
+                        color: #15aeef;
                     }
                 }
             }
@@ -130,7 +134,9 @@ p.no-data{
 
     .pagination{
         text-align: center;
+        margin-top: 35px;
         margin-bottom: 50px;
+        clear: both;
         .btn{
             background: #36c2ff;
             color: #fff;

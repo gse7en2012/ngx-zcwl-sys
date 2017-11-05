@@ -54,8 +54,6 @@ export class MasterPageComponent implements OnInit {
         item.state=this.stateHash[item.efairydevicefiredata_state];
         item.ss=this.dataHash[item.efairydevicefiredata_parameter][0]
       })
-
-
     })
 
   }
