@@ -1,0 +1,94 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">新增设备</span>
+    </p>
+  </div>
+  <div class="content">
+    <div class="tab-card">
+      <section class="form">
+        <div class="row">
+          <label>设备类型</label>
+          <select [(ngModel)]="deviceType" (change)="deviceTypeChange()">
+            <option *ngFor="let item of deviceTypeList" [ngValue]="item">{{item.name}}</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>设备主编码</label>
+          <input type="text" [(ngModel)]="deviceMasterCode">
+        </div>
+        <div class="row row-sm">
+            <label></label>
+            <div class="select-box">
+              <span>主机号</span>
+              <span>回路号</span>
+              <span>地址号</span>
+            </div>
+          </div>
+        <div class="row">
+          <label>设备从编码</label>
+          <div class="select-box">
+            <select [(ngModel)]="followCode1" [disabled]="deviceType.special">
+              <option *ngFor="let code of followCode1List" [value]="code">{{code}}</option>
+            </select>
+            -
+            <select [(ngModel)]="followCode2" [disabled]="deviceType.special">
+              <option *ngFor="let code of followCode2List" [value]="code">{{code}}</option>
+            </select>
+            -
+            <select [(ngModel)]="followCode3" [disabled]="deviceType.special">
+              <option *ngFor="let code of followCode3List" [value]="code">{{code}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <label>设备名称</label>
+          <input type="text" [(ngModel)]="deviceName">
+        </div>
+        <div class="row">
+          <label>设备定位</label>
+          <textarea type="text" id="address" [(ngModel)]="setAddress" class="address"></textarea>
+        </div>
+        <div class="row">
+          <label>定位经度</label>
+          <input type="text" [(ngModel)]="deviceLng">
+        </div>
+        <div class="row">
+          <label>定位纬度</label>
+          <input type="text" [(ngModel)]="deviceLat">
+        </div>
+        <div class="row">
+          <label>设备描述</label>
+          <textarea [(ngModel)]="deviceDesc"></textarea>
+        </div>
+
+
+        <div class="row">
+          <label>用户组</label>
+          <div class="user-box">
+            <div class="item" *ngFor="let u of userList" >
+                <label>用户名</label><input type="text" [(ngModel)]="u.efairyuser_nickname">
+                <label>手机号</label><input type="text" [(ngModel)]="u.efairyuser_phonenumber">
+                <b (click)="removeUserFromUserList(u)">-</b>
+            </div>
+            <div class="bot" (click)="addUserToUserList()">
+              +添加用户
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <label>&nbsp;</label>
+          <a class="button" (click)="addProjectDevice()">确认新增</a>
+          <a class="button grey" (click)="goBack()">取消</a>
+        </div>
+      </section>
+
+      <div class="a-map">
+        <div id="map"></div>
+      </div>
+
+    </div>
+  </div>
+</div>

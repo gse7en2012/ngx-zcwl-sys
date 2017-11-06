@@ -10,7 +10,7 @@
       <loading *ngIf="loading"></loading>
   
       <div class="device-list" *ngIf="!loading&&projectListPageShow.length!=0">
-        <a *ngFor="let branch of projectListPageShow" class="section" [routerLink]="['../../details/'+branch.efairyproject_id]">
+        <a *ngFor="let branch of projectListPageShow" class="section" [routerLink]="['details/'+branch.efairyproject_id]">
           
           <div class="device-pic">
             <img src="assets/image/device.png">

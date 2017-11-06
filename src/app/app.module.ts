@@ -54,6 +54,7 @@ import { SmsManagePageComponent } from './sms-manage-page/sms-manage-page.compon
 import { ProjectManageListComponent } from './project-manage-page/list/list.component';
 import { LoadingComponent } from './my-components/loading/loading.component';
 import { DetailsComponent as ProjectManageDeatilsComponent } from './project-manage-page/details/details.component';
+import { NewDeviceComponent } from './project-manage-page/new-device/new-device.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -87,7 +88,8 @@ const mistakeRoutes: Routes = [
 const projectManageRoutes: Routes = [
   // { path: '',   component:DataPageComponent },
   { path: 'agency/:agency_id', component: ProjectManageListComponent },
-  { path: 'details/:proejct_id', component: ProjectManageDeatilsComponent },
+  { path: 'agency/:agency_id/details/:proejct_id', component: ProjectManageDeatilsComponent },
+  { path: 'agency/:agency_id/details/:proejct_id/new_device', component: NewDeviceComponent },
   { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
 ]
 
@@ -144,7 +146,9 @@ const adminRoutes: Routes = [
     ProjectManageListComponent,
     LoadingComponent,
 
-    ProjectManageDeatilsComponent
+    ProjectManageDeatilsComponent,
+
+    NewDeviceComponent
   ],
   imports: [
     BrowserModule,

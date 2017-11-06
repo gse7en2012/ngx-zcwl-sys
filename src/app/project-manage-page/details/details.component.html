@@ -102,7 +102,7 @@
 
     <div class="tab-card" *ngIf="tabIndex==3">
         <h3 class="title">设备列表
-            <a class="button" (click)="addNewGm()">新增设备</a>
+            <a class="button" [routerLink]="['new_device']">新增设备</a>
           </h3>
           <table class="table">
             <tr>

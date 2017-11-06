@@ -32,7 +32,10 @@ export class ProjectService {
     addProjectGmManage:'/webapi/manage_project_gm',
     deleteProjectGmManage:'/webapi/manage_project_gm',
     addProjectUserManage:'/webapi/manage_project_user',
-    deleteProjectUserManage:'/webapi/manage_project_user'
+    deleteProjectUserManage:'/webapi/manage_project_user',
+
+
+    addProjectDeviceManage:'/webapi/manage_project_device_and_user'
   };
 
   private codeHash: any;
@@ -257,6 +260,8 @@ export class ProjectService {
     return this.gsevenRequestViaPut('editProjectDetailsManage',opts)
   }
 
-
+ public addProjectDeviceManage(opts){
+   return this.gsevenRequestViaPost('addProjectDeviceManage',opts);
+ }
 
 }

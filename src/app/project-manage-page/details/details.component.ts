@@ -17,7 +17,7 @@ export class DetailsComponent implements OnInit {
   //list var
   public gmList: any = [];
   public gmListShow: any;
-  public deviceList: any=[];
+  public deviceList: any = [];
   public deviceListShow: any;
   public userList: any = [];
   public userListShow: any;
@@ -61,6 +61,14 @@ export class DetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.projectId = params.proejct_id;
     });
+
+    this.route.queryParams.subscribe(params => {
+      console.log(params); // {order: "popular"}
+      if (params.type && (!isNaN(Number(params.type)) && Number(params.type) <= 4)) {
+        this.tabIndex = Number(params.type)
+      }
+    });
+
     this.getProejctInfo();
     this.getProjectGmList();
     this.getProjectUserList();
@@ -96,8 +104,8 @@ export class DetailsComponent implements OnInit {
     this.projectSerive.addProjectGm(this.projectId, this.addGmPhone, this.addGmNickname).then((r) => {
       this.getProjectGmList();
       this.isAddingGm = false;
-      this.addGmNickname='';
-      this.addGmPhone=''
+      this.addGmNickname = '';
+      this.addGmPhone = ''
     }).catch((e) => {
       alert(e)
     })
@@ -124,8 +132,8 @@ export class DetailsComponent implements OnInit {
     this.projectSerive.addProjectUser(this.projectId, this.addUserPhone, this.addUserNickname).then((r) => {
       this.getProjectUserList();
       this.isAddingUser = false;
-      this.addUserNickname='';
-      this.addUserPhone='';
+      this.addUserNickname = '';
+      this.addUserPhone = '';
     }).catch((e) => {
       alert(e)
     })
