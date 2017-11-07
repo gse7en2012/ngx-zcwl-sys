@@ -113,7 +113,15 @@ export class DetailsComponent implements OnInit {
   cancelAddNewGm() {
     this.isAddingGm = false;
   }
-
+  deleteDevice(device){
+    if (confirm('确定删除？')) {
+      this.projectSerive.deleteProjectDevice(this.projectId, device.efairydevice_id).then((r) => {
+        this.getProjectDeviceList();
+      }).catch((e) => {
+        alert(e)
+      })
+    }
+  }
 
   //user add
   deleteUser(user) {

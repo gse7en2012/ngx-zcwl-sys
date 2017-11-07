@@ -13,16 +13,18 @@ declare var AMapUI;
 declare var moment;
 
 @Component({
-  selector: 'app-new-device',
-  templateUrl: './new-device.component.html',
-  styleUrls: ['./new-device.component.scss']
+  selector: 'app-edit-device',
+  templateUrl: './edit-device.component.html',
+  styleUrls: ['./edit-device.component.scss']
 })
-export class NewDeviceComponent implements OnInit {
+export class EditDeviceComponent implements OnInit {
 
   public bigMap;
   public deviceInfo: any = {};
 
   public projectId: string;
+  public deviceId:string;
+  public deviceInstallTime:string;
   public positionPicker: any;
   public setAddress: string;
   public deviceLng: string;
@@ -58,29 +60,46 @@ export class NewDeviceComponent implements OnInit {
 
 
   ngOnInit() {
-    this.initAmap();
+    // this.initAmap();
     this.initDeviceCode();
 
     this.route.params.subscribe(params => {
       this.projectId = params.proejct_id;
+      this.deviceId=params.device_id;
+      this.getProjectDeviceDetailsManage();
     });
 
   }
 
+  getProjectDeviceDetailsManage(){
+    return this.projectSerive.getProjectDeviceDetailsManage(this.projectId,this.deviceId).then((data)=>{
+      this.deviceInfo=data;
+      this.setAddress=data.efairydevice_address;
+      this.deviceLng=data.efairydevice_location_lng;
+      this.deviceLat=data.efairydevice_location_lat;
+      this.deviceDesc=data.efairydevice_description;
+      this.deviceInstallTime=data.efairydevice_install_time;
+      this.formatDeviceUuid(data.efairydevice_uuid);
 
-  // observableSource(keyword: any): Observable<any[]>{
-  //   let url: string = 
-  //     'https://maps.googleapis.com/maps/api/geocode/json?address='+keyword
-  //   if (keyword) {
-  //     return this.http.get(url)
-  //       .map(res => {
-  //         let json = res.json();
-  //         return json.results;
-  //       })
-  //   } else {
-  //     return Observable.of([]);
-  //   }
-  // }
+      this.deviceTypeList.forEach((item:any,index:number)=>{
+        if(item.value==data.efairydevice_device_type_id){
+          this.deviceType=this.deviceTypeList[index];
+        }
+      })
+
+      this.initAmap(data.efairydevice_location_lng,data.efairydevice_location_lat);
+
+    }).catch((e)=>{
+      alert(e||'出错了！请联系管理员')
+    })
+  }
+
+  formatDeviceUuid(uuid){
+    this.deviceMasterCode=uuid.slice(0,20);
+    this.followCode1=parseInt(uuid.slice(20,22),16);
+    this.followCode2=parseInt(uuid.slice(22,24),16);
+    this.followCode3=parseInt(uuid.slice(24,26),16);
+  }
 
   fetchMasterCodeSuggestObservable(keyword: any): Observable<any[]> {
     if (keyword) {
@@ -94,52 +113,31 @@ export class NewDeviceComponent implements OnInit {
   }
 
 
-  addUserToUserList() {
-    this.userIndexSeed++;
-    this.userList.push({
-      efairyuser_nickname: '',
-      efairyuser_phonenumber: '',
-      id: this.userIndexSeed
-    })
-  }
 
-  removeUserFromUserList(user) {
-    this.userList = this.userList.filter((item: any) => {
-      return item.id !== user.id;
-    })
-  }
-
-  addProjectDevice() {
+  editProjectDevice() {
     const opts = {
+      efairydevice_id:this.deviceId,
       efairydevice_uuid: [
         this.deviceMasterCode,
         Number(this.followCode1).toString(16).length < 2 ? '0' + Number(this.followCode1).toString(16) : Number(this.followCode1).toString(16),
         Number(this.followCode2).toString(16).length < 2 ? '0' + Number(this.followCode2).toString(16) : Number(this.followCode2).toString(16),
         Number(this.followCode3).toString(16).length < 2 ? '0' + Number(this.followCode3).toString(16) : Number(this.followCode3).toString(16),
       ].join(''),
-      efairyuser_info_list: [],
-      efairydevice_name: this.deviceName,
+      efairydevice_name: this.deviceInfo.efairydevice_name,
       efairydevice_location_lng: this.deviceLng,
       efairydevice_location_lat: this.deviceLat,
       efairydevice_description: this.deviceDesc,
       efairydevice_address: this.setAddress,
-      efairydevice_install_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+      efairydevice_install_time: this.deviceInstallTime,
       efairydevice_project_id: this.projectId,
       efairydevice_device_type_id: this.deviceType['value'],
       efairydevice_belong_system: 10
     }
 
-    this.userList.forEach((item: any) => {
-      if (item.efairyuser_nickname != '' && item.efairyuser_phonenumber != '') {
-        opts.efairyuser_info_list.push(item);
-      }
-    })
+    if (!this.deviceInfo.efairydevice_name || !this.deviceMasterCode) return alert('请把资料填写完整');
 
-    console.log(opts);
-
-    if (!this.deviceName || !this.deviceMasterCode) return alert('请把资料填写完整')
-    this.projectSerive.addProjectDeviceManage(opts).then(r => {
-      alert('添加成功！');
+    this.projectSerive.editProjectDeviceManage(opts).then(r => {
+      alert('修改成功！');
       // this.router.navigate(['../'], { queryParams: { type: 3 } });
       this._location.back();
     }).catch(e => {
@@ -185,11 +183,12 @@ export class NewDeviceComponent implements OnInit {
     return result;
   }
 
-  initAmap() {
+  initAmap(lng,lat) {
 
     this.bigMap = new AMap.Map('map', {
       resizeEnable: true,
       zoom: 13,
+      center:[lng,lat]
     });
 
 
@@ -220,7 +219,7 @@ export class NewDeviceComponent implements OnInit {
         map: this.bigMap
       });
       this.positionPicker.on('success', (positionResult) => {
-        // console.log(positionResult);
+
         this.zone.run(() => {
           this.setAddress = positionResult.address;
           this.deviceLng = positionResult.position.lng;
@@ -231,10 +230,12 @@ export class NewDeviceComponent implements OnInit {
       this.positionPicker.on('fail', (positionResult) => {
         // console.log(positionResult);
       });
-      this.positionPicker.start();
+      
+      this.positionPicker.start(new AMap.LngLat(lng,lat));
     });
 
 
   }
+
 
 }

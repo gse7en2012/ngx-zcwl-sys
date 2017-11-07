@@ -1,7 +1,7 @@
 <div class="left">
   <div class="agency-list">
     <section *ngFor="let item of agencyList">
-      <div [ngClass]="{'row-header':true,cur:item.current}" (click)="getLv2AgencyList(item.efairyuser_id)">
+      <div [ngClass]="{'row-header':true,cur:item.current}" (click)="getLv2AgencyList(item)">
         {{item.efairyuser_nickname}}
         <span *ngIf="!item.current" class="right-arrow"></span>
         <span *ngIf="item.current" class="down-arrow"></span>
@@ -9,6 +9,9 @@
       <div [ngClass]="{'row-item':true,cur:secondItem.current}" *ngFor="let secondItem of item.secondList" [hidden]="!item.showChildren"
         [routerLink]="['agency/'+secondItem.efairyuser_id]" routerLinkActive="cur">
         {{secondItem.efairyuser_nickname}}
+      </div>
+      <div class="row-item no-child" *ngIf="!item.secondList||item.secondList.length==0" [hidden]="!item.showChildren">
+          没有下级经销商
       </div>
     </section>
   </div>

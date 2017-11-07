@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MyDatePickerModule } from 'mydatepicker';
 import { CookieModule } from 'ngx-cookie';
 import { AngularEchartsModule } from 'ngx-echarts';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
 import { errCodeMsgHash } from './service/err-msg';
 import { LibService } from './service/lib.service';
@@ -23,7 +24,8 @@ import { AppComponent } from './app.component';
  * my components
  */
 import { LeftNavPartComponent } from './my-components/left-nav-component/left-nav-component.component';
-
+import { LoadingComponent } from './my-components/loading/loading.component';
+import { PlaceholderPageComponent } from './my-components/placeholder-page/placeholder-page.component';
 /**
  * admin part
  */
@@ -52,9 +54,11 @@ import { UserManagePageComponent } from './user-manage-page/user-manage-page.com
 import { ProjectManagePageComponent } from './project-manage-page/project-manage-page.component';
 import { SmsManagePageComponent } from './sms-manage-page/sms-manage-page.component';
 import { ProjectManageListComponent } from './project-manage-page/list/list.component';
-import { LoadingComponent } from './my-components/loading/loading.component';
+
 import { DetailsComponent as ProjectManageDeatilsComponent } from './project-manage-page/details/details.component';
 import { NewDeviceComponent } from './project-manage-page/new-device/new-device.component';
+import { EditDeviceComponent } from './project-manage-page/edit-device/edit-device.component';
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -63,21 +67,21 @@ const appRoutes: Routes = [
 
 
 const dataRoutes: Routes = [
-  // { path: '',   component:DataPageComponent },
+  { path: '',   component:PlaceholderPageComponent },
   { path: 'agency/:agency_id', component: ProjectComponent },
   { path: 'agency/:agency_id/branch/:branch_id', component: BranchComponent },
   { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
 ]
 
 const warningRoutes: Routes = [
-  // { path: '',   component:WarningPageComponent },
+  { path: '',   component:PlaceholderPageComponent },
   { path: 'agency/:agency_id', component: ProjectComponent },
   { path: 'agency/:agency_id/branch/:branch_id', component: ListComponent },
   { path: 'agency/:agency_id/device/:device_id', component: DetailsTableComponent },
 ]
 
 const mistakeRoutes: Routes = [
-  // { path: '',   component:ErrorPageComponent },
+  { path: '',   component:PlaceholderPageComponent },
   { path: 'agency/:agency_id', component: ProjectListComponent },
   { path: 'agency/:agency_id/branch/:branch_id', component: ErrorListComponent },
   { path: 'agency/:agency_id/device/:device_id', component: ErrorDetailsTableComponent },
@@ -86,10 +90,11 @@ const mistakeRoutes: Routes = [
 //super manage
 
 const projectManageRoutes: Routes = [
-  // { path: '',   component:DataPageComponent },
+  { path: '',   component:PlaceholderPageComponent },
   { path: 'agency/:agency_id', component: ProjectManageListComponent },
   { path: 'agency/:agency_id/details/:proejct_id', component: ProjectManageDeatilsComponent },
   { path: 'agency/:agency_id/details/:proejct_id/new_device', component: NewDeviceComponent },
+  { path: 'agency/:agency_id/details/:proejct_id/edit_device/:device_id', component: EditDeviceComponent },
   { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
 ]
 
@@ -142,19 +147,24 @@ const adminRoutes: Routes = [
     ErrorListComponent,
     ProjectListComponent,
     ErrorDetailsTableComponent,
-    LeftNavPartComponent,
-    ProjectManageListComponent,
-    LoadingComponent,
 
+    LeftNavPartComponent,
+    LoadingComponent,
+    PlaceholderPageComponent,
+
+    ProjectManageListComponent,
     ProjectManageDeatilsComponent,
 
-    NewDeviceComponent
+    NewDeviceComponent,
+    EditDeviceComponent,
+    
   ],
   imports: [
     BrowserModule,
     AngularEchartsModule,
     FormsModule,
     HttpModule,
+    NguiAutoCompleteModule,
     MyDatePickerModule,
     CookieModule.forRoot(),
     RouterModule.forRoot(appRoutes),

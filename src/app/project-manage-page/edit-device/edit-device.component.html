@@ -53,7 +53,7 @@
         </div>
         <div class="row">
           <label>设备名称</label>
-          <input type="text" [(ngModel)]="deviceName">
+          <input type="text" [(ngModel)]="deviceInfo.efairydevice_name">
         </div>
         <div class="row">
           <label>设备定位</label>
@@ -73,24 +73,10 @@
         </div>
 
 
-        <div class="row">
-          <label>用户组</label>
-          <div class="user-box">
-            <div class="item" *ngFor="let u of userList" >
-                <label>用户名</label><input type="text" [(ngModel)]="u.efairyuser_nickname">
-                <label>手机号</label><input type="text" [(ngModel)]="u.efairyuser_phonenumber">
-                <b (click)="removeUserFromUserList(u)">-</b>
-            </div>
-            <div class="bot" (click)="addUserToUserList()">
-              +添加用户
-            </div>
-          </div>
-        </div>
-
 
         <div class="row">
           <label>&nbsp;</label>
-          <a class="button" (click)="addProjectDevice()">确认新增</a>
+          <a class="button" (click)="editProjectDevice()">确认修改</a>
           <a class="button grey" (click)="goBack()">取消</a>
         </div>
       </section>

@@ -25,17 +25,22 @@ export class ProjectService {
     getProjectReport: '/webapi/report',
     getProjectDetailsManage: '/webapi/manage_project',
     getProjectGmListManage: '/webapi/manage_project_gm_list',
-    getProjectUserListManage:'/webapi/manage_project_user_list',
-    getProjectDeviceListManage:'/webapi/manage_project_device_list',
+    getProjectUserListManage: '/webapi/manage_project_user_list',
+    getProjectDeviceListManage: '/webapi/manage_project_device_list',
+    getProjectDeviceDetailsManage: '/webapi/manage_project_device',
+    getProjectDeviceIotCardListManage: '/webapi/iotcard_list',
 
-    editProjectDetailsManage:'/webapi/project',
-    addProjectGmManage:'/webapi/manage_project_gm',
-    deleteProjectGmManage:'/webapi/manage_project_gm',
-    addProjectUserManage:'/webapi/manage_project_user',
-    deleteProjectUserManage:'/webapi/manage_project_user',
+    editProjectDetailsManage: '/webapi/project',
 
+    addProjectGmManage: '/webapi/manage_project_gm',
+    deleteProjectGmManage: '/webapi/manage_project_gm',
 
-    addProjectDeviceManage:'/webapi/manage_project_device_and_user'
+    addProjectUserManage: '/webapi/manage_project_user',
+    deleteProjectUserManage: '/webapi/manage_project_user',
+
+    addProjectDeviceManage: '/webapi/manage_project_device_and_user',
+    editProjectDeviceManage: '/webapi/manage_project_device',
+    deleteProjectDeviceManage:'/webapi/manage_project_device'
   };
 
   private codeHash: any;
@@ -51,7 +56,7 @@ export class ProjectService {
   }
 
   gsevenRequestViaGet(target, opts) {
-    const uri=this.serviceUrl[target];
+    const uri = this.serviceUrl[target];
     const param = this.libService.generateHttpGetSearchParams(opts);
     return this.http.get(`${uri}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
       .then((data) => {
@@ -62,8 +67,8 @@ export class ProjectService {
         }
       })
   }
-  gsevenRequestViaDelete(target,opts){
-    const uri=this.serviceUrl[target];
+  gsevenRequestViaDelete(target, opts) {
+    const uri = this.serviceUrl[target];
     const param = this.libService.generateHttpGetSearchParams(opts);
     return this.http.delete(`${uri}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
       .then((data) => {
@@ -74,8 +79,8 @@ export class ProjectService {
         }
       })
   }
-  gsevenRequestViaPost(target,opts){
-    const postData=this.libService.generateHttpPostSearchParams(opts);
+  gsevenRequestViaPost(target, opts) {
+    const postData = this.libService.generateHttpPostSearchParams(opts);
     return this.http.post(this.serviceUrl[target], postData).map(res => res.json()).toPromise()
       .then((data) => {
         if (data.err_code === 200) {
@@ -85,8 +90,8 @@ export class ProjectService {
         }
       })
   }
-  gsevenRequestViaPut(target,opts){
-    const postData=this.libService.generateHttpPostSearchParams(opts);
+  gsevenRequestViaPut(target, opts) {
+    const postData = this.libService.generateHttpPostSearchParams(opts);
     return this.http.put(this.serviceUrl[target], postData).map(res => res.json()).toPromise()
       .then((data) => {
         if (data.err_code === 200) {
@@ -96,7 +101,7 @@ export class ProjectService {
         }
       })
   }
-  
+
 
   getProjectList(agencyId: string) {
     const param = this.libService.generateHttpGetSearchParams({
@@ -201,67 +206,105 @@ export class ProjectService {
       })
   }
 
-  public getProjectDeviceListManage(pid:string,page?:number,size?:number,keyword?:string) {
+  public getProjectDeviceListManage(pid: string, page?: number, size?: number, keyword?: string) {
     return this.gsevenRequestViaGet('getProjectDeviceListManage', {
       efairyproject_id: pid,
       page: page,
       size: size,
-      keyword:keyword
+      keyword: keyword
     })
   }
 
-  public getProjectGmListManage(pid:string,page?:number,size?:number,keyword?:string) {
+  public getProjectGmListManage(pid: string, page?: number, size?: number, keyword?: string) {
     return this.gsevenRequestViaGet('getProjectGmListManage', {
       efairyproject_id: pid,
       page: page,
       size: size,
-      keyword:keyword
+      keyword: keyword
     })
   }
 
-  public getProjectUserListManage(pid:string,page?:number,size?:number,keyword?:string) {
+  public getProjectUserListManage(pid: string, page?: number, size?: number, keyword?: string) {
     return this.gsevenRequestViaGet('getProjectUserListManage', {
       efairyproject_id: pid,
       page: page,
       size: size,
-      keyword:keyword
+      keyword: keyword
     })
   }
 
-  public addProjectGm(pid:string,phone:string,name:string){
-    return this.gsevenRequestViaPost('addProjectGmManage',{
-      efairyuser_phonenumber:phone,
-      efairyuser_nickname:name,
-      efairyproject_id:pid
-    })
+  public getProjectDeviceIotCardListManageObservable(cardNumber: string, lastId?: string, size?: number) {
+    const uri = this.serviceUrl['getProjectDeviceIotCardListManage'];
+    const param = this.libService.generateHttpGetSearchParams({
+      efairyiotcard_number: cardNumber,
+      last_id: lastId,
+      size: size
+    });
+    return this.http.get(`${uri}?access_token=${param.token}`, { search: param.search })
   }
-  public deleteProjectGm(pid,gmId){
-    return this.gsevenRequestViaDelete('deleteProjectGmManage',{
-      efairyproject_id:pid,
-      efairyproject_gm_id_list:JSON.stringify([gmId])
-    })
-  }
-  public addProjectUser(pid:string,phone:string,name:string){
-    return this.gsevenRequestViaPost('addProjectUserManage',{
-      efairyuser_phonenumber:phone,
-      efairyuser_nickname:name,
-      efairyproject_id:pid
-    })
-  }
-  public deleteProjectUser(pid,userId){
-    return this.gsevenRequestViaDelete('deleteProjectUserManage',{
-      efairyproject_id:pid,
-      efairyproject_user_id_list:JSON.stringify([userId])
+
+  public getProjectDeviceIotCardListManage(cardNumber: string, lastId?: string, size?: number) {
+    return this.gsevenRequestViaGet('getProjectDeviceIotCardListManage', {
+      efairyiotcard_number: cardNumber,
+      last_id: lastId,
+      size: size
     })
   }
 
 
-  public editProjectDetailsManage(opts){
-    return this.gsevenRequestViaPut('editProjectDetailsManage',opts)
+
+
+  public addProjectGm(pid: string, phone: string, name: string) {
+    return this.gsevenRequestViaPost('addProjectGmManage', {
+      efairyuser_phonenumber: phone,
+      efairyuser_nickname: name,
+      efairyproject_id: pid
+    })
+  }
+  public deleteProjectGm(pid, gmId) {
+    return this.gsevenRequestViaDelete('deleteProjectGmManage', {
+      efairyproject_id: pid,
+      efairyproject_gm_id_list: JSON.stringify([gmId])
+    })
+  }
+  public addProjectUser(pid: string, phone: string, name: string) {
+    return this.gsevenRequestViaPost('addProjectUserManage', {
+      efairyuser_phonenumber: phone,
+      efairyuser_nickname: name,
+      efairyproject_id: pid
+    })
+  }
+  public deleteProjectUser(pid, userId) {
+    return this.gsevenRequestViaDelete('deleteProjectUserManage', {
+      efairyproject_id: pid,
+      efairyproject_user_id_list: JSON.stringify([userId])
+    })
   }
 
- public addProjectDeviceManage(opts){
-   return this.gsevenRequestViaPost('addProjectDeviceManage',opts);
- }
+  public deleteProjectDevice(pid, deviceId){
+    return this.gsevenRequestViaDelete('deleteProjectDeviceManage', {
+      efairyproject_id: pid,
+      efairydevice_id_list: JSON.stringify([deviceId])
+    })
+  }
+
+  public getProjectDeviceDetailsManage(pid, deviceId) {
+    return this.gsevenRequestViaGet('getProjectDeviceDetailsManage', {
+      efairyproject_id: pid,
+      efairydevice_id: deviceId
+    })
+  }
+
+  public editProjectDetailsManage(opts) {
+    return this.gsevenRequestViaPut('editProjectDetailsManage', opts)
+  }
+
+  public addProjectDeviceManage(opts) {
+    return this.gsevenRequestViaPost('addProjectDeviceManage', opts);
+  }
+
+  public editProjectDeviceManage(opts){
+    return this.gsevenRequestViaPut('editProjectDeviceManage', opts);
+  }
 
 }

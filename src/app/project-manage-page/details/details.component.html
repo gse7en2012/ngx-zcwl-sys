@@ -126,10 +126,10 @@
                   <span>{{item.efairydevice_install_time}}</span>
                 </td>
               <td>
-                <a (click)="item.isEdit=true" *ngIf="!item.isEdit">修改</a>
+                <a  [routerLink]="['edit_device/'+item.efairydevice_id]">修改</a>
                 <a (click)="editGm(item)" *ngIf="item.isEdit">提交</a>
                 <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
-                <a (click)="deleteGm(item)" *ngIf="!item.isEdit">删除</a>
+                <a (click)="deleteDevice(item)" *ngIf="!item.isEdit">删除</a>
               </td>
             </tr>
             <tr *ngIf="isAddingDevice">

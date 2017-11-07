@@ -34,7 +34,7 @@ p.no-data{
         }
         .right-arrow{
             display: inline-block;
-            border: 2px solid #eee;
+            border: 2px solid #888;
             height: 10px;
             line-height: 12px;
             transform: rotate(45deg);
@@ -71,6 +71,13 @@ p.no-data{
             &.cur,&:hover{
                 background: #f1f1f1;
                 color: #276ab0;
+            }
+            &.no-child{
+                cursor: default;
+                &:hover{
+                    background: #272b2e;
+                    color: #888;
+                }
             }
         }
     }

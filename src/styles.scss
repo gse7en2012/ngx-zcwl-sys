@@ -112,3 +112,13 @@ table{
     margin-bottom: 100px;
 }
 
+.ngui-auto-complete-wrapper{
+    display: inline-block;
+}
+.ngui-auto-complete > ul li {
+    padding: 2px 5px;
+    border-bottom: 1px solid #eee;
+    height: 22px;
+    line-height: 22px;
+}
+
