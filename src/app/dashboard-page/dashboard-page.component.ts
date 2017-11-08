@@ -36,95 +36,8 @@ export class DashboardPageComponent implements OnInit {
       mapStyle: "amap://styles/grey"
     });
 
-    this.rightChartOption = {
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
-      },
-      legend: {
-        data: ['2011年', '2012年'],
-        textStyle: {
-          color: '#aaa'
-        },
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
-        backgroundColor:"transparent"
-      },
-      xAxis: {
-        type: 'value',
-        boundaryGap: [0, 0.01]
-      },
-      yAxis: {
-        type: 'category',
-        data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
-      },
-      series: [
-        {
-          name: '2011年',
-          type: 'bar',
-          data: [18203, 23489, 29034, 104970, 131744, 630230]
-        },
-        {
-          name: '2012年',
-          type: 'bar',
-          data: [19325, 23438, 31000, 121594, 134141, 681807]
-        }
-      ]
-    };
 
-    this.leftChartOption = {
-      tooltip: {
-        trigger: 'item',
-        formatter: "{a} <br/>{b}: {c} ({d}%)"
-      },
-      legend: {
-        orient: 'vertical',
-        x: 'right',
-        textStyle: {
-          color: '#aaa'
-        },
-        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-      },
-      series: [
-        {
-          name: '访问来源',
-          type: 'pie',
-          radius: ['50%', '70%'],
-          avoidLabelOverlap: false,
-          label: {
-            normal: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: '30',
-                fontWeight: 'bold'
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            { value: 335, name: '直接访问' },
-            { value: 310, name: '邮件营销' },
-            { value: 234, name: '联盟广告' },
-            { value: 135, name: '视频广告' },
-            { value: 1548, name: '搜索引擎' }
-          ]
-        }
-      ]
-    }
+
 
     this.rightMap = new AMap.Map('r-map', {
       zoomEnable: true,
@@ -150,6 +63,7 @@ export class DashboardPageComponent implements OnInit {
     this.getAllProject();
 
     this.getLastAlarmDevice();
+    this.getProjectReport();
   }
 
   testRenderMapPolygon() {
@@ -287,7 +201,143 @@ export class DashboardPageComponent implements OnInit {
 
 
   getProjectReport() {
+    this.projectService.getProjectMonitorData().then((data) => {
+      console.log(data);
+      this.setServiceChartDataOpts(data.service_data);
+      this.setServiceChartRightDataOpts(data.alarm_record);
+    })
+  }
 
+  setServiceChartDataOpts(serviceData) {
+    this.leftChartOption = {
+      tooltip: {
+        trigger: 'item',
+        formatter: "{a} <br/>{b}: {c} ({d}%)"
+      },
+      legend: {
+        orient: 'vertical',
+        x: 'right',
+        textStyle: {
+          color: '#aaa'
+        },
+        data: ['现场服务次数', '排除电气隐患次数', '待排除电气隐患次数', , '维护次数','未处理报警次数']
+      },
+      series: [
+        {
+          name: '数据详情',
+          type: 'pie',
+          radius: ['46%', '70%'],
+          center: ['35%', '50%'],
+          avoidLabelOverlap: false,
+          label: {
+            normal: {
+              show: false,
+              position: 'center'
+            },
+            emphasis: {
+              show: true,
+              textStyle: {
+                fontSize: '18',
+                fontWeight: 'bold'
+              }
+            }
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
+          },
+          data: [
+            { value: serviceData.efairyfieldservice_times, name: '现场服务次数' },
+            { value: serviceData.efairyhiddendanger_fixed_times, name: '排除电气隐患次数' },
+            { value: serviceData.efairyhiddendanger_number, name: '待排除电气隐患次数' },
+            { value: serviceData.efairymtrecord_times, name: '维护次数' },
+            { value: serviceData.efairyalarmrecord_unhandle_times, name: '未处理报警次数' },
+          ]
+        }
+      ]
+    }
+
+  }
+
+  setServiceChartRightDataOpts(data) {
+    this.rightChartOption = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        // data: ['2011年', '2012年'],
+        textStyle: {
+          color: '#aaa'
+        },
+      },
+      grid: {
+        left: '5%',
+        right: '7%',
+        bottom: '8%',
+        top:'8%',
+        containLabel: true,
+        backgroundColor: "transparent"
+      },
+      xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01]
+      },
+      yAxis: {
+        type: 'category',
+        data: [
+          {
+            value: '接入点位',
+            textStyle: {
+              color: '#d78716',
+            }
+          },
+          {
+            value: '报警点位',
+            textStyle: {
+              color: '#d11e5b',
+            }
+          },
+          {
+            value:    '报警数',
+          },
+       
+        ]
+      },
+      series: [
+        {
+          // name: '2012年',
+          type: 'bar',
+          barWidth: '35%',
+          data: [
+            {
+              value: data.efairydevice_number,
+              itemStyle: {
+                normal: {
+                  color: '#d78716'
+                }
+              }
+            },
+            {
+              value: data.efairydevice_alarm_device_number,
+              itemStyle: {
+                normal: {
+                  color: '#d11e5b'
+                }
+              }
+            },
+            {
+              value:  data.efairydevice_alarm_times,
+            
+            },
+           
+          ]
+        }
+      ]
+    };
   }
 
   getLastAlarmDevice() {

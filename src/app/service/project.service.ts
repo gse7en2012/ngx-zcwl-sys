@@ -23,6 +23,7 @@ export class ProjectService {
     getAgencyListLv2: '/webapi/lv2_agency_list',
     getProjectAlarmData: '/webapi/project_alarm_data',
     getProjectReport: '/webapi/report',
+    getProjectMonitorData:'/webapi/monitor_data',
     getProjectDetailsManage: '/webapi/manage_project',
     getProjectGmListManage: '/webapi/manage_project_gm_list',
     getProjectUserListManage: '/webapi/manage_project_user_list',
@@ -305,6 +306,10 @@ export class ProjectService {
 
   public editProjectDeviceManage(opts){
     return this.gsevenRequestViaPut('editProjectDeviceManage', opts);
+  }
+
+  public getProjectMonitorData(){
+    return this.gsevenRequestViaGet('getProjectMonitorData',{})
   }
 
 }

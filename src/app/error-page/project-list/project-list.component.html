@@ -4,16 +4,16 @@
     </div>
     <div class="content">
   
-      <div class="loading" *ngIf="loading">
-        <div class="sk-wave">
-          <div class="sk-rect sk-rect1"></div>
-          <div class="sk-rect sk-rect2"></div>
-          <div class="sk-rect sk-rect3"></div>
-          <div class="sk-rect sk-rect4"></div>
-          <div class="sk-rect sk-rect5"></div>
-        </div>
-      </div>
+      <loading *ngIf="loading"></loading>
   
+      <div class="pagination">
+        共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+        <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+        <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+        <a class="btn" (click)="changePage()">GO</a>
+      </div>
+
   
       <div class="device-list" *ngIf="!loading&&projectListPageShow.length>0">
         <a *ngFor="let branch of projectListPageShow" class="section" [routerLink]="['branch/'+branch.efairyproject_id]">
@@ -33,14 +33,7 @@
           </footer>
         </a>
   
-        <div class="pagination">
-          共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
-          <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
-          <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
-          <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
-          <a class="btn" (click)="changePage()">GO</a>
-        </div>
-  
+       
       </div>
   
       <p *ngIf="projectListPageShow.length==0&&!loading" class="no-data">暂无数据</p>
