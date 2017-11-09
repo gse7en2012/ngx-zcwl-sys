@@ -16,8 +16,8 @@
     </ul>
 
     <div class="tab-card" *ngIf="tabIndex==1">
+      <h3 class="title">项目信息</h3>
       <section class="form">
-        <h3 class="title">项目信息</h3>
         <div class="row">
           <label>项目名称</label>
           <input type="text" [(ngModel)]="proejctInfo.efairyproject_name">
@@ -32,9 +32,16 @@
         </div>
         <div class="row">
           <label>项目地址</label>
-          <input type="text" [(ngModel)]="proejctInfo.efairyproject_address">
+          <input type="text" [(ngModel)]="proejctInfo.efairyproject_address" id="address">
         </div>
-
+        <div class="row">
+          <label>项目经度</label>
+          <input type="text" [(ngModel)]="proejctInfo.efairyproject_location_lng">
+        </div>
+        <div class="row">
+          <label>项目纬度</label>
+          <input type="text" [(ngModel)]="proejctInfo.efairyproject_location_lat">
+        </div>
         <div class="row">
           <label>项目备注</label>
           <textarea [(ngModel)]="proejctInfo.efairyproject_description"></textarea>
@@ -46,20 +53,28 @@
           <a class="button grey">取消</a>
         </div>
       </section>
+      <div class="a-map">
+        <div id="map"></div>
+      </div>
     </div>
 
     <div class="tab-card" *ngIf="tabIndex==2">
       <h3 class="title">管理员列表
         <a class="button" (click)="addNewGm()">新增管理员</a>
+        <div class="search-box">
+          <input class="search" placeholder="管理员ID或管理员名称" [(ngModel)]="gmKeyword">
+          <img src="assets/image/search_w.png" class="icon" (click)="searchGm()">
+        </div>
       </h3>
-      <table class="table">
+      <loading [hidden]='!gmLoading'></loading>
+      <table class="table" [hidden]='gmLoading'>
         <tr>
           <th>管理员编号</th>
           <th>管理员名称</th>
           <th>管理员手机</th>
           <th>操作</th>
         </tr>
-        <tr *ngFor="let item of gmListShow">
+        <tr *ngFor="let item of gmList">
           <td>{{item.efairyuser_id}}</td>
           <td>
             <span *ngIf="!item.isEdit">{{item.efairyuser_nickname}}</span>
@@ -75,6 +90,9 @@
             <!-- <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a> -->
             <a (click)="deleteGm(item)" *ngIf="!item.isEdit">删除</a>
           </td>
+        </tr>
+        <tr *ngIf="gmList.length==0">
+          <td colspan="4">没有符合条件的数据</td>
         </tr>
         <tr *ngIf="isAddingGm">
           <td>系统自动生成</td>
@@ -101,114 +119,132 @@
     </div>
 
     <div class="tab-card" *ngIf="tabIndex==3">
-        <h3 class="title">设备列表
-            <a class="button" [routerLink]="['new_device']">新增设备</a>
-          </h3>
-          <table class="table">
-            <tr>
-              <th>设备编号</th>
-              <th>设备名称</th>
-              <th>设备地址</th>
-              <th>创建日期</th>
-              <th>操作</th>
-            </tr>
-            <tr *ngFor="let item of deviceListShow">
-              <td>{{item.efairydevice_uuid}}</td>
-              <td>
-                <span *ngIf="!item.isEdit">{{item.efairydevice_name}}</span>
-                <input *ngIf="item.isEdit" [(ngModel)]="item.efairydevice_name">
-              </td>
-              <td>
-                <span *ngIf="!item.isEdit">{{item.efairydevice_address}}</span>
-                <input *ngIf="item.isEdit" [(ngModel)]="item.efairydevice_address">
-              </td>
-              <td>
-                  <span>{{item.efairydevice_install_time}}</span>
-                </td>
-              <td>
-                <a  [routerLink]="['edit_device/'+item.efairydevice_id]">修改</a>
-                <a (click)="editGm(item)" *ngIf="item.isEdit">提交</a>
-                <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
-                <a (click)="deleteDevice(item)" *ngIf="!item.isEdit">删除</a>
-              </td>
-            </tr>
-            <tr *ngIf="isAddingDevice">
-              <td>系统自动生成</td>
-              <td>
-                <input [(ngModel)]="addGmNickname">
-              </td>
-              <td>
-                <input [(ngModel)]="addGmPhone">
-              </td>
-              <td>
-                <a (click)="ensureAddNewGm()">确定添加</a>
-                <a (click)="cancelAddNewGm()">取消</a>
-              </td>
-            </tr>
-          </table>
-    
-          <div class="pagination">
-            共{{devicePageMax}}页 / {{deviceTotal}}条数据 （当前第{{devicePage}}页）
-            <a class="btn " (click)="prevDevicePage()" [ngClass]="{btn:true,disabled:devicePage<=1}">上一页</a>
-            <a class="btn" (click)="nextDevicePage()" [ngClass]="{btn:true,disabled:devicePage>=devicePageMax}">下一页</a> 前往
-            <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpDevicePage"> 页
-            <a class="btn" (click)="changeDevicePage()">GO</a>
-          </div>    
+      <h3 class="title">设备列表
+        <a class="button" [routerLink]="['new_device']">新增设备</a>
+        <div class="search-box">
+          <input class="search" placeholder="设备ID或设备名称" [(ngModel)]="deviceKeyword">
+          <img src="assets/image/search_w.png" class="icon" (click)="searchDevice()">
+        </div>
+
+      </h3>
+      <loading [hidden]='!deviceLoading'></loading>
+      <table class="table" [hidden]="deviceLoading">
+        <tr>
+          <th>设备编号</th>
+          <th>设备名称</th>
+          <th>设备地址</th>
+          <th>创建日期</th>
+          <th>操作</th>
+        </tr>
+        <tr *ngFor="let item of deviceList">
+          <td>{{item.efairydevice_uuid}}</td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairydevice_name}}</span>
+            <input *ngIf="item.isEdit" [(ngModel)]="item.efairydevice_name">
+          </td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairydevice_address}}</span>
+            <input *ngIf="item.isEdit" [(ngModel)]="item.efairydevice_address">
+          </td>
+          <td>
+            <span>{{item.efairydevice_install_time}}</span>
+          </td>
+          <td>
+            <a [routerLink]="['edit_device/'+item.efairydevice_id]">修改</a>
+            <a (click)="editGm(item)" *ngIf="item.isEdit">提交</a>
+            <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
+            <a (click)="deleteDevice(item)" *ngIf="!item.isEdit">删除</a>
+          </td>
+        </tr>
+        <tr *ngIf="deviceList.length==0">
+          <td colspan="5">没有符合条件的数据</td>
+        </tr>
+        <tr *ngIf="isAddingDevice">
+          <td>系统自动生成</td>
+          <td>
+            <input [(ngModel)]="addGmNickname">
+          </td>
+          <td>
+            <input [(ngModel)]="addGmPhone">
+          </td>
+          <td>
+            <a (click)="ensureAddNewGm()">确定添加</a>
+            <a (click)="cancelAddNewGm()">取消</a>
+          </td>
+        </tr>
+      </table>
+
+      <div class="pagination">
+        共{{devicePageMax}}页 / {{deviceTotal}}条数据 （当前第{{devicePage}}页）
+        <a class="btn " (click)="prevDevicePage()" [ngClass]="{btn:true,disabled:devicePage<=1}">上一页</a>
+        <a class="btn" (click)="nextDevicePage()" [ngClass]="{btn:true,disabled:devicePage>=devicePageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpDevicePage"> 页
+        <a class="btn" (click)="changeDevicePage()">GO</a>
+      </div>
     </div>
 
     <div class="tab-card" *ngIf="tabIndex==4">
-        <h3 class="title">用户列表
-          <a class="button" (click)="addNewUser()">新增用户</a>
-        </h3>
-        <table class="table">
-          <tr>
-            <th>用户编号</th>
-            <th>用户名称</th>
-            <th>用户手机</th>
-            <th>操作</th>
-          </tr>
-          <tr *ngFor="let item of userListShow">
-            <td>{{item.efairyuser_id}}</td>
-            <td>
-              <span *ngIf="!item.isEdit">{{item.efairyuser_nickname}}</span>
-              <!-- <input *ngIf="item.isEdit" [(ngModel)]="item.efairyuser_nickname"> -->
-            </td>
-            <td>
-              <span *ngIf="!item.isEdit">{{item.efairyuser_phonenumber}}</span>
-              <!-- <input *ngIf="item.isEdit" [(ngModel)]="item.efairyuser_phonenumber"> -->
-            </td>
-            <td>
-              <!-- <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a> -->
-              <!-- <a (click)="editGm(item)" *ngIf="item.isEdit">提交</a> -->
-              <!-- <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a> -->
-              <a (click)="deleteUser(item)" *ngIf="!item.isEdit">删除</a>
-            </td>
-          </tr>
-          <tr *ngIf="isAddingUser">
-            <td>系统自动生成</td>
-            <td>
-              <input [(ngModel)]="addUserNickname">
-            </td>
-            <td>
-              <input [(ngModel)]="addUserPhone">
-            </td>
-            <td>
-              <a (click)="ensureAddNewUser()">确定添加</a>
-              <a (click)="cancelAddNewUser()">取消</a>
-            </td>
-          </tr>
-        </table>
-  
-        <div class="pagination">
-          共{{userPageMax}}页 / {{userTotal}}条数据 （当前第{{userPage}}页）
-          <a class="btn " (click)="prevUserPage()" [ngClass]="{btn:true,disabled:userPage<=1}">上一页</a>
-          <a class="btn" (click)="nextUserPage()" [ngClass]="{btn:true,disabled:userPage>=userPageMax}">下一页</a> 前往
-          <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpUserPage"> 页
-          <a class="btn" (click)="changeUserPage()">GO</a>
+      <h3 class="title">用户列表
+        <a class="button" (click)="addNewUser()">新增用户</a>
+        <div class="search-box">
+          <input class="search" placeholder="用户ID或用户名称" [(ngModel)]="userKeyword">
+          <img src="assets/image/search_w.png" class="icon" (click)="searchUser()">
         </div>
-  
-  
+
+      </h3>
+      <loading [hidden]='!userLoading'></loading>
+      <table class="table" [hidden]='userLoading'>
+        <tr>
+          <th>用户编号</th>
+          <th>用户名称</th>
+          <th>用户手机</th>
+          <th>操作</th>
+        </tr>
+        <tr *ngFor="let item of userList">
+          <td>{{item.efairyuser_id}}</td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairyuser_nickname}}</span>
+            <!-- <input *ngIf="item.isEdit" [(ngModel)]="item.efairyuser_nickname"> -->
+          </td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairyuser_phonenumber}}</span>
+            <!-- <input *ngIf="item.isEdit" [(ngModel)]="item.efairyuser_phonenumber"> -->
+          </td>
+          <td>
+            <!-- <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a> -->
+            <!-- <a (click)="editGm(item)" *ngIf="item.isEdit">提交</a> -->
+            <!-- <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a> -->
+            <a (click)="deleteUser(item)" *ngIf="!item.isEdit">删除</a>
+          </td>
+        </tr>
+        <tr *ngIf="userList.length==0">
+          <td colspan="4">没有符合条件的数据</td>
+        </tr>
+        <tr *ngIf="isAddingUser">
+          <td>系统自动生成</td>
+          <td>
+            <input [(ngModel)]="addUserNickname">
+          </td>
+          <td>
+            <input [(ngModel)]="addUserPhone">
+          </td>
+          <td>
+            <a (click)="ensureAddNewUser()">确定添加</a>
+            <a (click)="cancelAddNewUser()">取消</a>
+          </td>
+        </tr>
+      </table>
+
+      <div class="pagination">
+        共{{userPageMax}}页 / {{userTotal}}条数据 （当前第{{userPage}}页）
+        <a class="btn " (click)="prevUserPage()" [ngClass]="{btn:true,disabled:userPage<=1}">上一页</a>
+        <a class="btn" (click)="nextUserPage()" [ngClass]="{btn:true,disabled:userPage>=userPageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpUserPage"> 页
+        <a class="btn" (click)="changeUserPage()">GO</a>
       </div>
+
+
+    </div>
 
 
 

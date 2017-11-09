@@ -1,3 +1,26 @@
-<p>
-  user-manage-page works!
-</p>
+<div class="project-manage">
+  <div class="left">
+    <div class="agency-list">
+
+      <section>
+        <div [ngClass]="{'row-header':true}">
+          用户列表
+          <span class="right-arrow"></span>
+        </div>
+      </section>
+      <section>
+        <div [ngClass]="{'row-header':true}">
+          管理员列表
+          <span class="right-arrow"></span>
+        </div>
+      </section>
+      <section>
+        <div [ngClass]="{'row-header':true}">
+          设备列表
+          <span class="right-arrow"></span>
+        </div>
+      </section>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

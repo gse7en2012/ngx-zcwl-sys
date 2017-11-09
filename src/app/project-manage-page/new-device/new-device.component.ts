@@ -186,13 +186,10 @@ export class NewDeviceComponent implements OnInit {
   }
 
   initAmap() {
-
     this.bigMap = new AMap.Map('map', {
       resizeEnable: true,
       zoom: 13,
     });
-
-
 
     AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], () => {
       var autoOptions = {

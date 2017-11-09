@@ -3,7 +3,7 @@
     <p class="bread-crumb">实时数据 > 全部</p>
   </div>
   <div class="content">
-    
+
     <loading *ngIf="loading"></loading>
 
     <div class="pagination">
@@ -16,6 +16,14 @@
 
     <div class="device-list" *ngIf="!loading&&projectListPageShow.length!=0">
       <a *ngFor="let branch of projectListPageShow" class="section" [routerLink]="['branch/'+branch.efairyproject_id]">
+        <div class="float">
+          <a [routerLink]="['/admin/warning/agency/'+agencyId+'/branch/'+branch.efairyproject_id]">
+            <img src="assets/image/bell.png">
+          </a>
+          <a [routerLink]="['/admin/mistake/agency/'+agencyId+'/branch/'+branch.efairyproject_id]">
+            <img src="assets/image/tools.png">
+          </a>
+        </div>
         <h3 class="device-name">{{branch.efairyproject_name}}</h3>
         <div class="device-pic">
           <img src="assets/image/device.png">
@@ -32,7 +40,7 @@
         </footer>
       </a>
 
-     
+
 
     </div>
 

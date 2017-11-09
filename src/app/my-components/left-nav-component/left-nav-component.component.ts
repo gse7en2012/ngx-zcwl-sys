@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectService } from '../../service/project.service';
 
 
@@ -16,9 +16,15 @@ export class LeftNavPartComponent implements OnInit {
   public loading: boolean = true;
   public userLevel: number;
   public agencyList = [];
-  constructor(private projectService: ProjectService, private router: Router, ) { }
+  constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.route.params.subscribe(params => {
+      console.log(params,location.href);
+      
+    });
+
 
     const isNeedRedirect = !location.href.split(`${this.parentRouterParam}/`)[1];
     this.projectService.getAgencyList().then((data) => {

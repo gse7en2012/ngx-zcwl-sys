@@ -93,7 +93,7 @@
         .item{
             float: left;
             width: 32.5%;
-            height: 320px;
+            height: 340px;
             background: rgba(13, 16, 24, 0.8);
             border: 1px solid #555;
             padding: 10px;
@@ -101,6 +101,35 @@
             .title{
                 margin: 0;
                 line-height: 1.5;
+                font-size: 18px;
+            }
+            .service-total{
+                overflow: hidden;
+                margin: 10px 0;
+                float: right;
+                p{
+                    float: left;
+                    margin: 8px 2px 0;
+                    color: #aaa;
+                    font-size: 15px;
+                }
+                span{
+                    float: left;
+                    margin-right: -2px;
+                    margin-left: -1px;
+                    width: 20px;
+                    height: 25px;
+                    background: url('../../assets/image/num_spr.png') no-repeat 0 0;
+                    &.num2{ background-position:-20px 0; }
+                    &.num3{ background-position:-40px 0; }
+                    &.num4{ background-position:-60px 0; }
+                    &.num5{ background-position:-80px 0; }
+                    &.num6{ background-position:-100px 0; }
+                    &.num7{ background-position:-120px 0; }
+                    &.num8{ background-position:-140px 0; }
+                    &.num9{ background-position:-160px 0; }
+                    &.num0{ background-position:-180px 0; }
+                }
             }
             .content{
                 margin-top: 10px;
@@ -109,14 +138,14 @@
                 overflow: auto;
                 .time{
                     font-size: 15px;
-                    color: #ccc;
-                    margin: 5px 0;
+                    color: #eee;
+                    margin: 7px 0;
                 }
                 .details{
                     font-size: 14px;
                     line-height: 18px;
                     padding-left: 15px;
-                    color: #aaa;
+                    color: #ccc;
                     margin-bottom: 20px;
                 }
             }
@@ -134,8 +163,8 @@
                border-bottom:4px solid #6639a6;
             }
             &.red{
-               border-bottom:4px solid #d11e5b; 
-               .title{color: #d11e5b;}
+               border-bottom:4px solid #3490de; 
+               .title{color: #3490de;}
             }
             &.orange{
                 border-bottom:4px solid #d78716;

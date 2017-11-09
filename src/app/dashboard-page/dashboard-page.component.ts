@@ -23,7 +23,7 @@ export class DashboardPageComponent implements OnInit {
   public deviceAlarmData: any;
   public rightChartOption: any;
   public leftChartOption: any;
-
+  public servicePlaceTime: string;
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
 
@@ -32,7 +32,7 @@ export class DashboardPageComponent implements OnInit {
   ngOnInit() {
     this.bigMap = new AMap.Map('l-map', {
       resizeEnable: true,
-      zoom: 10,
+      zoom: 12,
       mapStyle: "amap://styles/grey"
     });
 
@@ -116,16 +116,19 @@ export class DashboardPageComponent implements OnInit {
         map: this.rightMap
       });
       this.rightMap.on('click', (e) => {
+        console.log(e);
 
-        districtExplorer.locatePosition(e.lnglat, (err, features) => {
+        districtExplorer.locatePosition(e.lnglat, (err, features) => {          
           if (err) {
             console.error(err);
             return;
           }
           const cityCenter = features[2].properties.center;
           this.rightMap.emit('fire', {
-            lat: cityCenter[1],
-            lng: cityCenter[0]
+            // lat: cityCenter[1],
+            // lng: cityCenter[0]
+            lat: e.lnglat.lat,
+            lng: e.lnglat.lng
           });
           renderFeatures(features);
         }, {
@@ -209,6 +212,17 @@ export class DashboardPageComponent implements OnInit {
   }
 
   setServiceChartDataOpts(serviceData) {
+
+    this.servicePlaceTime = Array.prototype.slice.call(serviceData.efairyfieldservice_times.toString()).map(item => {
+      const klass = {};
+      klass['num' + item] = true;
+      return {
+        klass: klass,
+        v: item
+      }
+    })
+
+
     this.leftChartOption = {
       tooltip: {
         trigger: 'item',
@@ -217,10 +231,18 @@ export class DashboardPageComponent implements OnInit {
       legend: {
         orient: 'vertical',
         x: 'right',
+        itemWidth: 14,
+        itemHeight: 14,
         textStyle: {
-          color: '#aaa'
+          color: '#eee',
+          fontSize: 14
         },
-        data: ['现场服务次数', '排除电气隐患次数', '待排除电气隐患次数', , '维护次数','未处理报警次数']
+        data: [
+          '未处理报警 ' + serviceData.efairyalarmrecord_unhandle_times + ' 次',
+          '排除电气隐患 ' + serviceData.efairyhiddendanger_fixed_times + ' 次',
+          '待排除电气隐患 ' + serviceData.efairyhiddendanger_number + ' 次',
+          '维护 ' + serviceData.efairymtrecord_times + ' 次',
+        ]
       },
       series: [
         {
@@ -248,11 +270,11 @@ export class DashboardPageComponent implements OnInit {
             }
           },
           data: [
-            { value: serviceData.efairyfieldservice_times, name: '现场服务次数' },
-            { value: serviceData.efairyhiddendanger_fixed_times, name: '排除电气隐患次数' },
-            { value: serviceData.efairyhiddendanger_number, name: '待排除电气隐患次数' },
-            { value: serviceData.efairymtrecord_times, name: '维护次数' },
-            { value: serviceData.efairyalarmrecord_unhandle_times, name: '未处理报警次数' },
+            { value: serviceData.efairyalarmrecord_unhandle_times, name: '未处理报警 ' + serviceData.efairyalarmrecord_unhandle_times + ' 次' },
+            { value: serviceData.efairyhiddendanger_fixed_times, name: '排除电气隐患 ' + serviceData.efairyhiddendanger_fixed_times + ' 次' },
+            { value: serviceData.efairyhiddendanger_number, name: '待排除电气隐患 ' + serviceData.efairyhiddendanger_number + ' 次' },
+            { value: serviceData.efairymtrecord_times, name: '维护 ' + serviceData.efairymtrecord_times + ' 次' },
+
           ]
         }
       ]
@@ -278,13 +300,19 @@ export class DashboardPageComponent implements OnInit {
         left: '5%',
         right: '7%',
         bottom: '8%',
-        top:'8%',
+        top: '8%',
         containLabel: true,
         backgroundColor: "transparent"
       },
       xAxis: {
         type: 'value',
-        boundaryGap: [0, 0.01]
+        boundaryGap: [0, 0.01],
+        splitLine: {
+          show: false
+        },
+        // splitArea: {
+        //   show: true
+        // }
       },
       yAxis: {
         type: 'category',
@@ -293,18 +321,21 @@ export class DashboardPageComponent implements OnInit {
             value: '接入点位',
             textStyle: {
               color: '#d78716',
+              fontSize: 14
             }
           },
           {
             value: '报警点位',
             textStyle: {
               color: '#d11e5b',
+              fontSize: 14
             }
           },
           {
-            value:    '报警数',
+            value: '报警数',
+            fontSize: 14
           },
-       
+
         ]
       },
       series: [
@@ -330,10 +361,10 @@ export class DashboardPageComponent implements OnInit {
               }
             },
             {
-              value:  data.efairydevice_alarm_times,
-            
+              value: data.efairydevice_alarm_times,
+
             },
-           
+
           ]
         }
       ]

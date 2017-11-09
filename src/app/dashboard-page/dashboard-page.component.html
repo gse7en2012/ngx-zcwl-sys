@@ -46,11 +46,16 @@
     </div>
     <div class="item red">
         <h3 class="title">2017年服务数据</h3>
-        <div echarts [options]="leftChartOption" theme="macarons" class="chart" style="height:280px;"></div>
+        <div class="service-total">
+          <p>现场服务</p>
+          <span [ngClass]="item.klass" *ngFor="let item of servicePlaceTime"></span>
+          <p>次</p>
+        </div>
+        <div echarts [options]="leftChartOption" theme="macarons" class="chart" style="height:270px;clear:both;"></div>
     </div>
     <div class="item orange">
         <h3 class="title">2017年服务数据</h3>
-        <div echarts [options]="rightChartOption" theme="macarons" class="chart" style="height:280px;"></div>
+        <div echarts [options]="rightChartOption" theme="macarons" class="chart" style="height:300px;"></div>
     </div>
   </div>
 

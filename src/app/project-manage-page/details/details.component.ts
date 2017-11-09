@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ProjectService } from '../../service/project.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
+
+declare var AMap;
+declare var AMapUI;
+declare var moment;
 
 @Component({
   selector: 'app-details',
@@ -14,6 +19,10 @@ export class DetailsComponent implements OnInit {
   public tabIndex: number = 1;
   public projectId: string;
   public proejctInfo: any = {};
+
+  //map
+  public positionPicker: any;
+  public bigMap;
   //list var
   public gmList: any = [];
   public gmListShow: any;
@@ -31,31 +40,36 @@ export class DetailsComponent implements OnInit {
   public isAddingUser: boolean = false;
 
   //gm page
+  public gmLoading: boolean = false;
   public gmTotal: number = 0;
   public gmPageSize: number = 15;
   public gmPage: number = 1;
   public gmJumpPage: number = 1;
   public gmPageMax: number = 1;
   public jumpGmPage: number;
+  public gmKeyword: string;
 
   //devicepage
+  public deviceLoading: boolean = false;
   public deviceTotal: number = 0;
   public devicePageSize: number = 15;
   public devicePage: number = 1;
   public deviceJumpPage: number = 1;
   public devicePageMax: number = 1;
   public jumpDevicePage: number;
+  public deviceKeyword: string;
 
   //user page
+  public userLoading: boolean = false;
   public userTotal: number = 0;
   public userPageSize: number = 15;
   public userPage: number = 1;
   public userJumpPage: number = 1;
   public userPageMax: number = 1;
   public jumpUserPage: number;
+  public userKeyword: string;
 
-
-  constructor(private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router, ) { }
+  constructor(private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router, private zone: NgZone) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -73,6 +87,58 @@ export class DetailsComponent implements OnInit {
     this.getProjectGmList();
     this.getProjectUserList();
     this.getProjectDeviceList();
+  }
+
+  //map
+  initAmap(lng, lat) {
+    this.bigMap = new AMap.Map('map', {
+      resizeEnable: true,
+      zoom: 13,
+      center: [lng, lat]
+    });
+
+    AMap.plugin(['AMap.Autocomplete', 'AMap.PlaceSearch'], () => {
+      var autoOptions = {
+        input: "address"//使用联想输入的input的id
+      };
+      const autocomplete = new AMap.Autocomplete(autoOptions);
+      var placeSearch = new AMap.PlaceSearch({
+        city: '',
+        map: this.bigMap
+      });
+      AMap.event.addListener(autocomplete, "select", (e) => {
+        //TODO 针对选中的poi实现自己的功能
+        // console.log(e);
+
+        const centerPoint = new AMap.LngLat(e.poi.location.lng, e.poi.location.lat);
+        if (e.poi.location != '') {
+          this.positionPicker.start(centerPoint)
+        }
+      });
+    });
+
+    AMapUI.loadUI(['misc/PositionPicker'], (PositionPicker) => {
+      this.positionPicker = new PositionPicker({
+        mode: 'dragMarker',
+        map: this.bigMap
+      });
+      this.positionPicker.on('success', (positionResult) => {
+
+        this.zone.run(() => {
+          this.proejctInfo.efairyproject_address = positionResult.address;
+          this.proejctInfo.efairyproject_location_lng = positionResult.position.lng;
+          this.proejctInfo.efairyproject_location_lat = positionResult.position.lat;
+        })
+
+      });
+      this.positionPicker.on('fail', (positionResult) => {
+        // console.log(positionResult);
+      });
+
+      this.positionPicker.start(new AMap.LngLat(lng, lat));
+    });
+
+
   }
 
 
@@ -113,7 +179,7 @@ export class DetailsComponent implements OnInit {
   cancelAddNewGm() {
     this.isAddingGm = false;
   }
-  deleteDevice(device){
+  deleteDevice(device) {
     if (confirm('确定删除？')) {
       this.projectSerive.deleteProjectDevice(this.projectId, device.efairydevice_id).then((r) => {
         this.getProjectDeviceList();
@@ -155,43 +221,55 @@ export class DetailsComponent implements OnInit {
   getProejctInfo() {
     this.projectSerive.getProjectDetailsManage(this.projectId).then((data) => {
       this.proejctInfo = data.project_info;
+      this.initAmap(this.proejctInfo.efairyproject_location_lng, this.proejctInfo.efairyproject_location_lat);
     })
   }
 
   getProjectGmList() {
-    this.projectSerive.getProjectGmListManage(this.projectId).then((data) => {
+    this.gmLoading = true;
+    this.projectSerive.getProjectGmListManage(this.projectId, this.gmPage, this.gmPageSize, this.gmKeyword).then((data) => {
       this.gmList = data.gm_list;
       this.gmTotal = data.efairyproject_total_gms;
       this.gmPageMax = Math.ceil(this.gmTotal / this.gmPageSize)
-      this.renderGmData();
+      this.gmLoading = false;
     })
   }
 
   getProjectUserList() {
-    this.projectSerive.getProjectUserListManage(this.projectId).then((data) => {
+    this.userLoading = true;
+    this.projectSerive.getProjectUserListManage(this.projectId, this.userPage, this.userPageSize, this.userKeyword).then((data) => {
       this.userList = data.user_list;
       this.userTotal = data.efairyproject_total_users;
-      this.userPageMax = Math.ceil(this.userTotal / this.userPageSize)
-      this.renderUserData();
+      this.userPageMax = Math.ceil(this.userTotal / this.userPageSize);
+      this.userLoading = false;
+      // this.renderUserData();
     })
   }
 
   getProjectDeviceList() {
-    this.projectSerive.getProjectDeviceListManage(this.projectId).then((data) => {
+    this.deviceLoading = true;
+    this.projectSerive.getProjectDeviceListManage(this.projectId, this.devicePage, this.devicePageSize, this.deviceKeyword).then((data) => {
       this.deviceList = data.device_list;
       this.deviceTotal = data.efairyproject_total_devices;
-      this.devicePageMax = Math.ceil(this.deviceTotal / this.devicePageSize)
-      this.renderDeviceData();
+      this.devicePageMax = Math.ceil(this.deviceTotal / this.devicePageSize);
+      this.deviceLoading = false;
+      // this.renderDeviceData();
     })
   }
 
   changeTab(index) {
+    if (this.tabIndex == index) return;
     this.tabIndex = index;
+    if (index == 1) {this.getProejctInfo()}
   }
 
 
-
   //page
+  searchGm() {
+    if (this.gmKeyword != undefined) {
+      this.getProjectGmList();
+    }
+  }
   renderGmData() {
     this.gmListShow = this.gmList.slice((this.gmPage - 1) * this.gmPageSize, this.gmPage * this.gmPageSize);
   }
@@ -199,18 +277,18 @@ export class DetailsComponent implements OnInit {
   prevGmPage() {
     if (this.gmPage <= 1) return false;
     this.gmPage--;
-    this.renderGmData();
+    this.getProjectGmList();
   }
 
   nextGmPage() {
     if (this.gmPage >= this.gmPageMax) return false;
     this.gmPage++;
-    this.renderGmData();
+    this.getProjectGmList();
   }
 
   changeGmPage() {
     this.gmPage = this.jumpGmPage;
-    this.renderGmData();
+    this.getProjectGmList();
   }
 
 
@@ -218,44 +296,69 @@ export class DetailsComponent implements OnInit {
   renderDeviceData() {
     this.deviceListShow = this.deviceList.slice((this.devicePage - 1) * this.devicePageSize, this.devicePage * this.devicePageSize);
   }
+  deviceSearchChange() {
+    console.log(this.deviceKeyword);
+
+  }
+  searchDevice() {
+    // if (this.deviceKeyword && this.deviceKeyword !== '') {
+    //   this.deviceListSearch = [];
+    //   this.deviceList.forEach((item) => {
+    //     if (item.efairydevice_name.indexOf(this.deviceKeyword) !== -1 || item.efairydevice_id.toString().indexOf(this.deviceKeyword) !== -1)
+    //       this.deviceListSearch.push(item);
+    //   })
+    //   this.deviceListShow = this.deviceListSearch;
+    // } else {
+    //   this.renderDeviceData();
+    // }
+    if (this.deviceKeyword != undefined) {
+      this.getProjectDeviceList();
+    }
+  }
 
   prevDevicePage() {
     if (this.devicePage <= 1) return false;
     this.devicePage--;
-    this.renderDeviceData();
+    // this.renderDeviceData();
+    this.getProjectDeviceList();
   }
 
   nextDevicePage() {
     if (this.devicePage >= this.devicePageMax) return false;
     this.devicePage++;
-    this.renderDeviceData();
+    this.getProjectDeviceList();
   }
 
   changeDevicePage() {
     this.devicePage = this.jumpDevicePage;
-    this.renderDeviceData();
+    this.getProjectDeviceList();
   }
 
+
+
   //user page
-  renderUserData() {
-    this.userListShow = this.userList.slice((this.userPage - 1) * this.userPageSize, this.userPage * this.userPageSize);
+  searchUser() {
+    if (this.userKeyword != undefined) {
+      this.getProjectUserList();
+    }
   }
+
 
   prevUserPage() {
     if (this.userPage <= 1) return false;
     this.userPage--;
-    this.renderUserData();
+    this.getProjectUserList();
   }
 
   nextUserPage() {
     if (this.userPage >= this.userPageMax) return false;
     this.userPage++;
-    this.renderUserData();
+    this.getProjectUserList();
   }
 
   changeUserPage() {
     this.userPage = this.jumpUserPage;
-    this.renderUserData();
+    this.getProjectUserList();
   }
 
 

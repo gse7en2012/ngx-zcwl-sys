@@ -111,10 +111,22 @@ p.no-data{
                 width: 96%;
                 margin: 0 auto;
             }
+            .a-map{
+                float: left;
+                margin-left: 1%;
+                width: 49%;
+                margin-top: 15px;
+                position: relative;
+                #map{
+                    min-height: 430px;
+                    width: 100%;
+                }
+            }
             .form{
                 overflow: hidden;
                 font-size: 14px;
                 color: #333;
+                float:left;
                 .row{
                     overflow: hidden;
                     margin: 15px;
@@ -134,7 +146,7 @@ p.no-data{
                         height: 36px;
                         line-height: 36px;
                         padding: 0 8px;
-                        width: 400px;
+                        width: 340px;
                         font-size: 15px;
                         box-shadow: inset 2px 2px 2px #eee;
                     }
@@ -143,10 +155,11 @@ p.no-data{
                         outline: 0;
                         border: 1px solid #aaa;
                         border-radius: 5px;
-                        height: 144px;
-                        line-height: 36px;
-                        padding: 0 8px;
-                        width: 400px;
+                        height: 106px;
+                        line-height: 1.5;
+                        padding: 8px;
+                        box-sizing: border-box;
+                        width: 358px;
                         font-size: 15px;
                         box-shadow: inset 2px 2px 2px #eee;
                     }
@@ -181,6 +194,32 @@ p.no-data{
                     font-size: 14px;
                     text-align: center;
                     box-shadow: inset 2px 2px 2px #eee;
+                }
+            }
+            .search-box{
+                position: relative;
+                float:right;
+                margin-top: -7px;
+                .icon{
+                    width: 16px;
+                    position: absolute;
+                    right: 18px;
+                    top: 7px;
+                }
+            }
+            .search{
+                margin: 0 10px;
+                border: 0;
+                background: #276ab0;
+                height: 30px;
+                border-radius: 14px;
+                padding: 0 10px;
+                color: #ddd;
+                outline: 0;
+                width: 130px;
+                padding-right: 30px;
+                &::-webkit-input-placeholder{
+                    color: #ddd;
                 }
             }
         }

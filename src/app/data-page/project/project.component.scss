@@ -67,12 +67,22 @@ p.no-data{
                 margin: 0 1% 5%;
                 color: #666;
                 text-decoration: none;
+                position: relative;
             }
             .device-name{
                 text-align: center;
                 font-weight: normal;
                 margin-bottom: 5px;
                 height:18px;
+                // font-size: 15px;
+            }
+            .float{
+                // position: absolute;
+                right: 5px;
+                top: 5px;
+                margin-bottom: -15px;
+                text-align: right;
+                padding: 4px 4px 0 0;
             }
             .device-pic{
                 width: 70%;
