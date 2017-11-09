@@ -122,3 +122,28 @@ table{
     line-height: 22px;
 }
 
+//for map
+.info-window{
+    background: rgba(51, 102, 204, .6);
+    padding: 8px;
+    border-radius: 5px;
+    color: #eee;
+    overflow: hidden;
+    width: 240px;
+    .name{
+        margin: 0;
+        text-align: center;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.5;
+    }
+    .address{
+        line-height: 1.5;
+        margin: 4px auto;
+        font-size: 14px;
+    }
+    .link{
+        float: right;
+        color: #fff;
+    }
+}

@@ -24,6 +24,12 @@ export class DashboardPageComponent implements OnInit {
   public rightChartOption: any;
   public leftChartOption: any;
   public servicePlaceTime: string;
+
+  public leftMapIsFull:boolean=false;
+  public rightMapIsFull:boolean=false;
+  public warningProjectNums:number=0;
+  public normalProjectNums:number=0;
+
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
 
@@ -42,12 +48,12 @@ export class DashboardPageComponent implements OnInit {
     this.rightMap = new AMap.Map('r-map', {
       zoomEnable: true,
       dragEnable: true,
-      zoom: 6,
+      zoom: 8,
       zooms: [4, 12],
       features: ['bg', 'point'],
       mapStyle: "amap://styles/darkblue"
     });
-
+    // this.rightMap.setFitView();
 
     this.rightMap.on('fire', (data) => {
       this.bigMap.setCenter([data.lng, data.lat])
@@ -101,6 +107,12 @@ export class DashboardPageComponent implements OnInit {
     })
   }
 
+  changeLeftMapFull() {
+    this.leftMapIsFull=!this.leftMapIsFull;
+  }
+  changeRightMapFull() {
+    this.rightMapIsFull=!this.rightMapIsFull;
+  }
 
   testClickMap() {
     var colors = [
@@ -115,10 +127,13 @@ export class DashboardPageComponent implements OnInit {
       var districtExplorer = new DistrictExplorer({
         map: this.rightMap
       });
-      this.rightMap.on('click', (e) => {
-        console.log(e);
 
-        districtExplorer.locatePosition(e.lnglat, (err, features) => {          
+      this.bigMap.on('click', (e) => {
+        this.bigMap.clearInfoWindow()
+      })
+
+      this.rightMap.on('click', (e) => {
+        districtExplorer.locatePosition(e.lnglat, (err, features) => {
           if (err) {
             console.error(err);
             return;
@@ -137,7 +152,7 @@ export class DashboardPageComponent implements OnInit {
       })
       function renderFeatures(features) {
         //清除已有的绘制内容
-        console.log(features)
+
         districtExplorer.clearFeaturePolygons();
         for (var i = 0, len = features.length; i < len; i++) {
           var strokeColor = colors[i % colors.length];
@@ -145,10 +160,10 @@ export class DashboardPageComponent implements OnInit {
           districtExplorer.renderFeature(features[i], {
             cursor: 'default',
             bubble: true,
-            strokeColor: strokeColor, //线颜色
+            strokeColor: 'transparent'||strokeColor, //线颜色
             strokeOpacity: 1, //线透明度
             strokeWeight: 1, //线宽
-            fillColor: fillColor, //填充色
+            fillColor: 'transparent'||fillColor, //填充色
             fillOpacity: 0.35, //填充透明度
           });
         }
@@ -202,10 +217,57 @@ export class DashboardPageComponent implements OnInit {
     });
   }
 
+  hugePointListMapCover() {
+    const colors = {
+      o: '#ea7a18',
+      r: '#f45d4c',
+      g: '#12b461'
+    };
+    AMapUI.load(['ui/misc/PointSimplifier', 'lib/$'], (PointSimplifier, $) => {
+      const pointSimplifierIns = new PointSimplifier({
+        map: this.rightMap, //所属的地图实例
+        getPosition: (item) => {
+          if (!item) return null;
+          const parts = item.split(',');
+          //返回经纬度
+          return [parseFloat(parts[0]), parseFloat(parts[1])];
+        },
+        getHoverTitle: (dataItem) => {
+          return dataItem.split(',')[3];
+        },
+        renderConstructor: PointSimplifier.Render.Canvas.GroupStyleRender,
+        renderOptions: {
+          //点的样式
+          pointStyle: {
+            width: 10,
+            height: 10,
+            fillStyle: colors['g']
+          },
+          getGroupId: (item, idx) => {
+            return item.split(',')[2];
+          },
+          groupStyleOptions: (gid) => {
+            return {
+              pointStyle: {
+                fillStyle: colors[gid]
+              }
+            };
+          },
+          //鼠标hover时的title信息
+          hoverTitleStyle: {
+            position: 'top'
+          }
+        }
+      });
+
+      pointSimplifierIns.setData(this.locationPointLngLat);
+
+    })
+  }
+
 
   getProjectReport() {
     this.projectService.getProjectMonitorData().then((data) => {
-      console.log(data);
       this.setServiceChartDataOpts(data.service_data);
       this.setServiceChartRightDataOpts(data.alarm_record);
     })
@@ -386,28 +448,56 @@ export class DashboardPageComponent implements OnInit {
   getAllProject() {
     this.projectService.getAllProjectList().then((data) => {
       this.projectList = data.project_list;
-      this.locationPointLngLat = this.projectList.map((row) => {
-        return [row['efairyproject_location_lng'], row['efairyproject_location_lat']].join(',')
+      this.locationPointLngLat = this.projectList.map((row: any) => {
+        const color = row.efairyproject_fire_number > 0 ? "r" : (row.efairyproject_trouble_number > 0 ? 'o' : 'g');
+        if(color=='r'||color=='o'){
+          this.warningProjectNums++;
+        }else{
+          this.normalProjectNums++;
+        }
+        return [row['efairyproject_location_lng'], row['efairyproject_location_lat'], color,row.efairyproject_name].join(',')
       })
       return data.project_list;
     }).then(list => {
       this.drawMap(list);
+      this.hugePointListMapCover();
     });
   }
 
   drawMap(pointList) {
-
+    let infoWindow = new AMap.InfoWindow({
+      offset: new AMap.Pixel(10, -40),
+      isCustom: true,
+    });
     pointList.forEach((point, index) => {
-      if (index === 0) this.bigMap.setCenter([point.efairyproject_location_lng, point.efairyproject_location_lat])
+      if (index === 0) this.bigMap.setCenter([point.efairyproject_location_lng, point.efairyproject_location_lat]);
+      const img = point.efairyproject_fire_number > 0 ?
+        "assets/image/building_red.png" : (point.efairyproject_trouble_number > 0 ? 'assets/image/building_orange.png' : 'assets/image/building_green.png') 
       const pointMaker = new AMap.Marker({
         map: this.bigMap,
         position: [point.efairyproject_location_lng, point.efairyproject_location_lat],
         title: point.efairyproject_name,
         icon: new AMap.Icon({
           size: new AMap.Size(30, 30),  //图标大小
-          image: "assets/image/building_green.png",
+          image: index % 2 == 0 ? "assets/image/building_green.png" : "assets/image/building_red.png",
         })
       });
+      pointMaker.content = `
+        <div class="info-window">
+          <h3 class="name">
+          ${point.efairyproject_name}
+          </h3>
+          <p class="address">
+            ${point.efairyproject_address}<br>
+            <a href="/admin/data/agency/${point.efairyproject_user_id}/branch/${point.efairyproject_id}" class="link">点击查看>></a>
+          </p>
+        </div>
+      `;
+      pointMaker.on('click', (e) => {
+        infoWindow.setContent(e.target.content);
+        infoWindow.open(this.bigMap, e.target.getPosition());
+      });
+
     })
 
   }
