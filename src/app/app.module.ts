@@ -68,9 +68,11 @@ const appRoutes: Routes = [
 
 const dataRoutes: Routes = [
   { path: '',   component:PlaceholderPageComponent },
-  { path: 'agency/:agency_id', component: ProjectComponent },
-  { path: 'agency/:agency_id/branch/:branch_id', component: BranchComponent },
-  { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
+  { path: ':parent_id/agency/:agency_id', component: ProjectComponent },
+  { path: ':parent_id/agency/:agency_id/branch/:branch_id', component: BranchComponent },
+  { path: ':parent_id/agency/:agency_id/branch_warning/:branch_id', component: ListComponent },
+  { path: ':parent_id/agency/:agency_id/branch_mistake/:branch_id', component: ErrorListComponent },
+  { path: ':parent_id/agency/:agency_id/branch/:branch_id/device/:device_id', component: DeviceComponent },
 ]
 
 const warningRoutes: Routes = [

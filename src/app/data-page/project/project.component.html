@@ -1,12 +1,15 @@
 <div class="right">
   <div class="info-bar">
-    <p class="bread-crumb">实时数据 > 全部</p>
+    <p class="bread-crumb">实时数据 > {{agencyInfo?.efairyuser_nickname}}</p>
   </div>
+
+  <h2 class="page-title">项目列表</h2>
+
   <div class="content">
 
     <loading *ngIf="loading"></loading>
 
-    <div class="pagination">
+    <div class="pagination" *ngIf="!loading&&projectListPageShow.length!=0">
       共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
       <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
       <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
@@ -17,10 +20,10 @@
     <div class="device-list" *ngIf="!loading&&projectListPageShow.length!=0">
       <a *ngFor="let branch of projectListPageShow" class="section" [routerLink]="['branch/'+branch.efairyproject_id]">
         <div class="float">
-          <a [routerLink]="['/admin/warning/agency/'+agencyId+'/branch/'+branch.efairyproject_id]">
+          <a [routerLink]="['branch_warning/'+branch.efairyproject_id]">
             <img src="assets/image/bell.png">
           </a>
-          <a [routerLink]="['/admin/mistake/agency/'+agencyId+'/branch/'+branch.efairyproject_id]">
+          <a [routerLink]="['branch_mistake/'+branch.efairyproject_id]">
             <img src="assets/image/tools.png">
           </a>
         </div>
@@ -39,9 +42,6 @@
           </div>
         </footer>
       </a>
-
-
-
     </div>
 
     <p *ngIf="projectListPageShow.length==0&&!loading" class="no-data">暂无数据</p>

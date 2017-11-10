@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceService } from '../../service/device.service';
 import { UserService } from '../../service/user.service';
+import { ProjectService} from '../../service/project.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
@@ -8,7 +9,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   selector: 'app-branch',
   templateUrl: './branch.component.html',
   styleUrls: ['./branch.component.scss'],
-  providers: [DeviceService]
+  providers: [DeviceService,ProjectService]
 })
 export class BranchComponent implements OnInit {
 
@@ -23,37 +24,47 @@ export class BranchComponent implements OnInit {
   public jumpPage: number = 1;
   public pageMax: number = 1;
   public projectId: string;
+  public agencyId:string;
+  public agencyName:string;
   public keyword;
 
   public project: any={
     efairyproject_name:''
   };
 
-  constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
+  constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService,private projectService:ProjectService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       if (params && params.branch_id) {
         this.projectId = params.branch_id;
+        this.agencyId=params.agency_id;
         this.getData();
+        
 
-        this.project = this.userService.getProjectById(this.projectId);
-        console.log(this.project);
-
+        console.log(this.projectId);
+        
       }
     });
+
+    this.projectService.getProjectList(this.agencyId).then((data) => {
+        this.agencyName=data.lv2_agency_info.efairyuser_nickname
+    })
   }
+
+
 
   getData() {
     this.deviceService.getDeviceList(this.projectId).then((data) => {
       this.deviceList = data.device_list;
       this.total = data.total_rows;
       this.loading = false;
-
-
+      this.project=data.project_info;
       this.pageMax = Math.ceil(this.total / this.pageSize)
       this.renderData();
     })
+
+    
   }
 
   renderData() {

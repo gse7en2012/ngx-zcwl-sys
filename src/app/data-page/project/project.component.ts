@@ -12,6 +12,7 @@ export class ProjectComponent implements OnInit {
 
   public agencyId;
   public projectList = [];
+  public agencyInfo:any={};
   public projectListPageShow = [];
   public loading: boolean = true;
   public total: number = 0;
@@ -43,7 +44,7 @@ export class ProjectComponent implements OnInit {
       this.projectList = data.project_list;
       this.total = data.total_rows;
       this.loading = false;
-
+      this.agencyInfo=data.lv2_agency_info;
 
       this.pageMax = Math.ceil(this.total / this.pageSize)
       this.renderData();

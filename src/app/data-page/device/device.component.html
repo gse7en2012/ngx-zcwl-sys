@@ -2,7 +2,12 @@
 
   <div class="right">
     <div class="info-bar">
-      <p class="bread-crumb"><a [routerLink]="['/admin/data/']">实时数据</a> > <a [routerLink]="['/admin/data/branch/'+deviceDetails.device_info.efairydevice_project_id]">{{project?.efairyproject_name}}</a>        > {{deviceDetails.device_info.efairydevice_name}}</p>
+      <p class="bread-crumb">
+          <a [routerLink]="['/admin/data/']">实时数据</a> >
+          <a [routerLink]="['../../../../../'+agencyId]">{{agencyName}}</a> > 
+          <a [routerLink]="['../../../'+agencyId]">{{project?.efairyproject_name}} </a> > 
+          {{deviceDetails.device_info.efairydevice_name}}
+      </p>
 
       <!-- <div class="fr">
         报警：0 正常：1
@@ -49,8 +54,8 @@
               <div class="info-list">
                 <label class="item">设备ID：{{deviceDetails.device_info.efairydevice_id}}</label>
                 <label class="item">设备软件版本：{{deviceDetails.device_info.efairydevice_version}}</label>
-                <label class="item">设备主编码：{{deviceDetails.device_info.efairydevice_uuid}}</label>
-                <label class="item">设备从编码：{{deviceDetails.device_info.efairydevice_belong_system}}</label>
+                <label class="item">设备主编码：{{deviceDetails.device_info.master}}</label>
+                <label class="item">设备从编码：{{deviceDetails.device_info.follow}}</label>
                 <label class="item">安装时间：{{deviceDetails.device_info.efairydevice_install_time}}</label>
                 <label class="item">设备地址：{{deviceDetails.device_info.efairydevice_address}}</label>
               </div>
@@ -71,11 +76,13 @@
             <img src="assets/image/wifi.png">
           </div>
           <div class="fr desc-box">
-            <p class="title">报警状态：<span class="b">{{stateHash[deviceDetails.device_info.efairydevice_state]}}</span></p>
-            <div class="info-list">
+            <!-- <p class="title">报警状态：<span class="b">{{stateHash[deviceDetails.device_info.efairydevice_state]}}</span></p> -->
+            <p class="title">设备通讯状态：{{deviceDetails.device_info.efairydevice_is_online?'在线':'离线'}}</p>
+            <p class="title">无线通讯状态：在线</p>
+            <!-- <div class="info-list">
               <label class="item">设备通讯状态：{{deviceDetails.device_info.efairydevice_is_online?'在线':'离线'}}</label>
               <label class="item">无线通讯状态：在线</label>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -83,20 +90,12 @@
       <div class="box">
         <header class="blue">
           数据
-          <div class="fr">
+          <div class="fr" (click)="getData()">
             <img src="assets/image/clock.png">
           </div>
         </header>
         <div class="ctx">
-          <div class="loading" *ngIf="loading">
-            <div class="sk-wave">
-              <div class="sk-rect sk-rect1"></div>
-              <div class="sk-rect sk-rect2"></div>
-              <div class="sk-rect sk-rect3"></div>
-              <div class="sk-rect sk-rect4"></div>
-              <div class="sk-rect sk-rect5"></div>
-            </div>
-          </div>
+          <loading  *ngIf="loading"></loading>
           <div *ngIf="!loading">
             <p class="time">{{dataUpdateTime}}</p>
             <div class="data-box">
