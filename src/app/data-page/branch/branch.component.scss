@@ -6,6 +6,8 @@
         background: #fff;
         padding: 80px;
         font-size: 26px;
+        overflow: hidden;
+        clear: both;
     }
     .fl{float: left}
     .fr{float: right}
@@ -114,6 +116,7 @@
         }
         .fliter-type-box{
             float:left;
+            margin-bottom: 20px;
             select{
                 width:120px;
             }

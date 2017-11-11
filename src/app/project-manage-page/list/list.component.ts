@@ -65,8 +65,11 @@ export class ProjectManageListComponent implements OnInit {
     this.renderData();
   }
 
-  search() {
-
+  deleteProject(pid){
+    if(!confirm('确定删除该项目？')) return;
+    this.projectService.deleteProject(pid).then(()=>{
+      this.getData();
+    })
   }
 
 }

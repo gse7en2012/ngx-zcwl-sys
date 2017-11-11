@@ -3,8 +3,6 @@ import { ProjectService } from '../../service/project.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import * as myGlobal from '../../global/globals';
-
-// import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 

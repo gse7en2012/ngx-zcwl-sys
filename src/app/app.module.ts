@@ -58,6 +58,7 @@ import { ProjectManageListComponent } from './project-manage-page/list/list.comp
 import { DetailsComponent as ProjectManageDeatilsComponent } from './project-manage-page/details/details.component';
 import { NewDeviceComponent } from './project-manage-page/new-device/new-device.component';
 import { EditDeviceComponent } from './project-manage-page/edit-device/edit-device.component';
+import { NewProjectComponent } from './project-manage-page/new-project/new-project.component';
 
 
 const appRoutes: Routes = [
@@ -93,11 +94,12 @@ const mistakeRoutes: Routes = [
 
 const projectManageRoutes: Routes = [
   { path: '',   component:PlaceholderPageComponent },
-  { path: 'agency/:agency_id', component: ProjectManageListComponent },
-  { path: 'agency/:agency_id/details/:proejct_id', component: ProjectManageDeatilsComponent },
-  { path: 'agency/:agency_id/details/:proejct_id/new_device', component: NewDeviceComponent },
-  { path: 'agency/:agency_id/details/:proejct_id/edit_device/:device_id', component: EditDeviceComponent },
-  { path: 'agency/:agency_id/device/:device_id', component: DeviceComponent },
+  { path: ':parent_id/agency/:agency_id', component: ProjectManageListComponent },
+  { path: ':parent_id/agency/:agency_id/new_project', component: NewProjectComponent },
+  { path: ':parent_id/agency/:agency_id/details/:proejct_id', component: ProjectManageDeatilsComponent },
+  { path: ':parent_id/agency/:agency_id/details/:proejct_id/new_device', component: NewDeviceComponent },
+  { path: ':parent_id/agency/:agency_id/details/:proejct_id/edit_device/:device_id', component: EditDeviceComponent },
+  { path: ':parent_id/agency/:agency_id/device/:device_id', component: DeviceComponent },
 ]
 
 
@@ -159,6 +161,7 @@ const adminRoutes: Routes = [
 
     NewDeviceComponent,
     EditDeviceComponent,
+    NewProjectComponent,
     
   ],
   imports: [

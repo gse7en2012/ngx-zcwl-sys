@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceService } from '../../service/device.service';
 import { UserService } from '../../service/user.service';
-import { ProjectService} from '../../service/project.service';
+import { ProjectService } from '../../service/project.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
@@ -9,7 +9,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   selector: 'app-branch',
   templateUrl: './branch.component.html',
   styleUrls: ['./branch.component.scss'],
-  providers: [DeviceService,ProjectService]
+  providers: [DeviceService, ProjectService]
 })
 export class BranchComponent implements OnInit {
 
@@ -24,31 +24,32 @@ export class BranchComponent implements OnInit {
   public jumpPage: number = 1;
   public pageMax: number = 1;
   public projectId: string;
-  public agencyId:string;
-  public agencyName:string;
+  public agencyId: string;
+  public agencyName: string;
   public keyword;
 
-  public project: any={
-    efairyproject_name:''
-  };
+  public filterType: string='all';
 
-  constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService,private projectService:ProjectService) { }
+
+  public project: any = {
+    efairyproject_name: ''
+  };
+  public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
+
+
+  constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService, private projectService: ProjectService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       if (params && params.branch_id) {
         this.projectId = params.branch_id;
-        this.agencyId=params.agency_id;
+        this.agencyId = params.agency_id;
         this.getData();
-        
-
-        console.log(this.projectId);
-        
       }
     });
 
     this.projectService.getProjectList(this.agencyId).then((data) => {
-        this.agencyName=data.lv2_agency_info.efairyuser_nickname
+      this.agencyName = data.lv2_agency_info.efairyuser_nickname
     })
   }
 
@@ -59,12 +60,10 @@ export class BranchComponent implements OnInit {
       this.deviceList = data.device_list;
       this.total = data.total_rows;
       this.loading = false;
-      this.project=data.project_info;
+      this.project = data.project_info;
       this.pageMax = Math.ceil(this.total / this.pageSize)
       this.renderData();
     })
-
-    
   }
 
   renderData() {
@@ -96,9 +95,26 @@ export class BranchComponent implements OnInit {
           this.deviceListSearch.push(item);
       })
       this.deviceListPageShow = this.deviceListSearch;
-    }else{
+    } else {
       this.renderData();
     }
+  }
+  searchEnter(e){
+    if(e.keyCode=='13') this.search();
+  }
+
+  changeType(e){
+    console.log(this.filterType);
+    if(this.filterType=='all'){
+      this.getData();
+    }else{
+      this.deviceListPageShow=this.deviceList.filter((item:any)=>{
+        console.log(item.efairydevice_state,this.filterType,item.efairydevice_state==this.filterType);
+        
+        return item.efairydevice_state==Number(this.filterType);
+      })
+    }
+
   }
 
 }

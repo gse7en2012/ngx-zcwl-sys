@@ -1,8 +1,9 @@
 <div class="right">
     <div class="info-bar">
-      <p class="bread-crumb">报警信息 > 全部</p>
-  
-      <div class="fr">
+      <p class="bread-crumb">故障信息 > 
+        <a [routerLink]="['../../../'+agencyId]">{{agencyName}}</a> > {{project?.efairyproject_name}}</p>
+      
+      <!-- <div class="fr">
         报警：0 正常：1
         <div class="search-box">
           <input class="search" placeholder="设备ID或设备名称">
@@ -18,9 +19,15 @@
         </div>
         <span class="fl">报警</span>
       </div>
-  
+   -->
   
     </div>
+
+
+  <h2 class="page-title">故障信息列表</h2>
+  
+
+
     <div class="content">
       <table class="table">
         <tr>
@@ -31,7 +38,7 @@
           <!-- <th>报警类型</th> -->
           <th>报警值</th>
           <th>阈值</th>
-          <th>查看</th>
+          <!-- <th>查看</th> -->
         </tr>
         <tr *ngIf="alarmListPageShow.length==0">
             <td colspan="8">没有该查询条件下的数据</td>
@@ -44,13 +51,13 @@
           <!-- <td>{{item.label}}</td> -->
           <td>{{item.efairydevice_alarm_rtv}}</td>
           <td>{{item.efairydevice_alarm_thv}}</td>
+<!-- 
           <td>
             <a [routerLink]="['../../device/'+item.efairydevice_id]">
               <img src="assets/image/view.png">
             </a>
-  
-  
-          </td>
+          </td> -->
+
         </tr>
       </table>
     </div>

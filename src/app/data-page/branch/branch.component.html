@@ -7,7 +7,7 @@
     <div class="fr">
       <!-- 报警：0 正常：1 -->
       <div class="search-box">
-        <input class="search" placeholder="设备ID或设备名称" [(ngModel)]="keyword">
+        <input class="search" placeholder="设备ID或设备名称" [(ngModel)]="keyword" (keypress)="searchEnter($event)">
         <img src="assets/image/search_w.png" class="icon" (click)="search()">
       </div>
     </div>
@@ -26,51 +26,50 @@
   <div class="content">
     <loading *ngIf="loading"></loading>
     <div *ngIf="!loading">
-      <p *ngIf="deviceListPageShow.length==0" class="no-data">暂无数据</p>
-      <div *ngIf="deviceListPageShow.length>0">
-        <div class="pagination">
-          共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
-          <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
-          <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
-          <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
-          <a class="btn" (click)="changePage()">GO</a>
-        </div>
-
-        <div class="fliter-type-box">
-          <label>选择状态：</label>
-          <select>
-            <option>全部</option>
-            <option>正常</option>
-            <option>报警</option>
-            <option>故障</option>
-            <!-- public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常']; -->
-          </select>
-        </div>
-
-        <div class="device-list">
-          <a class="section" *ngFor="let device of deviceListPageShow" [routerLink]="['device/'+device.efairydevice_id]">
-            <h3 class="device-name">{{device.efairydevice_name}}</h3>
-            <div class="ctx" *ngIf="device.efairydevice_is_online">
-              <div class="fl">
-                <img src="assets/image/device_online.png">
-              </div>
-              <div class="fr">
-                在线
-                <img src="assets/image/icon_online.png">
-              </div>
-            </div>
-            <div class="ctx" *ngIf="!device.efairydevice_is_online">
-              <div class="fl">
-                <img src="assets/image/device_off.png">
-              </div>
-              <div class="fr">
-                离线
-                <img src="assets/image/icon_off.png">
-              </div>
-            </div>
-          </a>
-        </div>
+     
+      <div class="pagination" *ngIf="deviceListPageShow.length>0">
+        共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+        <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+        <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+        <a class="btn" (click)="changePage()">GO</a>
       </div>
+
+      <div class="fliter-type-box">
+        <label>选择状态：</label>
+        <select [(ngModel)]="filterType" (ngModelChange)="changeType($event)">
+          <option value="all">全部</option>
+          <option value="6">正常</option>
+          <option value="1">报警</option>
+          <option value="3">故障</option>
+          <!-- public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常']; -->
+        </select>
+      </div>
+      <p *ngIf="deviceListPageShow.length==0" class="no-data">暂无数据</p>
+      <div class="device-list" *ngIf="deviceListPageShow.length>0">
+        <a class="section" *ngFor="let device of deviceListPageShow" [routerLink]="['device/'+device.efairydevice_id]">
+          <h3 class="device-name">{{device.efairydevice_name}}</h3>
+          <div class="ctx" *ngIf="device.efairydevice_is_online">
+            <div class="fl">
+              <img src="assets/image/device_online.png">
+            </div>
+            <div class="fr">
+              在线
+              <img src="assets/image/icon_online.png">
+            </div>
+          </div>
+          <div class="ctx" *ngIf="!device.efairydevice_is_online">
+            <div class="fl">
+              <img src="assets/image/device_off.png">
+            </div>
+            <div class="fr">
+              离线
+              <img src="assets/image/icon_off.png">
+            </div>
+          </div>
+        </a>
+      </div>
+
     </div>
   </div>
 

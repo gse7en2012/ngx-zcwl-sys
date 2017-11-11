@@ -1,9 +1,9 @@
 <div class="right">
   <div class="info-bar">
-    <p class="bread-crumb">报警信息 > 全部</p>
-
+    <p class="bread-crumb">报警信息 >
+    <a [routerLink]="['../../../'+agencyId]">{{agencyName}}</a> > {{project?.efairyproject_name}}</p>
+    
     <div class="fr">
-      报警：0 正常：1
       <div class="search-box">
         <input class="search" placeholder="设备ID或设备名称">
         <img src="../assets/image/search_w.png" class="icon">
@@ -21,7 +21,11 @@
 
 
   </div>
+
+  <h2 class="page-title">报警信息列表</h2>
+  
   <div class="content">
+
     <table class="table">
       <tr>
         <th>设备编号</th>

@@ -41,7 +41,10 @@ export class ProjectService {
 
     addProjectDeviceManage: '/webapi/manage_project_device_and_user',
     editProjectDeviceManage: '/webapi/manage_project_device',
-    deleteProjectDeviceManage:'/webapi/manage_project_device'
+    deleteProjectDeviceManage:'/webapi/manage_project_device',
+
+    deleteProjectManage:'/webapi/project',
+    addProjectManage:'/webapi/project'
   };
 
   private codeHash: any;
@@ -268,6 +271,17 @@ export class ProjectService {
       efairyproject_gm_id_list: JSON.stringify([gmId])
     })
   }
+
+  public addProject(opts) {
+    return this.gsevenRequestViaPost('addProjectManage', opts)
+  }
+  
+  public deleteProject(pid){
+    return this.gsevenRequestViaDelete('deleteProjectManage',{
+      efairyproject_id_list: JSON.stringify([pid])
+    })
+  }
+
   public addProjectUser(pid: string, phone: string, name: string) {
     return this.gsevenRequestViaPost('addProjectUserManage', {
       efairyuser_phonenumber: phone,

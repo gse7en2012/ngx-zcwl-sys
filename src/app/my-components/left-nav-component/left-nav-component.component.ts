@@ -52,10 +52,10 @@ export class LeftNavPartComponent implements OnInit {
     }
   }
 
-  initCurrentParentTab(){
+  initCurrentParentTab() {
     this.getCurrentParentTabId();
     console.log(this.parentRouterParam);
-    
+
     this.agencyList.forEach((item) => {
       if (item.efairyuser_id == this.parentTabId) {
         this.getLv2AgencyList(item);
@@ -66,10 +66,8 @@ export class LeftNavPartComponent implements OnInit {
 
   getLv2AgencyList(lv1Agency, isNeedNav?) {
     // lv1Agency.current=!lv1Agency.current;
-    lv1Agency.loading=true;
     const parentId = lv1Agency['efairyuser_id'];
     this.agencyList.forEach((item) => {
-
       if (item.efairyuser_id == parentId) {
         item.showChildren = !item.showChildren;
         item.current = !item.current;
@@ -80,8 +78,9 @@ export class LeftNavPartComponent implements OnInit {
     })
 
     if (lv1Agency.isLoaded) return;
+    lv1Agency.loading = true;
     this.projectService.getAgencyListLv2(parentId).then((data) => {
-      lv1Agency.loading=false;
+      lv1Agency.loading = false;
       this.agencyList.forEach((parentAgency) => {
         if (parentAgency.efairyuser_id == parentId) {
           parentAgency.secondList = data.agency_list;

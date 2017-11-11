@@ -18,6 +18,7 @@ p.no-data{
         padding: 0;
         margin: 0;
         .row-header{
+            user-select: none;
             cursor: pointer;
             height:55px;
             line-height: 55px;
@@ -58,6 +59,7 @@ p.no-data{
             top: -2px;
         }
         .row-item{
+            user-select: none;
             outline: 0;
             height: 48px;
             line-height: 48px;

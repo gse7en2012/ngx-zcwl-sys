@@ -1,0 +1,60 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">新增项目</span>
+    </p>
+  </div>
+  <div class="content">
+    <div class="tab-card">
+      <section class="form">
+        <div class="row">
+          <label>项目名称</label>
+          <input type="text" [(ngModel)]="projectInfo.efairyproject_name">
+        </div>
+        <div class="row">
+          <label>项目负责人</label>
+          <input type="text" [(ngModel)]="projectInfo.efairyproject_user_name">
+        </div>
+        <div class="row">
+          <label>项目负责人手机</label>
+          <input type="text" [(ngModel)]="projectInfo.efairyproject_user_phonenumber">
+        </div>
+        <div class="row">
+          <label>项目地址</label>
+          <input type="text" [(ngModel)]="projectInfo.efairyproject_address" id="address">
+        </div>
+        <div class="row">
+            <label>项目维护费</label>
+            <select [(ngModel)]="projectInfo.efairyproject_fee_type">
+                <option  value="1">50元</option>
+                <option  value="2">100元</option>
+                <option  value="3">150元</option>
+              </select>
+          </div>
+        <div class="row">
+          <label>项目经度</label>
+          <input type="text" [(ngModel)]="projectInfo.efairyproject_location_lng">
+        </div>
+        <div class="row">
+          <label>项目纬度</label>
+          <input type="text" [(ngModel)]="projectInfo.efairyproject_location_lat">
+        </div>
+        <div class="row">
+          <label>项目备注</label>
+          <textarea [(ngModel)]="projectInfo.efairyproject_description"></textarea>
+        </div>
+
+        <div class="row">
+          <label>&nbsp;</label>
+          <a class="button" (click)="addNewProject()">确认新增</a>
+          <a class="button grey">取消</a>
+        </div>
+      </section>
+
+      <div class="a-map">
+        <div id="map"></div>
+      </div>
+
+    </div>
+  </div>
+</div>

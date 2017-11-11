@@ -85,12 +85,17 @@ p.no-data{
                 color: #666;
                 text-decoration: none;
             }
+            .device-link{
+                float: left;
+                width: 90%;
+            }
             .device-name{
                 float: left;
                 margin: 15px 30px 5px;
                 font-weight: normal;
                 line-height: 1.8;
                 font-size: 16px;
+                color:#666;
                 .blue{
                     color: #276bb0;
                 }
@@ -117,6 +122,8 @@ p.no-data{
                 float: right;
                 width: 200px;
                 font-size: 14px;
+                border-right: 1px solid #ddd;
+                padding-right: 20px;
                 .fl,.fr{
                     width: 50%;
                     .num{
@@ -128,6 +135,29 @@ p.no-data{
                         line-height: 1.5;
                         color: #15aeef;
                     }
+                }
+            }
+            .device-opts{
+                float: right;
+                margin-top: 28px;
+                width: 10%;
+                text-align: center;
+                cursor: pointer;
+                b{
+                  
+                    width: 20px;
+                    height: 20px;
+                    line-height: 18px;
+                    background:#f45d4c;
+                    color: #fff;
+                    font-size: 18px;
+                    border-radius: 50%;
+                    text-align: center;
+                    margin-top: 5px;
+                    display: inline-block;
+                }
+                a{
+                    font-size: 16px;
                 }
             }
         }

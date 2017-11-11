@@ -23,6 +23,10 @@ export class ErrorListComponent implements OnInit {
   public pageMax: number = 1;
   public projectId: string;
   public keyword;
+  
+  public agencyId: string;
+  public agencyName: string;
+
 
   public project: any={
     efairyproject_name:''
@@ -58,13 +62,21 @@ export class ErrorListComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params && params.branch_id) {
         this.projectId = params.branch_id;
+        this.agencyId = params.agency_id;
         this.getData();
-
-        // this.project = this.userService.getProjectById(this.projectId);
-
-
       }
     });
+
+    this.projectService.getProjectList(this.agencyId).then((data) => {
+      this.agencyName = data.lv2_agency_info.efairyuser_nickname;
+      data.project_list.forEach((item)=>{
+        if(item.efairyproject_id==this.projectId){
+          this.project=item;
+        }
+      })      
+    })
+
+
   }
 
 
