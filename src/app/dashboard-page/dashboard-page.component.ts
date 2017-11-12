@@ -25,10 +25,11 @@ export class DashboardPageComponent implements OnInit {
   public leftChartOption: any;
   public servicePlaceTime: string;
 
-  public leftMapIsFull:boolean=false;
-  public rightMapIsFull:boolean=false;
-  public warningProjectNums:number=0;
-  public normalProjectNums:number=0;
+  public leftMapIsFull: boolean = false;
+  public rightMapIsFull: boolean = false;
+  public warningProjectNums: number = 0;
+  public mistakeProjectNums: number = 0;
+  public normalProjectNums: number = 0;
 
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
@@ -108,10 +109,10 @@ export class DashboardPageComponent implements OnInit {
   }
 
   changeLeftMapFull() {
-    this.leftMapIsFull=!this.leftMapIsFull;
+    this.leftMapIsFull = !this.leftMapIsFull;
   }
   changeRightMapFull() {
-    this.rightMapIsFull=!this.rightMapIsFull;
+    this.rightMapIsFull = !this.rightMapIsFull;
   }
 
   testClickMap() {
@@ -160,10 +161,10 @@ export class DashboardPageComponent implements OnInit {
           districtExplorer.renderFeature(features[i], {
             cursor: 'default',
             bubble: true,
-            strokeColor: 'transparent'||strokeColor, //线颜色
+            strokeColor: 'transparent' || strokeColor, //线颜色
             strokeOpacity: 1, //线透明度
             strokeWeight: 1, //线宽
-            fillColor: 'transparent'||fillColor, //填充色
+            fillColor: 'transparent' || fillColor, //填充色
             fillOpacity: 0.35, //填充透明度
           });
         }
@@ -450,12 +451,14 @@ export class DashboardPageComponent implements OnInit {
       this.projectList = data.project_list;
       this.locationPointLngLat = this.projectList.map((row: any) => {
         const color = row.efairyproject_fire_number > 0 ? "r" : (row.efairyproject_trouble_number > 0 ? 'o' : 'g');
-        if(color=='r'||color=='o'){
+        if (color == 'r') {
           this.warningProjectNums++;
-        }else{
+        } else if (color == 'o') {
+          this.mistakeProjectNums++;
+        } else {
           this.normalProjectNums++;
         }
-        return [row['efairyproject_location_lng'], row['efairyproject_location_lat'], color,row.efairyproject_name].join(',')
+        return [row['efairyproject_location_lng'], row['efairyproject_location_lat'], color, row.efairyproject_name].join(',')
       })
       return data.project_list;
     }).then(list => {
@@ -472,7 +475,7 @@ export class DashboardPageComponent implements OnInit {
     pointList.forEach((point, index) => {
       if (index === 0) this.bigMap.setCenter([point.efairyproject_location_lng, point.efairyproject_location_lat]);
       const img = point.efairyproject_fire_number > 0 ?
-        "assets/image/building_red.png" : (point.efairyproject_trouble_number > 0 ? 'assets/image/building_orange.png' : 'assets/image/building_green.png') 
+        "assets/image/building_red.png" : (point.efairyproject_trouble_number > 0 ? 'assets/image/building_orange.png' : 'assets/image/building_green.png')
       const pointMaker = new AMap.Marker({
         map: this.bigMap,
         position: [point.efairyproject_location_lng, point.efairyproject_location_lat],

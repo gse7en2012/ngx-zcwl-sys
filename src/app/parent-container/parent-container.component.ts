@@ -16,6 +16,8 @@ export class ParentContainerComponent implements OnInit {
 
   ngOnInit() {
     this.userInfo=this.userService.getAdminInfo();
+    console.log(this.userInfo);
+    
   }
 
 

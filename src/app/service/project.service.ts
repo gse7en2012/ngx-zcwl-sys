@@ -20,6 +20,10 @@ export class ProjectService {
     allList: '/webapi/all_project_list',
     getCode: '/webapi/login_checkcode',
     getAgencyList: '/webapi/agency_list',
+
+    getNormalUserProjectList:'/webapi/project_geo_list',
+    getGeoProjectList:'/webapi/geo_project_list',
+
     getAgencyListLv2: '/webapi/lv2_agency_list',
     getProjectAlarmData: '/webapi/project_alarm_data',
     getProjectReport: '/webapi/report',
@@ -275,7 +279,7 @@ export class ProjectService {
   public addProject(opts) {
     return this.gsevenRequestViaPost('addProjectManage', opts)
   }
-  
+
   public deleteProject(pid){
     return this.gsevenRequestViaDelete('deleteProjectManage',{
       efairyproject_id_list: JSON.stringify([pid])
@@ -324,6 +328,17 @@ export class ProjectService {
 
   public getProjectMonitorData(){
     return this.gsevenRequestViaGet('getProjectMonitorData',{})
+  }
+
+  public getNormalUserProjectList(){
+    return this.gsevenRequestViaGet('getNormalUserProjectList',{})
+  }
+
+  public getGeoProjectList(geoInfo:any,geoLevel:string){
+    return this.gsevenRequestViaGet('getGeoProjectList',{
+      geo_info:JSON.stringify(geoInfo),
+      geo_level:geoLevel
+    })
   }
 
 }

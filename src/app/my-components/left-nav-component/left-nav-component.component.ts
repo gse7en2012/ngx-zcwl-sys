@@ -17,6 +17,10 @@ export class LeftNavPartComponent implements OnInit {
   public userLevel: number;
   public parentTabId: number;
   public agencyList = [];
+  public isAdminUser: boolean = false;
+  public normalNavList: any = [];
+  public nodes = [];
+
   constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -32,11 +36,23 @@ export class LeftNavPartComponent implements OnInit {
       this.loading = false;
       this.userLevel = data.level;
       this.agencyList = data.agency_list;
-      this.initCurrentParentTab(); //渲染
+
       //0-超级管理员 1-一级经销商 2-二级经销商 3-项目管理员 4-普通用户
       // if (this.userLevel == 0 || this.userLevel == 1) {
       //   this.getLv2AgencyList(this.agencyList[0], isNeedRedirect)
       // }
+
+      if (this.userLevel == 0 || this.userLevel == 1|| this.userLevel == 2|| this.userLevel == 3) {
+        this.isAdminUser = true;
+        this.initCurrentParentTab(); //渲染
+      }
+      if (this.userLevel == 4 ) {
+        this.projectService.getNormalUserProjectList().then((r) => {
+          this.nodes = this.formatResToTree(r);
+          this.normalNavList = r;
+        })
+      }
+
     })
   }
 
@@ -50,6 +66,67 @@ export class LeftNavPartComponent implements OnInit {
         return parentId;
       }
     }
+  }
+
+  toggleProvince(province) {
+    province.isOpen = !province.isOpen;
+    // this.router.navigate(['geo/project'], {
+    //   queryParams: {
+    //     geo_level: 1,
+    //     province:province.efairyproject_province
+    //   }
+    // })
+  }
+
+  toggleCity(city) {
+    city.isOpen = !city.isOpen;
+  }
+  toggleDistrict(district) {
+    district.isOpen = !district.isOpen;
+  }
+
+  formatResToTree(data) {
+    let indexSeed = 0;
+    return data.map((province: any, index) => {
+      indexSeed++;
+      const p = {
+        id: indexSeed,
+        name: province.efairyproject_province || '直辖市',
+        children: []
+      }
+      if (province.city_list.length > 0) {
+        p['children'] = province.city_list.map((city: any, cIndex) => {
+          indexSeed++;
+          const c = {
+            id: indexSeed,
+            name: city.efairyproject_city || '省属',
+            children: []
+          }
+          if (city.district_list.length > 0) {
+            c['children'] = city.district_list.map((district: any, dIndex) => {
+              indexSeed++;
+              const d = {
+                id: indexSeed,
+                name: district.efairyproject_district || '市属',
+                children: []
+              }
+              if (district.township_list.length > 0) {
+                d['children'] = district.township_list.map((town: any, tIndex) => {
+                  indexSeed++;
+                  return {
+                    id: indexSeed,
+                    name: town.efairyproject_township
+                  }
+                })
+              }
+              return d;
+            })
+          }
+          return c;
+        })
+      }
+      return p;
+    })
   }
 
   initCurrentParentTab() {

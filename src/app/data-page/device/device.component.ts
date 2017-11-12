@@ -25,13 +25,22 @@ export class DeviceComponent implements OnInit, OnDestroy {
   public project: any = {
     efairyproject_name: ''
   };
+
   public projectId: string;
+  //for breadcrumb
   public agencyId: string;
   public agencyName: string;
 
-
   public dataUpdateTime: any;
   public loading: boolean = true;
+
+
+  public pageFromType: number = 1; //1-admin manage  2-geo
+  public geoInfo: any = {};
+  public geoLevel: string;
+  public qs: any;
+
+
 
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
   public dataHash = {
@@ -68,36 +77,47 @@ export class DeviceComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.projectId = params.branch_id;
       this.agencyId = params.agency_id;
-
-
       if (params && params.device_id) {
         this.deviceId = params.device_id;
         this.getData();
         this.stId = setInterval(() => {
-          
           this.getData();
         }, 30000);
-
       }
     });
 
+    this.getInitQueryString();
 
-    this.projectService.getProjectList(this.agencyId).then((data) => {
-      this.agencyName = data.lv2_agency_info.efairyuser_nickname
-    })
-
+    if (this.agencyId) {
+      this.pageFromType = 1;
+      this.projectService.getProjectList(this.agencyId).then((data) => {
+        this.agencyName = data.lv2_agency_info.efairyuser_nickname
+      })
+    }
+    
     this.deviceService.getDeviceList(this.projectId).then((data) => {
-      this.project=data.project_info;
+      this.project = data.project_info;
     })
-
     this.getAlarmData();
-
   }
 
   ngOnDestroy() {
-    console.log('leave device');
-
     clearInterval(this.stId);
+  }
+
+  getInitQueryString() {
+    this.route.queryParams.subscribe(queryParams => {
+      this.geoLevel = queryParams.geo_level;
+      this.geoInfo = {
+        efairyproject_province: queryParams.province,
+        efairyproject_city: queryParams.city,
+        efairyproject_district: queryParams.district,
+        efairyproject_township: queryParams.town,
+        efairyproject_seaarea: ''
+      }
+      this.qs = queryParams;
+      if (this.geoLevel) this.pageFromType = 2;
+    })
   }
 
   getData() {
@@ -106,7 +126,6 @@ export class DeviceComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.deviceDetails = data;
       this.formatDataList(data);
-
     });
   }
 
@@ -151,12 +170,12 @@ export class DeviceComponent implements OnInit, OnDestroy {
       data.realtime_data.data.forEach(element => {
         if (element.cid != 0 && this.dataHash[element.pt]) {
           //{cid: 0, st: 30, pt: 1, rtv: 0, thv: 0}
-          const single={
+          const single = {
             itemName: this.dataHash[element.pt][0] + '通道' + element.cid,
             itemValue: [(element.rtv * this.dataHash[element.pt][1]), this.dataHash[element.pt][2], '/', (element.thv * this.dataHash[element.pt][1]), this.dataHash[element.pt][2]].join('')
           };
-          if(element.pt=='128'){
-            single.itemValue=element.rtv=='1'?'启用':'不启用'
+          if (element.pt == '128') {
+            single.itemValue = element.rtv == '1' ? '启用' : '不启用'
           }
           this.dataList.push(single)
         }
@@ -166,12 +185,12 @@ export class DeviceComponent implements OnInit, OnDestroy {
       this.dataUpdateTime = moment(data.realtime_data.ts * 1000).format('YYYY/MM/DD HH:mm:ss')
     }
 
-    this.deviceDetails.device_info.master=this.deviceDetails.device_info.efairydevice_uuid.slice(0,20);
-    this.deviceDetails.device_info.follow=this.deviceDetails.device_info.efairydevice_uuid.slice(20,26);
-    this.deviceDetails.device_info.follow=[
-      parseInt(this.deviceDetails.device_info.follow.slice(0,2),16),
-      parseInt(this.deviceDetails.device_info.follow.slice(2,4),16),
-      parseInt(this.deviceDetails.device_info.follow.slice(4,6),16)
+    this.deviceDetails.device_info.master = this.deviceDetails.device_info.efairydevice_uuid.slice(0, 20);
+    this.deviceDetails.device_info.follow = this.deviceDetails.device_info.efairydevice_uuid.slice(20, 26);
+    this.deviceDetails.device_info.follow = [
+      parseInt(this.deviceDetails.device_info.follow.slice(0, 2), 16),
+      parseInt(this.deviceDetails.device_info.follow.slice(2, 4), 16),
+      parseInt(this.deviceDetails.device_info.follow.slice(4, 6), 16)
     ].join('-')
   }
 

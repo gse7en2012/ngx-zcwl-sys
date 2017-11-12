@@ -3,6 +3,7 @@
     overflow: hidden;
     background: url('../../assets/image/dashboard_bg.png') repeat;
     .header{
+        display: block;
         background: url('../../assets/image/dashboard_header.png') repeat;
         height: 60px;
         text-align: center;
@@ -128,6 +129,14 @@
                     box-shadow: inset 2px 2px 20px #8f1f25,inset -2px 2px 20px #8f1f25,inset 2px -2px 20px #8f1f25,inset -2px -2px 20px #8f1f25;
                     .num{
                         color: #e50304;
+                    }
+                }
+                &.orange{
+                    
+                    border:2px solid #f08300;
+                    box-shadow: inset 2px 2px 20px #ce770e,inset -2px 2px 20px #ce770e,inset 2px -2px 20px #ce770e,inset -2px -2px 20px #ce770e;
+                    .num{
+                        color: #f08300;
                     }
                 }
             }

@@ -1,15 +1,21 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb" *ngIf="pageFromType==1">
+      <a [routerLink]="['/admin/data/']">实时数据</a> >
+      <a [routerLink]="['../../../../../'+agencyId]">{{agencyName}}</a> >
+      <a [routerLink]="['../../../'+projectId]">{{project?.efairyproject_name}} </a> > {{deviceDetails.device_info.efairydevice_name}}
+    </p>
 
+    <p class="bread-crumb" *ngIf="pageFromType==2">
+      <a [routerLink]="['/admin/data/']">实时数据</a>
+      <span *ngIf="geoInfo.efairyproject_province">> {{geoInfo?.efairyproject_province}} </span>
+      <span *ngIf="geoInfo.efairyproject_city">> {{geoInfo?.efairyproject_city}}</span>
+      <span *ngIf="geoInfo.efairyproject_district">> {{geoInfo?.efairyproject_district}}</span>
+      <span *ngIf="geoInfo.efairyproject_township">> {{geoInfo?.efairyproject_township}}</span>
+      > {{project?.efairyproject_name}} > {{deviceDetails.device_info.efairydevice_name}}
+    </p>
 
-  <div class="right">
-    <div class="info-bar">
-      <p class="bread-crumb">
-          <a [routerLink]="['/admin/data/']">实时数据</a> >
-          <a [routerLink]="['../../../../../'+agencyId]">{{agencyName}}</a> > 
-          <a [routerLink]="['../../../'+projectId]">{{project?.efairyproject_name}} </a> > 
-          {{deviceDetails.device_info.efairydevice_name}}
-      </p>
-
-      <!-- <div class="fr">
+    <!-- <div class="fr">
         报警：0 正常：1
         <div class="search-box">
           <input class="search" placeholder="设备ID或设备名称">
@@ -25,99 +31,96 @@
         </div>
         <span class="fl">报警</span>
       </div> -->
-    </div>
-    <div class="content">
+  </div>
+  <div class="content">
 
-      <div class="box">
-        <header class="red">
-          基础信息
-          <div class="fr" (click)="editDevice()">
-            <img src="assets/image/pencil.png">
+    <div class="box">
+      <header class="red">
+        基础信息
+        <div class="fr" (click)="editDevice()">
+          <img src="assets/image/pencil.png">
+        </div>
+      </header>
+      <div class="ctx">
+        <loading *ngIf="loading"></loading>
+
+        <div *ngIf="!loading">
+          <div class="fl pic-box">
+            <img src="assets/image/device_online.png">
           </div>
-        </header>
-        <div class="ctx">
-          <div class="loading" *ngIf="loading">
-            <div class="sk-wave">
-              <div class="sk-rect sk-rect1"></div>
-              <div class="sk-rect sk-rect2"></div>
-              <div class="sk-rect sk-rect3"></div>
-              <div class="sk-rect sk-rect4"></div>
-              <div class="sk-rect sk-rect5"></div>
-            </div>
-          </div>
-          <div *ngIf="!loading">
-            <div class="fl pic-box">
-              <img src="assets/image/device_online.png">
-            </div>
-            <div class="fr desc-box">
-              <p class="title">设备名：<span class="b">{{deviceDetails.device_info.efairydevice_name}}</span></p>
-              <div class="info-list">
-                <label class="item">设备ID：{{deviceDetails.device_info.efairydevice_id}}</label>
-                <label class="item">设备软件版本：{{deviceDetails.device_info.efairydevice_version}}</label>
-                <label class="item">设备主编码：{{deviceDetails.device_info.master}}</label>
-                <label class="item">设备从编码：{{deviceDetails.device_info.follow}}</label>
-                <label class="item">安装时间：{{deviceDetails.device_info.efairydevice_install_time}}</label>
-                <label class="item">设备地址：{{deviceDetails.device_info.efairydevice_address}}</label>
-              </div>
+          <div class="fr desc-box">
+            <p class="title">设备名：
+              <span class="b">{{deviceDetails.device_info.efairydevice_name}}</span>
+            </p>
+            <div class="info-list">
+              <label class="item">设备ID：{{deviceDetails.device_info.efairydevice_id}}</label>
+              <label class="item">设备软件版本：{{deviceDetails.device_info.efairydevice_version}}</label>
+              <label class="item">设备主编码：{{deviceDetails.device_info.master}}</label>
+              <label class="item">设备从编码：{{deviceDetails.device_info.follow}}</label>
+              <label class="item">安装时间：{{deviceDetails.device_info.efairydevice_install_time}}</label>
+              <label class="item">设备地址：{{deviceDetails.device_info.efairydevice_address}}</label>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="box">
-        <header class="green">
-          状态
-          <div class="fr">
-            <img src="assets/image/roll.png">
-          </div>
-        </header>
-        <div class="ctx">
-          <div class="fl pic-box">
-            <img src="assets/image/wifi.png">
-          </div>
-          <div class="fr desc-box">
-            <!-- <p class="title">报警状态：<span class="b">{{stateHash[deviceDetails.device_info.efairydevice_state]}}</span></p> -->
-            <p class="title">设备通讯状态：{{deviceDetails.device_info.efairydevice_is_online?'在线':'离线'}}</p>
-            <p class="title">无线通讯状态：在线</p>
-            <!-- <div class="info-list">
+    <div class="box">
+      <header class="green">
+        状态
+        <div class="fr">
+          <img src="assets/image/roll.png">
+        </div>
+      </header>
+      <div class="ctx">
+        <div class="fl pic-box">
+          <img src="assets/image/wifi.png">
+        </div>
+        <div class="fr desc-box">
+          <!-- <p class="title">报警状态：<span class="b">{{stateHash[deviceDetails.device_info.efairydevice_state]}}</span></p> -->
+          <p class="title">设备通讯状态：{{deviceDetails.device_info.efairydevice_is_online?'在线':'离线'}}</p>
+          <p class="title">无线通讯状态：在线</p>
+          <!-- <div class="info-list">
               <label class="item">设备通讯状态：{{deviceDetails.device_info.efairydevice_is_online?'在线':'离线'}}</label>
               <label class="item">无线通讯状态：在线</label>
             </div> -->
-          </div>
         </div>
       </div>
-
-      <div class="box">
-        <header class="blue">
-          数据
-          <div class="fr" (click)="getData()">
-            <img src="assets/image/clock.png">
-          </div>
-        </header>
-        <div class="ctx">
-          <loading  *ngIf="loading"></loading>
-          <div *ngIf="!loading">
-            <p class="time">{{dataUpdateTime}}</p>
-            <div class="data-box">
-              <label class="row" *ngIf="dataList.length==0">暂无数据</label>
-              <label class="row" *ngFor="let item of dataList">{{item.itemName}}<span class="number">{{item.itemValue}}</span></label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="box">
-        <header class="pink">
-          一周警报
-        </header>
-        <div class="ctx">
-          <div echarts [options]="option" theme="macarons" class="chart" style="height:214px;"></div>
-        </div>
-      </div>
-
     </div>
 
-    <!-- <div class="pagination">
+    <div class="box">
+      <header class="blue">
+        数据
+        <div class="fr" (click)="getData()">
+          <img src="assets/image/clock.png">
+        </div>
+      </header>
+      <div class="ctx">
+        <loading *ngIf="loading"></loading>
+        <div *ngIf="!loading">
+          <p class="time">{{dataUpdateTime}}</p>
+          <div class="data-box">
+            <label class="row" *ngIf="dataList.length==0">暂无数据</label>
+            <label class="row" *ngFor="let item of dataList">{{item.itemName}}
+              <span class="number">{{item.itemValue}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <header class="pink">
+        一周警报
+      </header>
+      <div class="ctx">
+        <div echarts [options]="option" theme="macarons" class="chart" style="height:214px;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div class="pagination">
       共1页 / 1条数据 （当前第1页）
       <a class="btn disabled">上一页</a>
       <a class="btn">下一页</a> 前往
@@ -125,40 +128,46 @@
       <a class="btn">GO</a>
     </div> -->
 
-  </div>
+</div>
 
-  <div class="pop-bg" [hidden]="!isDeviceEditing"></div>
-  <div class="pop" [hidden]="!isDeviceEditing">
-    <div class="header">
-      修改设备
-      <span class="fr close" (click)="closePop()">&times;</span>
+<div class="pop-bg" [hidden]="!isDeviceEditing"></div>
+<div class="pop" [hidden]="!isDeviceEditing">
+  <div class="header">
+    修改设备
+    <span class="fr close" (click)="closePop()">&times;</span>
+  </div>
+  <div class="form">
+    <div class="row">
+      <label>设备名称：</label>
+      <input>
     </div>
-    <div class="form">
-      <div class="row">
-        <label>设备名称：</label><input>
-      </div>
-      <div class="row">
-        <label>设备名称：</label><input>
-      </div>
-      <div class="row">
-        <label>设备名称：</label><input>
-      </div>
-      <div class="row">
-        <label>设备名称：</label><input>
-      </div>
-      <div class="row">
-        <label>设备名称：</label><input>
-      </div>
-      <div class="row">
-        <label>设备名称：</label><input>
-      </div>
-      <div class="row">
-        <label>设备名称：</label><input>
-      </div>
+    <div class="row">
+      <label>设备名称：</label>
+      <input>
     </div>
-    <div class="footer">
-      <a class="btn">确定修改</a>
-      <a class="btn" (click)="closePop()">取消</a>
+    <div class="row">
+      <label>设备名称：</label>
+      <input>
+    </div>
+    <div class="row">
+      <label>设备名称：</label>
+      <input>
+    </div>
+    <div class="row">
+      <label>设备名称：</label>
+      <input>
+    </div>
+    <div class="row">
+      <label>设备名称：</label>
+      <input>
+    </div>
+    <div class="row">
+      <label>设备名称：</label>
+      <input>
     </div>
   </div>
-
+  <div class="footer">
+    <a class="btn">确定修改</a>
+    <a class="btn" (click)="closePop()">取消</a>
+  </div>
+</div>

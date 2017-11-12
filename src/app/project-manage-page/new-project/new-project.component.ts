@@ -17,32 +17,36 @@ declare var moment;
 })
 export class NewProjectComponent implements OnInit {
 
-  public bigMap:any;
+  public bigMap: any;
   public positionPicker: any;
-  public projectInfo:any={
-    efairyproject_name:'',
-    efairyproject_user_name:'',
-    efairyproject_user_phonenumber:'',
-    efairyproject_address:'',
-    efairyproject_location_lng:'',
-    efairyproject_location_lat:'',
-    efairyproject_description:'',
-    efairyproject_fee_type:'1'
+  public projectInfo: any = {
+    efairyproject_name: '',
+    efairyproject_user_name: '',
+    efairyproject_user_phonenumber: '',
+    efairyproject_address: '',
+    efairyproject_location_lng: '',
+    efairyproject_location_lat: '',
+    efairyproject_description: '',
+    efairyproject_fee_type: '1',
+    lv2_agency_id: ''
   };
 
   constructor(private zone: NgZone, private _location: Location, private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router) { }
-  
-  
+
+
   ngOnInit() {
     this.initAmap();
+    this.route.params.subscribe(params => {
+      this.projectInfo.lv2_agency_id = params.agency_id;
+    });
   }
 
-  addNewProject(){
+  addNewProject() {
     console.log(this.projectInfo);
-    this.projectSerive.addProject(this.projectInfo).then(()=>{
+    this.projectSerive.addProject(this.projectInfo).then(() => {
       alert('添加成功');
       this._location.back();
-    }).catch((e)=>{
+    }).catch((e) => {
       alert('添加失败，请联系管理员!')
     })
   }

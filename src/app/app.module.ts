@@ -8,6 +8,7 @@ import { CookieModule } from 'ngx-cookie';
 import { AngularEchartsModule } from 'ngx-echarts';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
+
 import { errCodeMsgHash } from './service/err-msg';
 import { LibService } from './service/lib.service';
 import { UserService } from './service/user.service';
@@ -59,6 +60,7 @@ import { DetailsComponent as ProjectManageDeatilsComponent } from './project-man
 import { NewDeviceComponent } from './project-manage-page/new-device/new-device.component';
 import { EditDeviceComponent } from './project-manage-page/edit-device/edit-device.component';
 import { NewProjectComponent } from './project-manage-page/new-project/new-project.component';
+import { ProjectGeoComponent } from './data-page/project-geo/project-geo.component';
 
 
 const appRoutes: Routes = [
@@ -68,7 +70,12 @@ const appRoutes: Routes = [
 
 
 const dataRoutes: Routes = [
-  { path: '',   component:PlaceholderPageComponent },
+  { path: '', component: PlaceholderPageComponent },
+
+  { path: 'geo/project', component: ProjectGeoComponent },
+  { path: 'geo/project/branch/:branch_id', component: BranchComponent },
+  { path: 'geo/project/branch/:branch_id/device/:device_id', component: DeviceComponent },
+
   { path: ':parent_id/agency/:agency_id', component: ProjectComponent },
   { path: ':parent_id/agency/:agency_id/branch/:branch_id', component: BranchComponent },
   { path: ':parent_id/agency/:agency_id/branch_warning/:branch_id', component: ListComponent },
@@ -77,14 +84,14 @@ const dataRoutes: Routes = [
 ]
 
 const warningRoutes: Routes = [
-  { path: '',   component:PlaceholderPageComponent },
+  { path: '', component: PlaceholderPageComponent },
   { path: 'agency/:agency_id', component: ProjectComponent },
   { path: 'agency/:agency_id/branch/:branch_id', component: ListComponent },
   { path: 'agency/:agency_id/device/:device_id', component: DetailsTableComponent },
 ]
 
 const mistakeRoutes: Routes = [
-  { path: '',   component:PlaceholderPageComponent },
+  { path: '', component: PlaceholderPageComponent },
   { path: 'agency/:agency_id', component: ProjectListComponent },
   { path: 'agency/:agency_id/branch/:branch_id', component: ErrorListComponent },
   { path: 'agency/:agency_id/device/:device_id', component: ErrorDetailsTableComponent },
@@ -93,7 +100,7 @@ const mistakeRoutes: Routes = [
 //super manage
 
 const projectManageRoutes: Routes = [
-  { path: '',   component:PlaceholderPageComponent },
+  { path: '', component: PlaceholderPageComponent },
   { path: ':parent_id/agency/:agency_id', component: ProjectManageListComponent },
   { path: ':parent_id/agency/:agency_id/new_project', component: NewProjectComponent },
   { path: ':parent_id/agency/:agency_id/details/:proejct_id', component: ProjectManageDeatilsComponent },
@@ -111,11 +118,12 @@ const adminRoutes: Routes = [
       { path: 'data', component: DataPageComponent, children: dataRoutes },
       { path: 'warning', component: WarningPageComponent, children: warningRoutes },
       { path: 'mistake', component: ErrorPageComponent, children: mistakeRoutes },
-      { path: 'dashboard', component: DashboardPageComponent },
+      // { path: 'dashboard', component: DashboardPageComponent },
       { path: 'danger', component: DangerPageComponent },
     ],
     canActivate: [AuthGuard]
   },
+  { path: 'dashboard', component: DashboardPageComponent },
   {
     path: 'super', component: SuperContainerComponent, children: [
       { path: '', redirectTo: 'project', pathMatch: 'full' },
@@ -162,7 +170,8 @@ const adminRoutes: Routes = [
     NewDeviceComponent,
     EditDeviceComponent,
     NewProjectComponent,
-    
+    ProjectGeoComponent,
+
   ],
   imports: [
     BrowserModule,

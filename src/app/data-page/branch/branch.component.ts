@@ -27,8 +27,12 @@ export class BranchComponent implements OnInit {
   public agencyId: string;
   public agencyName: string;
   public keyword;
+  public filterType: string = 'all';
 
-  public filterType: string='all';
+  public pageFromType: number = 1; //1-admin manage  2-geo
+  public geoInfo: any = {};
+  public geoLevel: string;
+  public qs: any;
 
 
   public project: any = {
@@ -41,19 +45,35 @@ export class BranchComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      if (params && params.branch_id) {
-        this.projectId = params.branch_id;
-        this.agencyId = params.agency_id;
-        this.getData();
-      }
+      this.projectId = params.branch_id;
+      this.agencyId = params.agency_id;
+      this.getData();
     });
 
-    this.projectService.getProjectList(this.agencyId).then((data) => {
-      this.agencyName = data.lv2_agency_info.efairyuser_nickname
-    })
+    this.getInitQueryString();
+
+    if (this.agencyId) {
+      this.pageFromType = 1;
+      this.projectService.getProjectList(this.agencyId).then((data) => {
+        this.agencyName = data.lv2_agency_info.efairyuser_nickname
+      })
+    }
   }
 
-
+  getInitQueryString() {
+    this.route.queryParams.subscribe(queryParams => {
+      this.geoLevel = queryParams.geo_level;
+      this.geoInfo = {
+        efairyproject_province: queryParams.province,
+        efairyproject_city: queryParams.city,
+        efairyproject_district: queryParams.district,
+        efairyproject_township: queryParams.town,
+        efairyproject_seaarea: ''
+      }
+      this.qs = queryParams;
+      if (this.geoLevel) this.pageFromType = 2;
+    })
+  }
 
   getData() {
     this.deviceService.getDeviceList(this.projectId).then((data) => {
@@ -99,19 +119,19 @@ export class BranchComponent implements OnInit {
       this.renderData();
     }
   }
-  searchEnter(e){
-    if(e.keyCode=='13') this.search();
+  searchEnter(e) {
+    if (e.keyCode == '13') this.search();
   }
 
-  changeType(e){
+  changeType(e) {
     console.log(this.filterType);
-    if(this.filterType=='all'){
+    if (this.filterType == 'all') {
       this.getData();
-    }else{
-      this.deviceListPageShow=this.deviceList.filter((item:any)=>{
-        console.log(item.efairydevice_state,this.filterType,item.efairydevice_state==this.filterType);
-        
-        return item.efairydevice_state==Number(this.filterType);
+    } else {
+      this.deviceListPageShow = this.deviceList.filter((item: any) => {
+        console.log(item.efairydevice_state, this.filterType, item.efairydevice_state == this.filterType);
+
+        return item.efairydevice_state == Number(this.filterType);
       })
     }
 

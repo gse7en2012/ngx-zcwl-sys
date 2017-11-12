@@ -1,0 +1,54 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">实时数据
+      <span *ngIf="geoInfo.efairyproject_province">> {{geoInfo?.efairyproject_province}} </span>
+      <span *ngIf="geoInfo.efairyproject_city">> {{geoInfo?.efairyproject_city}}</span>
+      <span *ngIf="geoInfo.efairyproject_district">> {{geoInfo?.efairyproject_district}}</span>
+      <span *ngIf="geoInfo.efairyproject_township">> {{geoInfo?.efairyproject_township}}</span>
+    </p>
+  </div>
+
+  <h2 class="page-title">项目列表</h2>
+
+  <div class="content">
+
+    <loading *ngIf="loading"></loading>
+
+    <div class="pagination" *ngIf="!loading&&projectListPageShow.length!=0">
+      共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+      <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+      <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+      <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+      <a class="btn" (click)="changePage()">GO</a>
+    </div>
+
+    <div class="device-list" *ngIf="!loading&&projectListPageShow.length!=0">
+      <a *ngFor="let branch of projectListPageShow" class="section" [routerLink]="['branch/'+branch.efairyproject_id]" [queryParams]="qs">
+        <div class="float">
+          <a [routerLink]="['branch_warning/'+branch.efairyproject_id]">
+            <img src="assets/image/bell.png">
+          </a>
+          <a [routerLink]="['branch_mistake/'+branch.efairyproject_id]">
+            <img src="assets/image/tools.png">
+          </a>
+        </div>
+        <h3 class="device-name">{{branch.efairyproject_name}}</h3>
+        <div class="device-pic">
+          <img src="assets/image/device.png">
+        </div>
+        <footer class="device-info">
+          <div class="fl">
+            <p class="num">{{branch.efairyproject_fire_number}}</p>
+            <p class="desc">报警/台</p>
+          </div>
+          <div class="fr">
+            <p class="num">{{branch.efairyproject_device_online_number}}/{{branch.efairyproject_total_devices}}</p>
+            <p class="desc">在线/设备总数</p>
+          </div>
+        </footer>
+      </a>
+    </div>
+
+    <p *ngIf="projectListPageShow.length==0&&!loading" class="no-data">暂无数据</p>
+
+  </div>

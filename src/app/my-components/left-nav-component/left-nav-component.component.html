@@ -1,6 +1,6 @@
 <div class="left">
   <loading *ngIf="loading"></loading>
-  <div class="agency-list" (clickOutside)="initCurrentParentTab()" >
+  <div class="agency-list" *ngIf="isAdminUser">
     <section *ngFor="let item of agencyList">
       <div [ngClass]="{'row-header':true,cur:item.current}" (click)="getLv2AgencyList(item)">
         {{item.efairyuser_nickname}}
@@ -12,9 +12,50 @@
         {{secondItem.efairyuser_nickname}}
       </div>
       <div class="row-item no-child" *ngIf="(!item.secondList||item.secondList.length==0)&&!item.loading" [hidden]="!item.showChildren">
-          没有下级经销商
+        没有下级经销商
       </div>
       <loading *ngIf="item.loading"></loading>
     </section>
   </div>
+
+  <!-- <div class="tree" *ngIf="!isAdminUser">
+    <tree-root [nodes]="nodes" (onToggle)="onEvent($event)" (onActiveChanged)="onEvent($event)" (onFocus)="onEvent($event)" (onBlur)="onEvent($event)"></tree-root>
+  </div> -->
+
+  <div class="place-list" *ngIf="!isAdminUser">
+    <div class="province" *ngFor="let province of normalNavList">
+      <span (click)="toggleProvince(province)">
+          <b class="close" *ngIf="!province.isOpen">+</b>
+          <b class="open" *ngIf="province.isOpen">-</b>
+        <a [routerLink]="['geo/project']" [queryParams]="{ geo_level: 1,province:province.efairyproject_province }">
+          {{province.efairyproject_province}}</a>
+      </span>
+      <div *ngIf="province.isOpen">
+        <div class="city" *ngFor="let city of province.city_list">
+          <span (click)="toggleCity(city)">
+            <b class="close" *ngIf="!city.isOpen">+</b>
+            <b class="open" *ngIf="city.isOpen">-</b>
+            <a [routerLink]="['geo/project']" [queryParams]="{ geo_level: 2,province:province.efairyproject_province,city:city.efairyproject_city }">
+              {{city.efairyproject_city}}</a>
+          </span>
+          <div *ngIf="city.isOpen">
+            <div class="district" *ngFor="let district of city.district_list">
+              <span (click)="toggleDistrict(district)">
+                <b class="close" *ngIf="!district.isOpen">+</b>
+                <b class="open" *ngIf="district.isOpen">-</b>
+                <a [routerLink]="['geo/project']" [queryParams]="{ geo_level: 3,province:province.efairyproject_province,city:city.efairyproject_city,district:district.efairyproject_district }">
+                  {{district.efairyproject_district||'市属'}}</a>
+              </span>
+              <div *ngIf="district.isOpen">
+                <a class="town" *ngFor="let town of district.township_list" [routerLink]="['geo/project']" [queryParams]="{ geo_level: 4,province:province.efairyproject_province,city:city.efairyproject_city,district:district.efairyproject_district,town:town.efairyproject_township }">
+                  {{town.efairyproject_township}}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

@@ -9,8 +9,8 @@ import { UserService } from '../service/user.service';
   providers: [UserService]
 })
 export class LoginPageComponent implements OnInit {
-
-  public username: string='13751066522';
+//18129969569
+  public username: string='13751066523';
   public pass: string='1234';
   public navMinHeight:string;
 

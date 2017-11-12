@@ -1,8 +1,18 @@
 <div class="right">
   <div class="info-bar">
-    <p class="bread-crumb">
+    <p class="bread-crumb" *ngIf="pageFromType==1">
       <a [routerLink]="['/admin/data/']">实时数据</a> >
-      <a [routerLink]="['../../../'+agencyId]">{{agencyName}}</a> > {{project?.efairyproject_name}}</p>
+      <a [routerLink]="['../../../'+agencyId]">{{agencyName}}</a> > {{project?.efairyproject_name}}
+    </p>
+
+    <p class="bread-crumb" *ngIf="pageFromType==2">
+      <a [routerLink]="['/admin/data/']">实时数据</a> 
+      <span *ngIf="geoInfo.efairyproject_province">> {{geoInfo?.efairyproject_province}} </span>
+      <span *ngIf="geoInfo.efairyproject_city">> {{geoInfo?.efairyproject_city}}</span>
+      <span *ngIf="geoInfo.efairyproject_district">> {{geoInfo?.efairyproject_district}}</span>
+      <span *ngIf="geoInfo.efairyproject_township">> {{geoInfo?.efairyproject_township}}</span>
+      > {{project?.efairyproject_name}}
+    </p>
 
     <div class="fr">
       <!-- 报警：0 正常：1 -->
@@ -26,7 +36,7 @@
   <div class="content">
     <loading *ngIf="loading"></loading>
     <div *ngIf="!loading">
-     
+
       <div class="pagination" *ngIf="deviceListPageShow.length>0">
         共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
         <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
@@ -46,8 +56,33 @@
         </select>
       </div>
       <p *ngIf="deviceListPageShow.length==0" class="no-data">暂无数据</p>
-      <div class="device-list" *ngIf="deviceListPageShow.length>0">
+      <!-- from manage -->
+      <div class="device-list" *ngIf="deviceListPageShow.length>0&&pageFromType==1">
         <a class="section" *ngFor="let device of deviceListPageShow" [routerLink]="['device/'+device.efairydevice_id]">
+          <h3 class="device-name">{{device.efairydevice_name}}</h3>
+          <div class="ctx" *ngIf="device.efairydevice_is_online">
+            <div class="fl">
+              <img src="assets/image/device_online.png">
+            </div>
+            <div class="fr">
+              在线
+              <img src="assets/image/icon_online.png">
+            </div>
+          </div>
+          <div class="ctx" *ngIf="!device.efairydevice_is_online">
+            <div class="fl">
+              <img src="assets/image/device_off.png">
+            </div>
+            <div class="fr">
+              离线
+              <img src="assets/image/icon_off.png">
+            </div>
+          </div>
+        </a>
+      </div>
+      <!-- from geo -->
+      <div class="device-list" *ngIf="deviceListPageShow.length>0&&pageFromType==2">
+        <a class="section" *ngFor="let device of deviceListPageShow" [routerLink]="['device/'+device.efairydevice_id]" [queryParams]="qs">
           <h3 class="device-name">{{device.efairydevice_name}}</h3>
           <div class="ctx" *ngIf="device.efairydevice_is_online">
             <div class="fl">

@@ -83,4 +83,93 @@ p.no-data{
             }
         }
     }
+
+    .place-list{
+        margin: 0;
+        padding: 0;
+        .close,.open{
+            font-weight: normal;
+            font-size: 14px;
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            line-height: 14px;
+            text-align: center;
+            border: 1px solid #aaa;
+            color: #aaa;
+            position: relative;
+            top: -2px;
+            margin-left: 15px;
+        }
+        .province{
+            a{color: #999; }
+            &>span{
+                display:block;
+                border-bottom: 1px solid #292d30;
+                cursor: pointer;
+                height: 55px;
+                line-height: 55px;
+                color: #999;
+                font-size: 18px;
+                box-sizing: border-box;
+                transition: all ease-in-out .2s;
+            }
+        }
+        .city{
+            .close,.open{
+                margin-left: 30px;
+                color: #777;
+                border-color: #777;
+                width: 14px;
+                height: 14px;
+                line-height: 12px;
+            }
+            &>span{
+                a{color: #666; }
+                display: block;
+                cursor: pointer;
+                height: 46px;
+                line-height: 46px;
+                color: #666;
+                background: #eee;
+                border-bottom: 1px solid #ddd;
+                font-size: 17px;
+                box-sizing: border-box;
+                transition: all ease-in-out .2s;
+                
+            }
+        }    
+        .district{
+            .close,.open{
+                margin-left: 50px;
+            }
+            a{color: #666; }
+            span{
+                display: block;
+                cursor: pointer;
+                height:38px;
+                line-height: 38px;
+                color: #666;
+                background: #fff;
+                font-size: 16px;
+                box-sizing: border-box;
+                transition: all ease-in-out .2s;
+            }
+        }
+        .town{
+            a{color: #888; }
+            user-select: none;
+            display:block;
+            cursor: pointer;
+            height:32px;
+            line-height: 32px;
+            padding-left: 75px;
+            // text-indent: 6em;
+            color: #888;
+            background: #fff;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all ease-in-out .2s;
+        }
+    }
 }

@@ -40,6 +40,7 @@ export class UserService {
     return this.http.get(this.serviceUrl['login'], { search: params }).map(res => res.json()).toPromise()
       .then((data) => {
         if (data.err_code === 200) {
+          data.result.user_info.user_level=data.result.level;
           this.cookieService.put('pst_token', data.result.access_token);
           this.cookieService.putObject('pst_admin_info', data.result.user_info);
           return data.result;
