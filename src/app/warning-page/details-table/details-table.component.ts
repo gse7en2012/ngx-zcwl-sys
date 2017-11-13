@@ -265,7 +265,7 @@ export class DetailsTableComponent implements OnInit {
           data: row['series'][k].reverse(),
           type: 'line',
           name: '通道' + k,
-          stack: '总量',
+         // stack: '总量',
         })
       })
 
@@ -344,7 +344,7 @@ export class DetailsTableComponent implements OnInit {
         {
           name: '报警次数',
           type: 'line',
-          stack: '总量',
+         // stack: '总量',
           // areaStyle: { normal: {} },
           data: []
         },

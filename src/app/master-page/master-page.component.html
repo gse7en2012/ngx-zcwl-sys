@@ -8,42 +8,44 @@
             <div class="l">个人信息</div>
           </div>
           <div class="ctx">
-            <img src="https://0.gravatar.com/avatar/cd59176540d404323eb7ed64760db991?s=90&d=identicon&r=G" class="avatar">
+            <img [src]="userInfo.efairyuser_headimg_url" class="avatar">
             <div class="profile">
-              {{userInfo.efairyuser_nickname}} 管理员<br>{{userInfo.efairyuser_company}}<br><br>{{time}}
+              {{userInfo.efairyuser_nickname}} 管理员
+              <br>{{userInfo.efairyuser_company}}
+              <br>
+              <br>{{time}}
             </div>
           </div>
         </div>
         <div class="item red">
           <div class="header">
             <div class="l">报警数据</div>
-            <div class="r">3</div>
+            <div class="r">{{projectAlarmTotal}}</div>
           </div>
           <div class="ctx">
             <ul class="info-list">
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
+              <li *ngFor="let item of projectAlarmList" >
+                设备:{{item.efairydevice_name}} {{item.state}}  {{item.efairydevice_alarm_rtv}}/{{item.efairydevice_alarm_thv}} {{item.efairydevice_alarm_time}}
+              </li>
             </ul>
           </div>
         </div>
         <div class="item orange">
           <div class="header">
-            <div class="l">设备故障</div>
-            <div class="r">3</div>
+            <div class="l">设备统计</div>
+            <div class="r">{{totalDevice}}</div>
           </div>
           <div class="ctx">
-            <ul class="info-list">
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-              <li>没有更多的数据</li>
-            </ul>
+            <div class="charts-item">
+              <div class="info">
+                离线设备：{{offDevice}}
+                <br>在线设备：{{onlineDevice}}
+              </div>
+              <div echarts [options]="leftChartOption" theme="essos" class="chart" style="height:100%;"></div>
+            </div>
+            <div class="charts-item">
+              <div echarts [options]="rightChartOption" theme="vintage" class="chart" style="height:100%;"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -53,12 +55,12 @@
             <img src="assets/image/file.png" class="map-icon">基础信息
           </div>
           <div class="box">
-            <p>单位名称：天地会总舵</p>
-            <p>单位名称：天地会总舵</p>
-            <p>单位名称：天地会总舵</p>
-            <p>单位名称：天地会总舵</p>
-            <p>单位名称：天地会总舵</p>
-            <p>单位名称：天地会总舵</p>
+            <p>单位名称：{{userCenter.efairyuser_company}}</p>
+            <p>负责人：{{userCenter.efairyuser_nickname}}</p>
+            <p>单位地址：{{userCenter.efairyuser_company_address}}</p>
+            <p>联系电话：{{userCenter.efairyuser_phonenumber}}</p>
+            <p>联系邮箱：{{userCenter.efairyuser_email}}</p>
+            <p>设备供应商：{{userCenter.efairyuser_device_supplier}}</p>
           </div>
         </div>
         <div class="item">
@@ -66,9 +68,7 @@
             <img src="assets/image/map.png" class="map-icon">地图
             <img src="assets/image/edit.png" class="right-icon">
           </div>
-          <div class="box">
-
-          </div>
+          <div id="m-map"></div>
         </div>
 
       </div>
@@ -76,9 +76,9 @@
         <div class="item">
           <div class="title">
             <img src="assets/image/dash.png" class="map-icon">电气安全综合隐患指数top1
-            <img src="assets/image/edit.png" class="right-icon">
+            <!-- <img src="assets/image/edit.png" class="right-icon"> -->
           </div>
-          <div class="box"></div>
+          <div echarts [options]="bottomChartOption" theme="macarons" class="chart" style="height:263px;"></div>
         </div>
       </div>
     </div>
@@ -92,16 +92,20 @@
             <!-- <img src="assets/image/edit.png" class="right-icon"> -->
           </div>
           <div class="box">
-            <section class="block" *ngFor="let item of deviceAlarmData" >
+            <section class="block" *ngFor="let item of deviceAlarmData">
               <div class="time">
-                  <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}  
+                <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}
               </div>
               <div class="ctx">
-                设备id：{{item.efairydevice_uuid}} <br> 设备名称：{{item.efairydevice_name}} <br>  报警类型：报警 <br>  设备状态：{{item.state}} <br> 参量值：{{item.ss}} <br> 报警值：{{item.efairydevicefiredata_rtv}} <br> 阀值：{{item.efairydevicefiredata_thv}}
+                设备id：{{item.efairydevice_uuid}}
+                <br> 设备名称：{{item.efairydevice_name}}
+                <br> 报警类型：{{item.ss}}
+                <br> 报警值：{{item.efairydevicefiredata_rtv_v}}
+                <br> 阀值：{{item.efairydevicefiredata_thv_v}}
               </div>
             </section>
-           
-          
+
+
 
           </div>
         </div>

@@ -25,6 +25,8 @@
         "../node_modules/echarts/dist/echarts.min.js",
         "../src/assets/dark.js",
         "../src/assets/macarons.js",
+        "../src/assets/vintage.js",
+        "../src/assets/essos.js",
         "../src/lib/moment.js"
       ],
       "environmentSource": "environments/environment.ts",

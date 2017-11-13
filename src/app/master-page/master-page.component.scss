@@ -44,13 +44,26 @@ ul{
                 .info-list{
                     &::-webkit-scrollbar{
                         width: 8px;
-                        background: #f35e4a;
+                        background: #ddd;
                     }
                     &::-webkit-scrollbar-thumb{
                         background: #dc5446;
                     }
                 }
             }
+        }
+        .charts-item{
+           float:left;
+           width: 50%;
+           height:100%;
+           position: relative;
+           .info{
+               position: absolute;
+               font-size: 12px;
+               line-height: 18px;
+               right:5px;
+               bottom:5px;
+           }
         }
         .header{
             font-size: 16px;
@@ -71,20 +84,22 @@ ul{
             height: 150px;
             overflow: hidden;
             .profile{
-                margin-top: 12px;
+                margin-top: 30px;
                 float: left;
-                margin-left: 12px;
+                margin-left: 15px;
                 line-height: 1.5;
-                font-size: 14px;
+                font-size: 16px;
             }
             .info-list{
                 margin: 0;
-                padding: 10px 30px;
+                padding: 10px 15px;
                 box-sizing: border-box;
                 height: 100%;
                 overflow: auto;
                 li{
                     line-height: 1.5;
+                    padding: 3px 0;
+                    border-bottom:1px solid #ddd;
                 }
                 &::-webkit-scrollbar{
                     width: 8px;
@@ -96,17 +111,17 @@ ul{
             }
         }
         .avatar{
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             float: left;
-            margin-left: 13%;
-            margin-top: 20px;
+            margin-left: 10%;
+            margin-top: 30px;
         }
     }
     .grid3{
         .item{
-            width: 32%;
+            width: 32.3%;
             margin-right: 1.033333%;
             box-sizing: border-box;
         }
@@ -114,8 +129,8 @@ ul{
     .grid2{
         
         .item{
-            width: 48.5%;
-            margin-right: 1.3333%;
+            width: 48.95555%;
+            margin-right: 1.0333%;
             box-sizing: border-box;
             border: 1px solid #dfdfdf;
             .title{
@@ -131,11 +146,15 @@ ul{
                 background: #fff;
                 color: #666;
                 padding: 20px;
-                height: 244px;
+                min-height: 200px;
+                font-size: 15px;
                 p{
                     margin: 0;
                     line-height: 2;
                 }
+            }
+            #m-map{
+                height: 240px;
             }
         }
     }
@@ -145,8 +164,8 @@ ul{
 .grid1{
     .item{
         border:1px solid #dfdfdf;
-        width: 98.0666667%;
-        margin-right: 1.933333%;
+        width: 98.7666667%;
+        margin-right: 1.033333%;
         .title{
             background: #fbfbfb;
             height: 52px;
@@ -176,10 +195,17 @@ ul{
         .item{
             width: 100%;
             .box{
-                min-height:779px;
+                min-height:771px;
                 height:auto;
-                height: 780px;
+                height: 770px;
                 overflow: auto;
+                &::-webkit-scrollbar{
+                    width: 8px;
+                    background: #ddd;
+                }
+                &::-webkit-scrollbar-thumb{
+                    background: #aaa;
+                }
             }
         }
     }

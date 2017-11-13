@@ -18,7 +18,8 @@ export class DeviceService {
     details: '/webapi/device',
     historyData:'/webapi/device_data',
     alarmData:'/webapi/device_alarm_data',
-    lastAlarmData:'/webapi/last_device_alarm_data'
+    lastAlarmData:'/webapi/last_device_alarm_data',
+    deviceStatistics:'/webapi/device_statistics',
   };
 
   private codeHash: any;
@@ -71,6 +72,9 @@ export class DeviceService {
     return this.libService.createGetRequest(this.serviceUrl['lastAlarmData'],{})
   }
 
+  getDeviceStatistics(){
+    return this.libService.createGetRequest(this.serviceUrl['deviceStatistics'],{})
+  }
 
 
 

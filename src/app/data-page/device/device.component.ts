@@ -94,7 +94,7 @@ export class DeviceComponent implements OnInit, OnDestroy {
         this.agencyName = data.lv2_agency_info.efairyuser_nickname
       })
     }
-    
+
     this.deviceService.getDeviceList(this.projectId).then((data) => {
       this.project = data.project_info;
     })
@@ -229,7 +229,7 @@ export class DeviceComponent implements OnInit, OnDestroy {
         {
           name: '报警次数',
           type: 'line',
-          stack: '总量',
+          //stack: '总量',
           // areaStyle: { normal: {} },
           data: yData
         },

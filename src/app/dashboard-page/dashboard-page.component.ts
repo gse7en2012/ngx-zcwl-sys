@@ -19,7 +19,7 @@ export class DashboardPageComponent implements OnInit {
   public rightMap: any;
   public bottomMap: any;
   public projectList: object[];
-  public locationPointLngLat: string[];
+
   public deviceAlarmData: any;
   public rightChartOption: any;
   public leftChartOption: any;
@@ -30,6 +30,7 @@ export class DashboardPageComponent implements OnInit {
   public warningProjectNums: number = 0;
   public mistakeProjectNums: number = 0;
   public normalProjectNums: number = 0;
+  public locationPointLngLat: string[];
 
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
@@ -37,13 +38,13 @@ export class DashboardPageComponent implements OnInit {
   constructor(private projectService: ProjectService, private deviceService: DeviceService) { }
   //API http://lbs.amap.com/api/javascript-api/reference-amap-ui/geo/district-cluster#render
   ngOnInit() {
+
+
     this.bigMap = new AMap.Map('l-map', {
       resizeEnable: true,
       zoom: 12,
       mapStyle: "amap://styles/grey"
     });
-
-
 
 
     this.rightMap = new AMap.Map('r-map', {
@@ -482,7 +483,7 @@ export class DashboardPageComponent implements OnInit {
         title: point.efairyproject_name,
         icon: new AMap.Icon({
           size: new AMap.Size(30, 30),  //图标大小
-          image: index % 2 == 0 ? "assets/image/building_green.png" : "assets/image/building_red.png",
+          image: img,
         })
       });
       pointMaker.content = `
@@ -492,7 +493,7 @@ export class DashboardPageComponent implements OnInit {
           </h3>
           <p class="address">
             ${point.efairyproject_address}<br>
-            <a href="/admin/data/agency/${point.efairyproject_user_id}/branch/${point.efairyproject_id}" class="link">点击查看>></a>
+            <a href="/admin/data/${point.efairyproject_user_id}/agency/${point.efairyproject_user_id}/branch/${point.efairyproject_id}" class="link">点击查看>></a>
           </p>
         </div>
       `;

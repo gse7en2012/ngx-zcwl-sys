@@ -3,7 +3,7 @@ import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angul
 import { Observable } from 'rxjs/Observable';
 import { CookieService } from 'ngx-cookie';
 import { errCodeMsgHash } from './err-msg';
-import { LibService} from './lib.service';
+import { LibService } from './lib.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
@@ -16,20 +16,20 @@ export class UserService {
   private serviceUrl: object = {
     login: '/webapi/login',
     getCode: '/webapi/login_checkcode',
-    getUserCenter:'/webapi/user_center',
+    getUserCenter: '/webapi/user_center',
   };
 
-  private codeHash:any;
+  private codeHash: any;
 
-  public projectListForGlobal:object={};
+  public projectListForGlobal: object = {};
 
   constructor(
     private cookieService: CookieService,
     private http: Http,
-    private libService:LibService,
-    private codeHashObj:errCodeMsgHash
-  ) { 
-    this.codeHash=codeHashObj.codeHash;
+    private libService: LibService,
+    private codeHashObj: errCodeMsgHash
+  ) {
+    this.codeHash = codeHashObj.codeHash;
   }
 
 
@@ -40,7 +40,7 @@ export class UserService {
     return this.http.get(this.serviceUrl['login'], { search: params }).map(res => res.json()).toPromise()
       .then((data) => {
         if (data.err_code === 200) {
-          data.result.user_info.user_level=data.result.level;
+          data.result.user_info.user_level = data.result.level;
           this.cookieService.put('pst_token', data.result.access_token);
           this.cookieService.putObject('pst_admin_info', data.result.user_info);
           return data.result;
@@ -67,12 +67,18 @@ export class UserService {
       })
   }
 
-  public getUserCenter(){
+  public getUserCenter() {
     const param = this.libService.generateHttpGetSearchParams();
     return this.http.get(`${this.serviceUrl['getUserCenter']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-    .then((data)=>{
-      
-    })
+      .then((data) => {
+        if (data.err_code === 200) {
+          return data.result;
+        } else {
+          return Promise.reject(
+            this.codeHash[data.err_code] || '系统出错，请联系管理员'
+          );
+        }
+      })
   }
 
   public logOut() {
@@ -91,17 +97,17 @@ export class UserService {
 
   }
 
-  public setProjectList(list){
+  public setProjectList(list) {
     // this.projectListForGlobal=list;
     if (list) {
       this.projectListForGlobal = {};
-      list.forEach((item) => {        
+      list.forEach((item) => {
         this.projectListForGlobal[item.efairyproject_id] = item;
       })
     }
   }
 
-  public getProjectById(id){
+  public getProjectById(id) {
     return this.projectListForGlobal[id]
   }
 

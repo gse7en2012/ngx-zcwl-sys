@@ -48,7 +48,9 @@ export class ProjectService {
     deleteProjectDeviceManage:'/webapi/manage_project_device',
 
     deleteProjectManage:'/webapi/project',
-    addProjectManage:'/webapi/project'
+    addProjectManage:'/webapi/project',
+
+    getDangerousProject:'/webapi/dangerous_project'
   };
 
   private codeHash: any;
@@ -338,6 +340,12 @@ export class ProjectService {
     return this.gsevenRequestViaGet('getGeoProjectList',{
       geo_info:JSON.stringify(geoInfo),
       geo_level:geoLevel
+    })
+  }
+
+  public getDangerousProject(time:string){
+    return this.gsevenRequestViaGet('getDangerousProject',{
+     cur_time:time
     })
   }
 
