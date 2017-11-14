@@ -50,7 +50,10 @@ export class ProjectService {
     deleteProjectManage:'/webapi/project',
     addProjectManage:'/webapi/project',
 
-    getDangerousProject:'/webapi/dangerous_project'
+    getDangerousProject:'/webapi/dangerous_project',
+    getTotalAlarmList:'/webapi/total_alarm_data',
+
+    postDeviceControl:'/webapi/device_control'
   };
 
   private codeHash: any;
@@ -347,6 +350,18 @@ export class ProjectService {
     return this.gsevenRequestViaGet('getDangerousProject',{
      cur_time:time
     })
+  }
+
+  public getTotalAlarmList(){
+    return this.gsevenRequestViaGet('getTotalAlarmList',{})
+  }
+
+  public postDeviceControl(deviceId,order){
+    //66-get cid  128 reset 129 dissvoice
+    return this.gsevenRequestViaPost('postDeviceControl', {
+      efairydevice_id:deviceId,
+      control_order:order
+    });
   }
 
 }

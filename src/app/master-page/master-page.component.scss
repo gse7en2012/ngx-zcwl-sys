@@ -219,6 +219,11 @@ ul{
         padding-bottom: 10px;
         line-height: 1.5;
         color: #666;
+        .more-info{
+            position: absolute;
+            right: 5px;
+            top:5px;
+        }
         .time{
             position: absolute;
             width: 60px;
@@ -251,4 +256,12 @@ ul{
 .right-icon{
     float:right;
     margin-top: 18px;
+}
+
+.no-data-placeholder{
+    text-align: center;
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+    font-size: 16px;
 }

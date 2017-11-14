@@ -14,6 +14,12 @@
       <span *ngIf="geoInfo.efairyproject_township">> {{geoInfo?.efairyproject_township}}</span>
       > {{project?.efairyproject_name}} > {{deviceDetails.device_info.efairydevice_name}}
     </p>
+    
+    <div class="fr">
+      设备操作：
+      <a (click)="conrtolDevice(128)">复位</a>
+      <a (click)="conrtolDevice(129)">消音</a>
+    </div>
 
     <!-- <div class="fr">
         报警：0 正常：1
@@ -69,7 +75,7 @@
       <header class="green">
         状态
         <div class="fr">
-          <img src="assets/image/roll.png">
+          <!-- <img src="assets/image/roll.png"> -->
         </div>
       </header>
       <div class="ctx">

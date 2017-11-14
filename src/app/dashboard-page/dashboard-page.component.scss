@@ -213,17 +213,17 @@
                 }
             }
             &.pink{
-               .title{color: #6639a6;}
+               .title{color: #a00d12;}
                .content{
                 &::-webkit-scrollbar{
                     width: 8px;
                     background:rgba(75, 87, 99, .9);
                 }
                 &::-webkit-scrollbar-thumb{
-                    background: #6639a6;
+                    background: #a00d12;
                 }
                }
-               border-bottom:4px solid #6639a6;
+               border-bottom:4px solid #a00d12;
             }
             &.red{
                border-bottom:4px solid #3490de; 

@@ -1,7 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ProjectService } from '../../service/project.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import * as myGlobals from '../../global/globals';
 
 declare var AMap;
 declare var AMapUI;
@@ -68,6 +68,9 @@ export class DetailsComponent implements OnInit {
   public userPageMax: number = 1;
   public jumpUserPage: number;
   public userKeyword: string;
+
+  public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
+  public deviceTypeHash=myGlobals.deviceTypeHash;
 
   constructor(private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router, private zone: NgZone) { }
 
@@ -253,6 +256,10 @@ export class DetailsComponent implements OnInit {
       this.deviceTotal = data.efairyproject_total_devices;
       this.devicePageMax = Math.ceil(this.deviceTotal / this.devicePageSize);
       this.deviceLoading = false;
+      this.deviceList.forEach((item)=>{
+        item.efairydevice_state=this.stateHash[item.efairydevice_state];
+        item.efairydevice_device_type=this.deviceTypeHash[item.efairydevice_device_type_id];
+      })
       // this.renderDeviceData();
     })
   }

@@ -132,6 +132,8 @@
         <tr>
           <th>设备编号</th>
           <th>设备名称</th>
+          <th>设备类型</th>
+          <th>设备状态</th>
           <th>设备地址</th>
           <th>创建日期</th>
           <th>操作</th>
@@ -141,6 +143,12 @@
           <td>
             <span *ngIf="!item.isEdit">{{item.efairydevice_name}}</span>
             <input *ngIf="item.isEdit" [(ngModel)]="item.efairydevice_name">
+          </td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairydevice_device_type}}</span>
+          </td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairydevice_state}}</span>
           </td>
           <td>
             <span *ngIf="!item.isEdit">{{item.efairydevice_address}}</span>

@@ -38,15 +38,13 @@ export class LeftNavPartComponent implements OnInit {
       this.agencyList = data.agency_list;
 
       //0-超级管理员 1-一级经销商 2-二级经销商 3-项目管理员 4-普通用户
-      // if (this.userLevel == 0 || this.userLevel == 1) {
-      //   this.getLv2AgencyList(this.agencyList[0], isNeedRedirect)
-      // }
 
-      if (this.userLevel == 0 || this.userLevel == 1|| this.userLevel == 2|| this.userLevel == 3) {
+
+      if (this.userLevel == 0 || this.userLevel == 1) {
         this.isAdminUser = true;
         this.initCurrentParentTab(); //渲染
       }
-      if (this.userLevel == 4 ) {
+      if (this.userLevel == 4 || this.userLevel == 2 || this.userLevel == 3) {
         this.projectService.getNormalUserProjectList().then((r) => {
           this.nodes = this.formatResToTree(r);
           this.normalNavList = r;
@@ -127,6 +125,19 @@ export class LeftNavPartComponent implements OnInit {
       }
       return p;
     })
+  }
+
+  chooseTown(town){
+    this.normalNavList.forEach(province=>{
+      province.city_list.forEach((city)=>{
+        city.district_list.forEach((district)=>{
+          district.township_list.forEach((town)=>{
+            town.cur=false;
+          })
+        })
+      })
+    })
+    town.cur=true;
   }
 
   initCurrentParentTab() {

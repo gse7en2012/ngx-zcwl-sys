@@ -47,7 +47,7 @@
                   {{district.efairyproject_district||'市属'}}</a>
               </span>
               <div *ngIf="district.isOpen">
-                <a class="town" *ngFor="let town of district.township_list" [routerLink]="['geo/project']" [queryParams]="{ geo_level: 4,province:province.efairyproject_province,city:city.efairyproject_city,district:district.efairyproject_district,town:town.efairyproject_township }">
+                <a class="town" *ngFor="let town of district.township_list" [routerLink]="['geo/project']" [queryParams]="{ geo_level: 4,province:province.efairyproject_province,city:city.efairyproject_city,district:district.efairyproject_district,town:town.efairyproject_township }" (click)="chooseTown(town)" [ngClass]="{cur:town.cur}" >
                   {{town.efairyproject_township}}
                 </a>
               </div>

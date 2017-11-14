@@ -105,6 +105,14 @@ export class DeviceComponent implements OnInit, OnDestroy {
     clearInterval(this.stId);
   }
 
+  conrtolDevice(order){
+    this.projectService.postDeviceControl(this.deviceId,order).then((r)=>{
+      alert(r.efairydevicemsg_content+'操作成功！')
+    }).catch(e=>{
+      alert(e)
+    })
+  }
+
   getInitQueryString() {
     this.route.queryParams.subscribe(queryParams => {
       this.geoLevel = queryParams.geo_level;

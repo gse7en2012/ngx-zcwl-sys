@@ -61,11 +61,10 @@
           <div class="details">
             设备id：{{item.efairydevice_uuid}}
             <br> 设备名称：{{item.efairydevice_name}}
-            <br> 报警类型：报警
+            <!-- <br> 报警类型：{{item.ss}}报警 -->
             <br> 设备状态：{{item.state}}
-            <br> 参量值：{{item.ss}}
-            <br> 报警值：{{item.efairydevicefiredata_rtv}}
-            <br> 阀值：{{item.efairydevicefiredata_thv}}
+            <br> 报警值：{{item.efairydevice_alarm_rtv}}
+            <br> 阀值：{{item.efairydevice_alarm_thv}}
           </div>
         </section>
       </div>

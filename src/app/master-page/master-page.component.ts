@@ -18,6 +18,7 @@ declare var moment;
 })
 export class MasterPageComponent implements OnInit {
 
+  public userLevelLabel:string;
   public userInfo: any;
   public time: string;
   public deviceAlarmData: any;
@@ -32,9 +33,9 @@ export class MasterPageComponent implements OnInit {
 
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
   public dataHash = myGlobals.dataHash;
-  public stateHashList=myGlobals.stateHash;
-  public projectAlarmList:any;
-  public projectAlarmTotal:number=0;
+  public stateHashList = myGlobals.stateHash;
+  public projectAlarmList: any;
+  public projectAlarmTotal: number = 0;
 
   public leftChartOption: any;
   public rightChartOption: any;
@@ -48,7 +49,9 @@ export class MasterPageComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private deviceService: DeviceService, private projectService: ProjectService) { }
 
   ngOnInit() {
+    const userLevelList=['超级管理员','一级经销商','二级经销商','项目管理员','普通用户'];
     this.userInfo = this.userService.getAdminInfo();
+    this.userLevelLabel=userLevelList[this.userInfo.user_level];
     this.time = moment().format('YYYY年MM月DD日');
 
     this.getLastAlarmData();
@@ -56,11 +59,26 @@ export class MasterPageComponent implements OnInit {
     this.getAllProject();
     this.getDeviceStatistics();
     this.getDangerousProject();
+    this.getTotalAlarmList();
+  }
+
+  getTotalAlarmList() {
+    this.projectService.getTotalAlarmList().then((data) => {
+      this.projectAlarmList = data.alarm_data_list;
+      this.projectAlarmTotal = data.total_rows;
+      this.projectAlarmList.forEach((item) => {
+        item.label = this.dataHash[item.efairydevice_alarm_pt][0];
+        item.state = this.stateHashList[item.efairydevice_detail_state];
+        item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+        item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+      })
+    })
   }
 
   getDangerousProject() {
     const curTime = moment().format('YYYY-MM-DD HH:mm:ss')
     this.projectService.getDangerousProject(curTime).then((data) => {
+      if (data.length == 0) return;
       const dangerList = data.alarm_times_list;
       if (dangerList.length > 0) {
         this.bottomChartOption = this.formatLineChartData(
@@ -69,18 +87,6 @@ export class MasterPageComponent implements OnInit {
           dangerList.map((item) => { return item.alarm_times })
         )
       }
-
-      this.projectService.getProjectAlarmData(data.project_info.efairyproject_id).then((data)=>{
-        this.projectAlarmList=data.project_alarm_data_list;
-        this.projectAlarmTotal = data.total_rows;
-        this.projectAlarmList.forEach((item) => {
-          item.label = this.dataHash[item.efairydevice_alarm_pt][0];
-          item.state = this.stateHashList[item.efairydevice_detail_state];
-          item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
-          item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
-        })
-        
-      })
     })
   }
 
@@ -103,21 +109,23 @@ export class MasterPageComponent implements OnInit {
       const leftChartData = data.devices_status;
 
       this.leftChartOption = this.formatPieChartData('设备情况', [
-        { value: leftChartData.device_fire_number || 1, name: '报警数:' + leftChartData.device_fire_number },
-        { value: leftChartData.device_normal_number || 1, name: '正常数:' + leftChartData.device_normal_number },
-        { value: leftChartData.device_trouble_number || 1, name: '故障数:' + leftChartData.device_trouble_number }
+        { value: leftChartData.device_fire_number, name: '报警数:' + leftChartData.device_fire_number },
+        { value: leftChartData.device_normal_number, name: '正常数:' + leftChartData.device_normal_number },
+        { value: leftChartData.device_trouble_number, name: '故障数:' + leftChartData.device_trouble_number }
       ]);
       this.totalDevice = leftChartData.device_offline_number + leftChartData.device_online_number;
       this.onlineDevice = leftChartData.device_online_number;
       this.offDevice = leftChartData.device_offline_number;
 
-      const rightChartData = data.scale_map_list.map((item) => {
-        return {
-          value: item.alarm_times,
-          name: this.dataHash[item.pt][0] + ':' + item.alarm_times
-        }
-      });
-      this.rightChartOption = this.formatPieChartData('报警占比', rightChartData);
+      if (data.scale_map_list.length > 0) {
+        const rightChartData = data.scale_map_list.map((item) => {
+          return {
+            value: item.alarm_times,
+            name: this.dataHash[item.pt][0] + ':' + item.alarm_times
+          }
+        });
+        this.rightChartOption = this.formatPieChartData('报警占比', rightChartData);
+      }
 
     })
   }

@@ -50,7 +50,7 @@ export class DashboardPageComponent implements OnInit {
     this.rightMap = new AMap.Map('r-map', {
       zoomEnable: true,
       dragEnable: true,
-      zoom: 8,
+      zoom: 6,
       zooms: [4, 12],
       features: ['bg', 'point'],
       mapStyle: "amap://styles/darkblue"
@@ -436,15 +436,27 @@ export class DashboardPageComponent implements OnInit {
   }
 
   getLastAlarmDevice() {
-    this.deviceService.getLastDeviceAlarmData().then((data) => {
-      this.deviceAlarmData = data.device_alarm_data_list;
+    // this.deviceService.getLastDeviceAlarmData().then((data) => {
+    //   this.deviceAlarmData = data.device_alarm_data_list;
+    //   this.deviceAlarmData.forEach((item) => {
+    //     item.blueTime = moment(item.efairydevicefiredata_time).format('MM-DD');
+    //     item.spanTime = moment(item.efairydevicefiredata_time).format('HH:mm');
+    //     item.state = this.stateHash[item.efairydevicefiredata_state];
+    //     item.ss = this.dataHash[item.efairydevicefiredata_parameter][0]
+    //   })
+    // })
+    this.projectService.getTotalAlarmList().then((data) => {
+      this.deviceAlarmData = data.alarm_data_list;
       this.deviceAlarmData.forEach((item) => {
-        item.blueTime = moment(item.efairydevicefiredata_time).format('MM-DD');
-        item.spanTime = moment(item.efairydevicefiredata_time).format('HH:mm');
-        item.state = this.stateHash[item.efairydevicefiredata_state];
-        item.ss = this.dataHash[item.efairydevicefiredata_parameter][0]
+        item.blueTime = moment(item.efairydevice_alarm_time).format('YYYY-MM-DD');
+        item.spanTime = moment(item.efairydevice_alarm_time).format('HH:mm:ss');
+        item.ss = this.dataHash[item.efairydevice_alarm_pt][0];
+        item.state = this.stateHash[item.efairydevice_detail_state];
+        item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+        item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
       })
     })
+
   }
 
   getAllProject() {

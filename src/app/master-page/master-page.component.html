@@ -10,7 +10,7 @@
           <div class="ctx">
             <img [src]="userInfo.efairyuser_headimg_url" class="avatar">
             <div class="profile">
-              {{userInfo.efairyuser_nickname}} 管理员
+              {{userInfo.efairyuser_nickname}} {{userLevelLabel}}
               <br>{{userInfo.efairyuser_company}}
               <br>
               <br>{{time}}
@@ -23,9 +23,10 @@
             <div class="r">{{projectAlarmTotal}}</div>
           </div>
           <div class="ctx">
-            <ul class="info-list">
-              <li *ngFor="let item of projectAlarmList" >
-                设备:{{item.efairydevice_name}} {{item.state}}  {{item.efairydevice_alarm_rtv}}/{{item.efairydevice_alarm_thv}} {{item.efairydevice_alarm_time}}
+            <div *ngIf="!projectAlarmList||projectAlarmList.length==0" class="no-data-placeholder">暂无数据</div>
+            <ul class="info-list" *ngIf="projectAlarmList&&projectAlarmList.length>0">
+              <li *ngFor="let item of projectAlarmList">
+                设备:{{item.efairydevice_name}} {{item.state}} {{item.efairydevice_alarm_rtv}}/{{item.efairydevice_alarm_thv}} {{item.efairydevice_alarm_time}}
               </li>
             </ul>
           </div>
@@ -41,10 +42,12 @@
                 离线设备：{{offDevice}}
                 <br>在线设备：{{onlineDevice}}
               </div>
-              <div echarts [options]="leftChartOption" theme="essos" class="chart" style="height:100%;"></div>
+              <div echarts [options]="leftChartOption" theme="essos" class="chart" style="height:100%;" *ngIf="leftChartOption"></div>
+              <div *ngIf="!leftChartOption" class="no-data-placeholder">暂无数据</div>
             </div>
             <div class="charts-item">
-              <div echarts [options]="rightChartOption" theme="vintage" class="chart" style="height:100%;"></div>
+              <div echarts [options]="rightChartOption" theme="vintage" class="chart" style="height:100%;" *ngIf="rightChartOption"></div>
+              <div *ngIf="!rightChartOption" class="no-data-placeholder">暂无数据</div>
             </div>
           </div>
         </div>
@@ -66,7 +69,11 @@
         <div class="item">
           <div class="title">
             <img src="assets/image/map.png" class="map-icon">地图
-            <img src="assets/image/edit.png" class="right-icon">
+            <a [routerLink]="['/dashboard']">
+              <img src="assets/image/scale.png" class="right-icon">
+            </a>
+
+
           </div>
           <div id="m-map"></div>
         </div>
@@ -75,10 +82,14 @@
       <div class="row grid1">
         <div class="item">
           <div class="title">
-            <img src="assets/image/dash.png" class="map-icon">电气安全综合隐患指数top1
+            <img src="assets/image/dash.png" class="map-icon">电气安全综合隐患top1
             <!-- <img src="assets/image/edit.png" class="right-icon"> -->
           </div>
-          <div echarts [options]="bottomChartOption" theme="macarons" class="chart" style="height:263px;"></div>
+          <div echarts [options]="bottomChartOption" theme="macarons" class="chart" style="height:263px;" *ngIf="bottomChartOption"></div>
+          <div style="height:263px;" *ngIf="!bottomChartOption">
+            <div class="no-data-placeholder">暂无数据</div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -88,7 +99,7 @@
       <div class="row grid1">
         <div class="item">
           <div class="title">
-            <img src="assets/image/dash.png" class="map-icon">最近10次告警
+            <img src="assets/image/dash.png" class="map-icon">最近10次严重报警
             <!-- <img src="assets/image/edit.png" class="right-icon"> -->
           </div>
           <div class="box">
@@ -96,10 +107,13 @@
               <div class="time">
                 <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}
               </div>
+              <!-- <a class="more-info">
+                查看详情
+              </a> -->
               <div class="ctx">
                 设备id：{{item.efairydevice_uuid}}
                 <br> 设备名称：{{item.efairydevice_name}}
-                <br> 报警类型：{{item.ss}}
+                <br> 报警类型：{{item.ss}}报警
                 <br> 报警值：{{item.efairydevicefiredata_rtv_v}}
                 <br> 阀值：{{item.efairydevicefiredata_thv_v}}
               </div>
