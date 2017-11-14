@@ -129,8 +129,6 @@ export class BranchComponent implements OnInit {
       this.getData();
     } else {
       this.deviceListPageShow = this.deviceList.filter((item: any) => {
-        console.log(item.efairydevice_state, this.filterType, item.efairydevice_state == this.filterType);
-
         return item.efairydevice_state == Number(this.filterType);
       })
     }

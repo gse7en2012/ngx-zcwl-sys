@@ -100,6 +100,16 @@ ul{
                     line-height: 1.5;
                     padding: 3px 0;
                     border-bottom:1px solid #ddd;
+                    overflow: hidden;
+                    span{
+                        width: 25%;
+                        overflow: hidden;
+                        float: left;
+                        height: 30px;
+                        line-height: 30px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
                 }
                 &::-webkit-scrollbar{
                     width: 8px;

@@ -463,7 +463,7 @@ export class DashboardPageComponent implements OnInit {
     this.projectService.getAllProjectList().then((data) => {
       this.projectList = data.project_list;
       this.locationPointLngLat = this.projectList.map((row: any) => {
-        const color = row.efairyproject_fire_number > 0 ? "r" : (row.efairyproject_trouble_number > 0 ? 'o' : 'g');
+        const color = row.efairyproject_fire_number > 0 ? "r" : ((row.efairyproject_trouble_number > 0 ||row.efairyproject_state == 0)? 'o' : 'g');
         if (color == 'r') {
           this.warningProjectNums++;
         } else if (color == 'o') {
@@ -487,8 +487,8 @@ export class DashboardPageComponent implements OnInit {
     });
     pointList.forEach((point, index) => {
       if (index === 0) this.bigMap.setCenter([point.efairyproject_location_lng, point.efairyproject_location_lat]);
-      const img = point.efairyproject_fire_number > 0 ?
-        "assets/image/building_red.png" : (point.efairyproject_trouble_number > 0 ? 'assets/image/building_orange.png' : 'assets/image/building_green.png')
+      const img = point.efairyproject_fire_number > 0  ?
+        "assets/image/building_red.png" : ((point.efairyproject_trouble_number > 0 ||point.efairyproject_state == 0)? 'assets/image/building_orange.png' : 'assets/image/building_green.png');
       const pointMaker = new AMap.Marker({
         map: this.bigMap,
         position: [point.efairyproject_location_lng, point.efairyproject_location_lat],

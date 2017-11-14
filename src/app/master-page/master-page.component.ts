@@ -69,8 +69,9 @@ export class MasterPageComponent implements OnInit {
       this.projectAlarmList.forEach((item) => {
         item.label = this.dataHash[item.efairydevice_alarm_pt][0];
         item.state = this.stateHashList[item.efairydevice_detail_state];
-        item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
-        item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+        item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
+        item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
+        item.efairydevice_alarm_time=moment(item.efairydevice_alarm_time).format('MM-DD HH:mm');
       })
     })
   }
@@ -276,10 +277,8 @@ export class MasterPageComponent implements OnInit {
     });
     pointList.forEach((point, index) => {
       if (index === 0) this.bigMap.setCenter([point.efairyproject_location_lng, point.efairyproject_location_lat]);
-      const img = point.efairyproject_fire_number > 0 ?
-        "assets/image/building_red.png" :
-        (point.efairyproject_trouble_number > 0 ? 'assets/image/building_orange.png' : 'assets/image/building_green.png')
-
+      const img = point.efairyproject_fire_number > 0  ?
+      "assets/image/building_red.png" : ((point.efairyproject_trouble_number > 0 ||point.efairyproject_state == 0)? 'assets/image/building_orange.png' : 'assets/image/building_green.png');
       const pointMaker = new AMap.Marker({
         map: this.bigMap,
         position: [point.efairyproject_location_lng, point.efairyproject_location_lat],

@@ -26,7 +26,10 @@
             <div *ngIf="!projectAlarmList||projectAlarmList.length==0" class="no-data-placeholder">暂无数据</div>
             <ul class="info-list" *ngIf="projectAlarmList&&projectAlarmList.length>0">
               <li *ngFor="let item of projectAlarmList">
-                设备:{{item.efairydevice_name}} {{item.state}} {{item.efairydevice_alarm_rtv}}/{{item.efairydevice_alarm_thv}} {{item.efairydevice_alarm_time}}
+                <span class="name">{{item.efairydevice_name}}</span>
+                <span class="type">{{item.state}}</span>
+                <span class="rtv">{{item.efairydevice_alarm_rtv}}</span>
+                <span class="time">{{item.efairydevice_alarm_time}}</span>
               </li>
             </ul>
           </div>

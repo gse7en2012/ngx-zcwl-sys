@@ -50,6 +50,7 @@
         <select [(ngModel)]="filterType" (ngModelChange)="changeType($event)">
           <option value="all">全部</option>
           <option value="6">正常</option>
+          <option value="0">离线</option>
           <option value="1">报警</option>
           <option value="3">故障</option>
           <!-- public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常']; -->
