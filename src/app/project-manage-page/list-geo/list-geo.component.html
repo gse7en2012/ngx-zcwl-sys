@@ -1,0 +1,58 @@
+<div class="right">
+    <div class="info-bar">
+      <p class="bread-crumb">
+        <span class="title">项目管理</span>
+        <a class="btn fr" [routerLink]="['new_project']">新增项目</a>
+      </p>
+    </div>
+    <div class="content">
+  
+      <loading *ngIf="loading"></loading>
+  
+      <div class="pagination">
+        共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+        <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+        <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+        <a class="btn" (click)="changePage()">GO</a>
+      </div>
+  
+  
+      <div class="device-list" *ngIf="!loading&&projectListPageShow.length!=0">
+        <div *ngFor="let branch of projectListPageShow" class="section" >
+          <a [routerLink]="['details/'+branch.efairyproject_id]" class="device-link">
+            <div class="device-pic">
+              <img src="assets/image/device.png">
+            </div>
+            <h3 class="device-name">
+              <span class="blue">项目名</span>
+              <br> {{branch.efairyproject_name}}
+            </h3>
+  
+  
+            <footer class="device-info">
+              <div class="fl">
+                <p class="num">{{branch.efairyproject_fire_number}}</p>
+                <p class="desc">报警/台</p>
+              </div>
+              <div class="fr">
+                <p class="num">{{branch.efairyproject_device_online_number}}/{{branch.efairyproject_total_devices}}</p>
+                <p class="desc">在线/设备总数</p>
+              </div>
+            </footer>
+          </a>
+          <div class="device-opts" (click)="deleteProject(branch.efairyproject_id)">
+            <b>-</b>
+            <a>删除</a>
+          </div>
+  
+  
+        </div>
+  
+  
+  
+      </div>
+  
+      <p *ngIf="projectListPageShow.length==0&&!loading" class="no-data">暂无数据</p>
+  
+    </div>

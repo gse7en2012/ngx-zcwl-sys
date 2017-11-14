@@ -10,18 +10,20 @@ import { UserService } from '../service/user.service';
 })
 export class ParentContainerComponent implements OnInit {
 
-  public userInfo:any;
+  public userInfo: any;
 
   constructor(private userService: UserService, private router: Router, ) { }
 
   ngOnInit() {
-    this.userInfo=this.userService.getAdminInfo();
-    console.log(this.userInfo);
-    
+    this.userInfo = this.userService.getAdminInfo();
+
+
+  }
+  waiting() {
+    alert('敬请期待')
   }
 
-
-  logout(){
+  logout() {
     this.userService.logOut();
     this.router.navigate(['/login']);
   }

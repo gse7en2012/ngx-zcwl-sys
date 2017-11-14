@@ -26,7 +26,6 @@ export class LeftNavPartComponent implements OnInit {
   ngOnInit() {
 
     this.route.params.subscribe(params => {
-      console.log(params, location.href);
 
     });
     // this.getCurrentParentTabId();
