@@ -278,6 +278,9 @@ export class MasterPageComponent implements OnInit {
       zoom: 12,
       mapStyle: "amap://styles/macaron"
     });
+    this.bigMap.on('click', (e) => {
+      this.bigMap.clearInfoWindow()
+    })
     let infoWindow = new AMap.InfoWindow({
       offset: new AMap.Pixel(10, -40),
       isCustom: true,

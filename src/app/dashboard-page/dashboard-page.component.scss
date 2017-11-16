@@ -213,7 +213,13 @@
                 }
             }
             &.pink{
-               .title{color: #a00d12;}
+               .title{
+                   color: #a00d12;
+                   span{
+                      float:right;  
+                      margin-right: 5px;   
+                   }
+                }
                .content{
                 &::-webkit-scrollbar{
                     width: 8px;

@@ -21,13 +21,13 @@ export class ProjectService {
     getCode: '/webapi/login_checkcode',
     getAgencyList: '/webapi/agency_list',
 
-    getNormalUserProjectList:'/webapi/project_geo_list',
-    getGeoProjectList:'/webapi/geo_project_list',
+    getNormalUserProjectList: '/webapi/project_geo_list',
+    getGeoProjectList: '/webapi/geo_project_list',
 
     getAgencyListLv2: '/webapi/lv2_agency_list',
     getProjectAlarmData: '/webapi/project_alarm_data',
     getProjectReport: '/webapi/report',
-    getProjectMonitorData:'/webapi/monitor_data',
+    getProjectMonitorData: '/webapi/monitor_data',
     getProjectDetailsManage: '/webapi/manage_project',
     getProjectGmListManage: '/webapi/manage_project_gm_list',
     getProjectUserListManage: '/webapi/manage_project_user_list',
@@ -45,15 +45,15 @@ export class ProjectService {
 
     addProjectDeviceManage: '/webapi/manage_project_device_and_user',
     editProjectDeviceManage: '/webapi/manage_project_device',
-    deleteProjectDeviceManage:'/webapi/manage_project_device',
+    deleteProjectDeviceManage: '/webapi/manage_project_device',
 
-    deleteProjectManage:'/webapi/project',
-    addProjectManage:'/webapi/project',
+    deleteProjectManage: '/webapi/project',
+    addProjectManage: '/webapi/project',
 
-    getDangerousProject:'/webapi/dangerous_project',
-    getTotalAlarmList:'/webapi/total_alarm_data',
+    getDangerousProject: '/webapi/dangerous_project',
+    getTotalAlarmList: '/webapi/total_alarm_data',
 
-    postDeviceControl:'/webapi/device_control'
+    postDeviceControl: '/webapi/device_control'
   };
 
   private codeHash: any;
@@ -66,6 +66,17 @@ export class ProjectService {
     private codeHashObj: errCodeMsgHash
   ) {
     this.codeHash = codeHashObj.codeHash;
+  }
+
+
+  private selfStore: any = {};
+
+  setLeftNavInfo(data) {
+    this.selfStore = data;
+  }
+
+  getLeftNavInfo() {
+    return this.selfStore;
   }
 
   gsevenRequestViaGet(target, opts) {
@@ -116,7 +127,7 @@ export class ProjectService {
   }
 
 
-  getProjectList(agencyId: string) {
+  public getProjectList(agencyId: string) {
     const param = this.libService.generateHttpGetSearchParams({
       lv2_agency_id: agencyId
     });
@@ -131,7 +142,7 @@ export class ProjectService {
       })
   }
 
-  getAllProjectList() {
+  public getAllProjectList() {
     const param = this.libService.generateHttpGetSearchParams({});
     return this.http.get(`${this.serviceUrl['allList']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise().then((data) => {
       if (data.err_code === 200) {
@@ -142,37 +153,22 @@ export class ProjectService {
     })
   }
 
-  getAgencyList() {
-    const param = this.libService.generateHttpGetSearchParams();
-    return this.http.get(`${this.serviceUrl['getAgencyList']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-      .then((data) => {
-        if (data.err_code === 200) {
-          return data.result;
-        } else {
-          return Promise.reject(data.msg || '返回数据格式出错！');
-        }
-      })
+  public getAgencyList() {
+
+    return this.gsevenRequestViaGet('getAgencyList', {})
   }
 
-  getAgencyListLv2(lv1AgencyId: string, page?: number, size?: number) {
-    const param = this.libService.generateHttpGetSearchParams({
+  public getAgencyListLv2(lv1AgencyId: string, page?: number, size?: number) {
+
+    return this.gsevenRequestViaGet('getAgencyListLv2', {
       lv1_agency_id: lv1AgencyId,
       page: page,
-      size: size || 100
-    });
-    return this.http.get(`${this.serviceUrl['getAgencyListLv2']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-      .then((data) => {
-        if (data.err_code === 200) {
-          return data.result;
-        } else {
-          return Promise.reject(data.msg || '返回数据格式出错！');
-        }
-      })
-
+      size: size || 1000
+    })
 
   }
 
-  getProjectAlarmData(pid: string, aid?: number) {
+  public getProjectAlarmData(pid: string, aid?: number) {
     const param = this.libService.generateHttpGetSearchParams({
       efairyproject_id: pid,
       alarm_id: aid || 1,
@@ -188,7 +184,7 @@ export class ProjectService {
   }
 
   //1-日报 2-周报 3-月报 4-季报 5-年报
-  getProjectReport(projectId: number, type: number, currentDate: string) {
+  public getProjectReport(projectId: number, type: number, currentDate: string) {
     const param = this.libService.generateHttpGetSearchParams({
       efairyproject_id: projectId,
       report_type: type || 5,
@@ -205,7 +201,7 @@ export class ProjectService {
   }
 
   //super API
-  getProjectDetailsManage(projectId) {
+  public getProjectDetailsManage(projectId) {
     const param = this.libService.generateHttpGetSearchParams({
       efairyproject_id: projectId
     });
@@ -285,8 +281,8 @@ export class ProjectService {
     return this.gsevenRequestViaPost('addProjectManage', opts)
   }
 
-  public deleteProject(pid){
-    return this.gsevenRequestViaDelete('deleteProjectManage',{
+  public deleteProject(pid) {
+    return this.gsevenRequestViaDelete('deleteProjectManage', {
       efairyproject_id_list: JSON.stringify([pid])
     })
   }
@@ -305,7 +301,7 @@ export class ProjectService {
     })
   }
 
-  public deleteProjectDevice(pid, deviceId){
+  public deleteProjectDevice(pid, deviceId) {
     return this.gsevenRequestViaDelete('deleteProjectDeviceManage', {
       efairyproject_id: pid,
       efairydevice_id_list: JSON.stringify([deviceId])
@@ -327,40 +323,40 @@ export class ProjectService {
     return this.gsevenRequestViaPost('addProjectDeviceManage', opts);
   }
 
-  public editProjectDeviceManage(opts){
+  public editProjectDeviceManage(opts) {
     return this.gsevenRequestViaPut('editProjectDeviceManage', opts);
   }
 
-  public getProjectMonitorData(){
-    return this.gsevenRequestViaGet('getProjectMonitorData',{})
+  public getProjectMonitorData() {
+    return this.gsevenRequestViaGet('getProjectMonitorData', {})
   }
 
-  public getNormalUserProjectList(){
-    return this.gsevenRequestViaGet('getNormalUserProjectList',{})
+  public getNormalUserProjectList() {
+    return this.gsevenRequestViaGet('getNormalUserProjectList', {})
   }
 
-  public getGeoProjectList(geoInfo:any,geoLevel:string){
-    return this.gsevenRequestViaGet('getGeoProjectList',{
-      geo_info:JSON.stringify(geoInfo),
-      geo_level:geoLevel
+  public getGeoProjectList(geoInfo: any, geoLevel: string) {
+    return this.gsevenRequestViaGet('getGeoProjectList', {
+      geo_info: JSON.stringify(geoInfo),
+      geo_level: geoLevel
     })
   }
 
-  public getDangerousProject(time:string){
-    return this.gsevenRequestViaGet('getDangerousProject',{
-     cur_time:time
+  public getDangerousProject(time: string) {
+    return this.gsevenRequestViaGet('getDangerousProject', {
+      cur_time: time
     })
   }
 
-  public getTotalAlarmList(){
-    return this.gsevenRequestViaGet('getTotalAlarmList',{})
+  public getTotalAlarmList() {
+    return this.gsevenRequestViaGet('getTotalAlarmList', {})
   }
 
-  public postDeviceControl(deviceId,order){
+  public postDeviceControl(deviceId, order) {
     //66-get cid  128 reset 129 dissvoice
     return this.gsevenRequestViaPost('postDeviceControl', {
-      efairydevice_id:deviceId,
-      control_order:order
+      efairydevice_id: deviceId,
+      control_order: order
     });
   }
 

@@ -23,7 +23,7 @@
           <label>项目地址</label>
           <input type="text" [(ngModel)]="projectInfo.efairyproject_address" id="address">
         </div>
-        <div class="row">
+        <div class="row" *ngIf="userInfo.user_level==0" >
             <label>项目维护费</label>
             <select [(ngModel)]="projectInfo.efairyproject_fee_type">
                 <option  value="1">50元</option>

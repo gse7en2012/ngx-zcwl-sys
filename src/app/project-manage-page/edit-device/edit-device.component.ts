@@ -64,7 +64,7 @@ export class EditDeviceComponent implements OnInit {
     this.initDeviceCode();
 
     this.route.params.subscribe(params => {
-      this.projectId = params.proejct_id;
+      this.projectId = params.proejct_id||params.branch_id;
       this.deviceId=params.device_id;
       this.getProjectDeviceDetailsManage();
     });

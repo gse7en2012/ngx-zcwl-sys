@@ -182,7 +182,7 @@ export class DeviceComponent implements OnInit, OnDestroy {
             itemName: this.dataHash[element.pt][0] + '通道' + element.cid,
             itemValue: [(element.rtv * this.dataHash[element.pt][1]), this.dataHash[element.pt][2], '/', (element.thv * this.dataHash[element.pt][1]), this.dataHash[element.pt][2]].join('')
           };
-          if (element.pt == '128') {
+          if (element.pt == '128'||element.pt == '129') {
             single.itemValue = element.rtv == '1' ? '启用' : '不启用'
           }
           this.dataList.push(single)

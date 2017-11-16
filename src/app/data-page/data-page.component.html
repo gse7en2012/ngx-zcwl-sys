@@ -1,6 +1,6 @@
 <div class="data">
 
-  <left-nav [parentRouterParam]="'admin/data'"></left-nav>
-  <router-outlet></router-outlet>
+  <left-nav [parentRouterParam]="'admin/data'" ></left-nav>
+  <router-outlet (activate)="componentAdded($event)"></router-outlet>
 
 </div>

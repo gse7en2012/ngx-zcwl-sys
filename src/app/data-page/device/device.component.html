@@ -14,7 +14,7 @@
       <span *ngIf="geoInfo.efairyproject_township">> {{geoInfo?.efairyproject_township}}</span>
       > {{project?.efairyproject_name}} > {{deviceDetails.device_info.efairydevice_name}}
     </p>
-    
+
     <div class="fr">
       设备操作：
       <a (click)="conrtolDevice(128)">复位</a>
@@ -44,7 +44,9 @@
       <header class="red">
         基础信息
         <div class="fr" (click)="editDevice()">
-          <img src="assets/image/pencil.png">
+          <a [routerLink]="['edit']">
+            <img src="assets/image/pencil.png">
+          </a>
         </div>
       </header>
       <div class="ctx">
@@ -143,33 +145,35 @@
     <span class="fr close" (click)="closePop()">&times;</span>
   </div>
   <div class="form">
+    <!-- <label class="item">设备ID：{{deviceDetails.device_info.efairydevice_id}}</label>
+      <label class="item">设备软件版本：{{deviceDetails.device_info.efairydevice_version}}</label>
+      <label class="item">设备主编码：{{deviceDetails.device_info.master}}</label>
+      <label class="item">设备从编码：{{deviceDetails.device_info.follow}}</label>
+      <label class="item">安装时间：{{deviceDetails.device_info.efairydevice_install_time}}</label>
+      <label class="item">设备地址：{{deviceDetails.device_info.efairydevice_address}}</label> -->
     <div class="row">
       <label>设备名称：</label>
-      <input>
+      <input [(ngModel)]="deviceDetails.device_info.efairydevice_name">
     </div>
     <div class="row">
-      <label>设备名称：</label>
-      <input>
+      <label>设备软件版本：</label>
+      <input [(ngModel)]="deviceDetails.device_info.efairydevice_version">
     </div>
     <div class="row">
-      <label>设备名称：</label>
-      <input>
+      <label>设备主编码：</label>
+      <input [(ngModel)]="deviceDetails.device_info.master">
     </div>
     <div class="row">
-      <label>设备名称：</label>
-      <input>
+      <label>设备从编码：</label>
+      <input [(ngModel)]="deviceDetails.device_info.follow">
     </div>
     <div class="row">
-      <label>设备名称：</label>
-      <input>
+      <label>安装时间：</label>
+      <input [(ngModel)]="deviceDetails.device_info.efairydevice_install_time">
     </div>
     <div class="row">
-      <label>设备名称：</label>
-      <input>
-    </div>
-    <div class="row">
-      <label>设备名称：</label>
-      <input>
+      <label>设备地址：</label>
+      <input [(ngModel)]="deviceDetails.device_info.efairydevice_address">
     </div>
   </div>
   <div class="footer">

@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ProjectService } from '../../service/project.service';
+import { UserService } from '../../service/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import * as myGlobal from '../../global/globals';
@@ -27,11 +28,12 @@ export class NewProjectComponent implements OnInit {
     efairyproject_location_lng: '',
     efairyproject_location_lat: '',
     efairyproject_description: '',
-    efairyproject_fee_type: '1',
+
     lv2_agency_id: ''
   };
+  public userInfo: any = {};
 
-  constructor(private zone: NgZone, private _location: Location, private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private zone: NgZone, private _location: Location, private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
 
   ngOnInit() {
@@ -39,6 +41,12 @@ export class NewProjectComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.projectInfo.lv2_agency_id = params.agency_id;
     });
+
+    this.userInfo = this.userService.getAdminInfo();
+
+    if (this.userInfo.user_level == 0) {
+      this.projectInfo.efairyproject_fee_type = '1';
+    }
   }
 
   addNewProject() {

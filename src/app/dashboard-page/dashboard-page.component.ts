@@ -32,6 +32,9 @@ export class DashboardPageComponent implements OnInit {
   public normalProjectNums: number = 0;
   public locationPointLngLat: string[];
 
+
+  public deviceAlarmDataLoading:boolean=true;
+
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
 
@@ -447,6 +450,7 @@ export class DashboardPageComponent implements OnInit {
     // })
     this.projectService.getTotalAlarmList().then((data) => {
       this.deviceAlarmData = data.alarm_data_list;
+      this.deviceAlarmDataLoading=false;
       this.deviceAlarmData.forEach((item) => {
         item.blueTime = moment(item.efairydevice_alarm_time).format('YYYY-MM-DD');
         item.spanTime = moment(item.efairydevice_alarm_time).format('HH:mm:ss');

@@ -52,8 +52,11 @@
 
   <div class="footer">
     <div class="item pink">
-      <h3 class="title">设备报警</h3>
+      <h3 class="title">设备报警
+        <span>{{deviceAlarmData?.length}}</span>
+      </h3>
       <div class="content">
+        <loading *ngIf="deviceAlarmDataLoading" ></loading>
         <section class="block" *ngFor="let item of deviceAlarmData">
           <div class="time">
             <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectService } from '../../service/project.service';
-
+import { ShareService } from '../../service/share.service';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: '<left-nav></left-nav>',
@@ -21,7 +22,11 @@ export class LeftNavPartComponent implements OnInit {
   public normalNavList: any = [];
   public nodes = [];
 
-  constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute, private shareService: ShareService, private userService: UserService) {
+    shareService.changeEmitted$.subscribe(text => {
+      this.initCurrentParentTab();
+    });
+  }
 
   ngOnInit() {
 
@@ -31,26 +36,19 @@ export class LeftNavPartComponent implements OnInit {
     // this.getCurrentParentTabId();
 
     // const isNeedRedirect = !location.href.split(`${this.parentRouterParam}/`)[1];
-    this.projectService.getAgencyList().then((data) => {
-      this.loading = false;
-      this.userLevel = data.level;
-      this.agencyList = data.agency_list;
 
-      //0-超级管理员 1-一级经销商 2-二级经销商 3-项目管理员 4-普通用户
+    const userInfo: any = this.userService.getAdminInfo();
+    if (userInfo.user_level == 0 || userInfo.user_level == 1) {
+      this.isAdminUser = true;
+      this.initCurrentParentTab(); //渲染
+    }
+    if (userInfo.user_level == 4 || userInfo.user_level == 2 || userInfo.user_level == 3) {
+      this.projectService.getNormalUserProjectList().then((r) => {
+        this.nodes = this.formatResToTree(r);
+        this.normalNavList = r;
+      })
+    }
 
-
-      if (this.userLevel == 0 || this.userLevel == 1) {
-        this.isAdminUser = true;
-        this.initCurrentParentTab(); //渲染
-      }
-      if (this.userLevel == 4 || this.userLevel == 2 || this.userLevel == 3) {
-        this.projectService.getNormalUserProjectList().then((r) => {
-          this.nodes = this.formatResToTree(r);
-          this.normalNavList = r;
-        })
-      }
-
-    })
   }
 
   getCurrentParentTabId() {
@@ -126,23 +124,21 @@ export class LeftNavPartComponent implements OnInit {
     })
   }
 
-  chooseTown(town){
-    this.normalNavList.forEach(province=>{
-      province.city_list.forEach((city)=>{
-        city.district_list.forEach((district)=>{
-          district.township_list.forEach((town)=>{
-            town.cur=false;
+  chooseTown(town) {
+    this.normalNavList.forEach(province => {
+      province.city_list.forEach((city) => {
+        city.district_list.forEach((district) => {
+          district.township_list.forEach((town) => {
+            town.cur = false;
           })
         })
       })
     })
-    town.cur=true;
+    town.cur = true;
   }
 
   initCurrentParentTab() {
     this.getCurrentParentTabId();
-    console.log(this.parentRouterParam);
-
     this.agencyList.forEach((item) => {
       if (item.efairyuser_id == this.parentTabId) {
         this.getLv2AgencyList(item);
