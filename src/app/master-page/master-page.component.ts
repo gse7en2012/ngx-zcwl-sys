@@ -44,7 +44,9 @@ export class MasterPageComponent implements OnInit {
   public onlineDevice: number;
 
   public bottomChartOption: any;
-
+  public deviceAlarmDataLoading:boolean=true;
+  public projectAlarmListLoading:boolean=true;
+  public userCenterLoading:boolean=true;
 
   constructor(private userService: UserService, private router: Router, private deviceService: DeviceService, private projectService: ProjectService) { }
 
@@ -64,15 +66,17 @@ export class MasterPageComponent implements OnInit {
 
   getTotalAlarmList() {
     this.projectService.getTotalAlarmList().then((data) => {
+      this.projectAlarmListLoading=false;
       this.projectAlarmList = data.alarm_data_list;
       this.projectAlarmTotal = data.total_rows;
       this.projectAlarmList.forEach((item) => {
-        item.label = this.dataHash[item.efairydevice_alarm_pt][0];
+        item.label = this.dataHash[item.efairydevice_alarm_pt]?this.dataHash[item.efairydevice_alarm_pt][0]:'';
         item.state = this.stateHashList[item.efairydevice_detail_state];
         item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
         item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
         item.efairydevice_alarm_time=moment(item.efairydevice_alarm_time).format('MM-DD HH:mm');
       })
+     
     })
   }
 
@@ -101,8 +105,10 @@ export class MasterPageComponent implements OnInit {
 
         item.ss = this.dataHash[item.efairydevicefiredata_parameter][0];
         item.efairydevicefiredata_thv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_thv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
-        item.efairydevicefiredata_rtv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_rtv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2]
+        item.efairydevicefiredata_rtv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_rtv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
       })
+
+      this.deviceAlarmDataLoading=false;
     })
   }
   getDeviceStatistics() {
@@ -110,8 +116,8 @@ export class MasterPageComponent implements OnInit {
       const leftChartData = data.devices_status;
 
       this.leftChartOption = this.formatPieChartData('设备情况', [
-        { value: leftChartData.device_fire_number, name: '报警数:' + leftChartData.device_fire_number },
         { value: leftChartData.device_normal_number, name: '正常数:' + leftChartData.device_normal_number },
+        { value: leftChartData.device_fire_number, name: '报警数:' + leftChartData.device_fire_number },
         { value: leftChartData.device_trouble_number, name: '故障数:' + leftChartData.device_trouble_number }
       ]);
       this.totalDevice = leftChartData.device_offline_number + leftChartData.device_online_number;
@@ -134,6 +140,7 @@ export class MasterPageComponent implements OnInit {
   getUserCenter() {
     this.userService.getUserCenter().then((data) => {
       this.userCenter = data;
+      this.userCenterLoading=false;
     })
   }
   formatLineChartData(title, xData, yData) {

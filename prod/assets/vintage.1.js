@@ -22,9 +22,9 @@
     }
     echarts.registerTheme('vintage', {
         "color": [
-            "#50851c",
-            "#e50304",
-            "#f08300",
+            "#d87c7c",
+            "#919e8b",
+            "#d7ab82",
             "#6e7074",
             "#61a0a8",
             "#efa18d",

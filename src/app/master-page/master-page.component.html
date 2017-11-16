@@ -23,6 +23,7 @@
             <div class="r">{{projectAlarmTotal}}</div>
           </div>
           <div class="ctx">
+            <loading *ngIf="projectAlarmListLoading"></loading>
             <div *ngIf="!projectAlarmList||projectAlarmList.length==0" class="no-data-placeholder">暂无数据</div>
             <ul class="info-list" *ngIf="projectAlarmList&&projectAlarmList.length>0">
               <li *ngFor="let item of projectAlarmList">
@@ -45,7 +46,7 @@
                 离线设备：{{offDevice}}
                 <br>在线设备：{{onlineDevice}}
               </div>
-              <div echarts [options]="leftChartOption" theme="essos" class="chart" style="height:100%;" *ngIf="leftChartOption"></div>
+              <div echarts [options]="leftChartOption" theme="vintage" class="chart" style="height:100%;" *ngIf="leftChartOption"></div>
               <div *ngIf="!leftChartOption" class="no-data-placeholder">暂无数据</div>
             </div>
             <div class="charts-item">
@@ -60,13 +61,16 @@
           <div class="title">
             <img src="assets/image/file.png" class="map-icon">基础信息
           </div>
+          <loading *ngIf="userCenterLoading"></loading>
           <div class="box">
-            <p>单位名称：{{userCenter.efairyuser_company}}</p>
-            <p>负责人：{{userCenter.efairyuser_nickname}}</p>
-            <p>单位地址：{{userCenter.efairyuser_company_address}}</p>
-            <p>联系电话：{{userCenter.efairyuser_phonenumber}}</p>
-            <p>联系邮箱：{{userCenter.efairyuser_email}}</p>
-            <p>设备供应商：{{userCenter.efairyuser_device_supplier}}</p>
+            <div *ngIf="!userCenterLoading">
+              <p>单位名称：{{userCenter.efairyuser_company}}</p>
+              <p>负责人：{{userCenter.efairyuser_nickname}}</p>
+              <p>单位地址：{{userCenter.efairyuser_company_address}}</p>
+              <p>联系电话：{{userCenter.efairyuser_phonenumber}}</p>
+              <p>联系邮箱：{{userCenter.efairyuser_email}}</p>
+              <p>设备供应商：{{userCenter.efairyuser_device_supplier}}</p>
+            </div>
           </div>
         </div>
         <div class="item">
@@ -106,6 +110,7 @@
             <!-- <img src="assets/image/edit.png" class="right-icon"> -->
           </div>
           <div class="box">
+            <loading *ngIf="deviceAlarmDataLoading"></loading>
             <section class="block" *ngFor="let item of deviceAlarmData">
               <div class="time">
                 <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}
