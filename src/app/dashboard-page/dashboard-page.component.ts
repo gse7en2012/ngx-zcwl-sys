@@ -69,7 +69,7 @@ export class DashboardPageComponent implements OnInit {
 
 
     // this.testRenderMapPolygon();
-    this.testMapCluster();
+    //this.testMapCluster();
     this.testClickMap();
     this.getAllProject();
 
@@ -478,8 +478,9 @@ export class DashboardPageComponent implements OnInit {
         return [row['efairyproject_location_lng'], row['efairyproject_location_lat'], color, row.efairyproject_name].join(',')
       })
       return data.project_list;
-    }).then(list => {
+    }).then(list => {      
       this.drawMap(list);
+      this.testMapCluster();
       this.hugePointListMapCover();
     });
   }

@@ -88,6 +88,7 @@ const dataRoutes: Routes = [
   { path: ':parent_id/agency/:agency_id/branch/:branch_id/device/:device_id/edit', component: EditDeviceComponent },
 ]
 
+/**没用 */
 const warningRoutes: Routes = [
   { path: '', component: PlaceholderPageComponent },
   { path: 'agency/:agency_id', component: ProjectComponent },

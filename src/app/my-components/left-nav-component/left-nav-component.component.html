@@ -26,8 +26,8 @@
   <div class="place-list" *ngIf="!isAdminUser">
     <div class="province" *ngFor="let province of normalNavList">
       <span (click)="toggleProvince(province)">
-          <b class="close" *ngIf="!province.isOpen">+</b>
-          <b class="open" *ngIf="province.isOpen">-</b>
+        <b class="close" *ngIf="!province.isOpen">+</b>
+        <b class="open" *ngIf="province.isOpen">-</b>
         <a [routerLink]="['geo/project']" [queryParams]="{ geo_level: 1,province:province.efairyproject_province }">
           {{province.efairyproject_province}}</a>
       </span>
@@ -48,7 +48,8 @@
                   {{district.efairyproject_district||'市属'}}</a>
               </span>
               <div *ngIf="district.isOpen">
-                <a class="town" *ngFor="let town of district.township_list" [routerLink]="['geo/project']" [queryParams]="{ geo_level: 4,province:province.efairyproject_province,city:city.efairyproject_city,district:district.efairyproject_district,town:town.efairyproject_township }" (click)="chooseTown(town)" [ngClass]="{cur:town.cur}" >
+                <a class="town" *ngFor="let town of district.township_list" [routerLink]="['geo/project']" [queryParams]="{ geo_level: 4,province:province.efairyproject_province,city:city.efairyproject_city,district:district.efairyproject_district,town:town.efairyproject_township }"
+                  (click)="chooseTown(town)" [ngClass]="{cur:town.cur}">
                   {{town.efairyproject_township}}
                 </a>
               </div>

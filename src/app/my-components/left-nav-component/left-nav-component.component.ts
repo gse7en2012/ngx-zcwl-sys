@@ -39,8 +39,14 @@ export class LeftNavPartComponent implements OnInit {
 
     const userInfo: any = this.userService.getAdminInfo();
     if (userInfo.user_level == 0 || userInfo.user_level == 1) {
+
+      this.projectService.getAgencyList().then((r) => {
+        this.loading = false;
+        this.agencyList = r.agency_list;
+        this.initCurrentParentTab(); //渲染
+      })
       this.isAdminUser = true;
-      this.initCurrentParentTab(); //渲染
+
     }
     if (userInfo.user_level == 4 || userInfo.user_level == 2 || userInfo.user_level == 3) {
       this.projectService.getNormalUserProjectList().then((r) => {
@@ -152,8 +158,8 @@ export class LeftNavPartComponent implements OnInit {
     const parentId = lv1Agency['efairyuser_id'];
     this.agencyList.forEach((item) => {
       if (item.efairyuser_id == parentId) {
-        item.showChildren = !item.showChildren;
-        item.current = !item.current;
+        item.showChildren = true;
+        item.current = true;
       } else {
         item.showChildren = false;
         item.current = false;
