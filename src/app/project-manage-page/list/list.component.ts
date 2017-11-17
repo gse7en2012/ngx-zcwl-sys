@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output,HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectService } from '../../service/project.service';
 
@@ -18,7 +18,8 @@ export class ProjectManageListComponent implements OnInit {
   public page: number = 1;
   public jumpPage: number = 1;
   public pageMax: number = 1;
-
+  public projectKeyword:string;
+  public projectSearch:any;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
 
@@ -71,5 +72,21 @@ export class ProjectManageListComponent implements OnInit {
       this.getData();
     })
   }
+  searchProject(){
+    if (this.projectKeyword !== '') {
+      this.projectSearch = [];
+      this.projectList.forEach((item) => {
+        if (item.efairyproject_name.indexOf(this.projectKeyword) !== -1 || item.efairyproject_id.toString().indexOf(this.projectKeyword) !== -1)
+          this.projectSearch.push(item);
+      })
+      this.projectListPageShow = this.projectSearch;
+    } else {
+      this.renderData();
+    }
+  }
 
+  @HostListener('window:keydown', ['$event'])
+  keyboardInput(event: KeyboardEvent) {
+    if (event.keyCode === 13) { this.searchProject(); }
+  }
 }

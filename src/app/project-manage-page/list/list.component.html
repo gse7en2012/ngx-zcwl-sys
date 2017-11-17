@@ -9,7 +9,13 @@
 
     <loading *ngIf="loading"></loading>
 
-    <div class="pagination">
+
+    <div class="search-box" *ngIf="!loading">
+      <input class="search" placeholder="项目名称" [(ngModel)]="projectKeyword">
+      <img src="assets/image/search_w.png" class="icon" (click)="searchProject()">
+    </div>
+
+    <div class="pagination" *ngIf="!loading">
       共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
       <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
       <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
@@ -19,7 +25,7 @@
 
 
     <div class="device-list" *ngIf="!loading&&projectListPageShow.length!=0">
-      <div *ngFor="let branch of projectListPageShow" class="section" >
+      <div *ngFor="let branch of projectListPageShow" class="section">
         <a [routerLink]="['details/'+branch.efairyproject_id]" class="device-link">
           <div class="device-pic">
             <img src="assets/image/device.png">

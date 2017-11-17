@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { ProjectService } from '../../service/project.service';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as myGlobals from '../../global/globals';
 
@@ -72,7 +73,7 @@ export class DetailsComponent implements OnInit {
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
   public deviceTypeHash=myGlobals.deviceTypeHash;
 
-  constructor(private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router, private zone: NgZone) { }
+  constructor(private projectSerive: ProjectService, private route: ActivatedRoute, private router: Router, private zone: NgZone,private _location:Location) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -368,5 +369,9 @@ export class DetailsComponent implements OnInit {
     this.getProjectUserList();
   }
 
+
+  goBack() {
+    this._location.back();
+  }
 
 }
