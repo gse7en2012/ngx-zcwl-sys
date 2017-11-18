@@ -51,7 +51,7 @@ export class MasterPageComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private deviceService: DeviceService, private projectService: ProjectService) { }
 
   ngOnInit() {
-    const userLevelList=['超级管理员','一级经销商','二级经销商','项目管理员','普通用户'];
+    const userLevelList=['超级管理员','总监+','总监','项目管理员','普通用户'];
     this.userInfo = this.userService.getAdminInfo();
     this.userLevelLabel=userLevelList[this.userInfo.user_level];
     this.time = moment().format('YYYY年MM月DD日');

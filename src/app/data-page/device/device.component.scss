@@ -111,6 +111,10 @@
                     height: 214px;
                     overflow: hidden;
                     position: relative;
+                    &.min-h{
+                        min-height: 214px;
+                        height:auto;
+                    }
                     .pic-box{
                         width: 35%;
                         padding: 70px 0;
@@ -144,13 +148,14 @@
                         .row{
                             float:left;
                             width:33.33333%;
+                            min-width: 200px;
                             line-height: 1.8;
                             margin-bottom: 10px;
                             height: 25px;
                             overflow: hidden;
                             .number{
                                 color: #266bb0;
-                                margin: 0 10px;
+                                margin: 0 2px;
                             }
                         }
                     }
