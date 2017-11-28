@@ -18,7 +18,7 @@ declare var moment;
 })
 export class MasterPageComponent implements OnInit {
 
-  public userLevelLabel:string;
+  public userLevelLabel: string;
   public userInfo: any;
   public time: string;
   public deviceAlarmData: any;
@@ -44,16 +44,16 @@ export class MasterPageComponent implements OnInit {
   public onlineDevice: number;
 
   public bottomChartOption: any;
-  public deviceAlarmDataLoading:boolean=true;
-  public projectAlarmListLoading:boolean=true;
-  public userCenterLoading:boolean=true;
+  public deviceAlarmDataLoading: boolean = true;
+  public projectAlarmListLoading: boolean = true;
+  public userCenterLoading: boolean = true;
 
   constructor(private userService: UserService, private router: Router, private deviceService: DeviceService, private projectService: ProjectService) { }
 
   ngOnInit() {
-    const userLevelList=['超级管理员','总监+','总监','项目管理员','普通用户'];
+    const userLevelList = ['超级管理员', '总监+', '总监', '项目管理员', '普通用户'];
     this.userInfo = this.userService.getAdminInfo();
-    this.userLevelLabel=userLevelList[this.userInfo.user_level];
+    this.userLevelLabel = userLevelList[this.userInfo.user_level];
     this.time = moment().format('YYYY年MM月DD日');
 
     this.getLastAlarmData();
@@ -66,17 +66,17 @@ export class MasterPageComponent implements OnInit {
 
   getTotalAlarmList() {
     this.projectService.getTotalAlarmList().then((data) => {
-      this.projectAlarmListLoading=false;
+      this.projectAlarmListLoading = false;
       this.projectAlarmList = data.alarm_data_list;
       this.projectAlarmTotal = data.total_rows;
       this.projectAlarmList.forEach((item) => {
-        item.label = this.dataHash[item.efairydevice_alarm_pt]?this.dataHash[item.efairydevice_alarm_pt][0]:'';
+        item.label = this.dataHash[item.efairydevice_alarm_pt] ? this.dataHash[item.efairydevice_alarm_pt][0] : '';
         item.state = this.stateHashList[item.efairydevice_detail_state];
         item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
         item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
-        item.efairydevice_alarm_time=moment(item.efairydevice_alarm_time).format('MM-DD HH:mm');
+        item.efairydevice_alarm_time = moment(item.efairydevice_alarm_time).format('MM-DD HH:mm');
       })
-     
+
     })
   }
 
@@ -108,9 +108,11 @@ export class MasterPageComponent implements OnInit {
         item.efairydevicefiredata_rtv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_rtv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
       })
 
-      this.deviceAlarmDataLoading=false;
+      this.deviceAlarmDataLoading = false;
     })
   }
+
+
   getDeviceStatistics() {
     this.deviceService.getDeviceStatistics().then((data) => {
       const leftChartData = data.devices_status;
@@ -131,7 +133,18 @@ export class MasterPageComponent implements OnInit {
             name: this.dataHash[item.pt][0] + ':' + item.alarm_times
           }
         });
-        this.rightChartOption = this.formatPieChartData('报警占比', rightChartData);
+        this.rightChartOption = this.formatPieChartData('报警占比', rightChartData,[
+          "#e50304",
+          "#f08300",
+          "#f8da10",
+          "#6e7074",
+          "#61a0a8",
+          "#efa18d",
+          "#787464",
+          "#cc7e63",
+          "#724e58",
+          "#4b565b"
+        ]);
       }
 
     })
@@ -140,7 +153,7 @@ export class MasterPageComponent implements OnInit {
   getUserCenter() {
     this.userService.getUserCenter().then((data) => {
       this.userCenter = data;
-      this.userCenterLoading=false;
+      this.userCenterLoading = false;
     })
   }
   formatLineChartData(title, xData, yData) {
@@ -189,7 +202,7 @@ export class MasterPageComponent implements OnInit {
     };
   }
 
-  formatPieChartData(title: string, data: object[]) {
+  formatPieChartData(title: string, data: object[], color?: string[]) {
     return {
       tooltip: {
         trigger: 'item',
@@ -199,6 +212,7 @@ export class MasterPageComponent implements OnInit {
         },
         position: ['40%', '50%']
       },
+      color:color,
       title: {
         text: title,
         left: 5,
@@ -287,8 +301,8 @@ export class MasterPageComponent implements OnInit {
     });
     pointList.forEach((point, index) => {
       if (index === 0) this.bigMap.setCenter([point.efairyproject_location_lng, point.efairyproject_location_lat]);
-      const img = point.efairyproject_fire_number > 0  ?
-      "assets/image/building_red.png" : ((point.efairyproject_trouble_number > 0 ||point.efairyproject_state == 0)? 'assets/image/building_orange.png' : 'assets/image/building_green.png');
+      const img = point.efairyproject_fire_number > 0 ?
+        "assets/image/building_red.png" : ((point.efairyproject_trouble_number > 0 || point.efairyproject_state == 0) ? 'assets/image/building_orange.png' : 'assets/image/building_green.png');
       const pointMaker = new AMap.Marker({
         map: this.bigMap,
         position: [point.efairyproject_location_lng, point.efairyproject_location_lat],

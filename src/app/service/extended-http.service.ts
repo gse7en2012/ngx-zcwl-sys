@@ -50,7 +50,7 @@ export class ExtendedHttpService extends Http {
       if (res.status === 401|| res.status === 444||res.status === 445) {
         //handle authorization errors
         //in this example I am navigating to logout route which brings the login screen
-        alert(errMsg[res.status]);
+        // alert(errMsg[res.status]);
         this.router.navigate(['/login']);
         return Observable.of(res);
       } else {

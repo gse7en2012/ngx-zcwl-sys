@@ -110,7 +110,7 @@
           <div class="data-box">
             <label class="row" *ngIf="dataList.length==0">暂无数据</label>
             <label class="row" *ngFor="let item of dataList">{{item.itemName}}
-              <span class="number">{{item.itemValue}}</span>
+              <span class="number" [ngClass]="{red:item.itemError}">{{item.itemValue}}</span>
             </label>
           </div>
         </div>

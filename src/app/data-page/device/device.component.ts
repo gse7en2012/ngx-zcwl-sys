@@ -180,10 +180,12 @@ export class DeviceComponent implements OnInit, OnDestroy {
           //{cid: 0, st: 30, pt: 1, rtv: 0, thv: 0}
           const single = {
             itemName: this.dataHash[element.pt][0] + '通道' + element.cid,
-            itemValue: [(element.rtv * this.dataHash[element.pt][1]).toFixed(2), this.dataHash[element.pt][2], '/', (element.thv * this.dataHash[element.pt][1]).toFixed(2), this.dataHash[element.pt][2]].join('')
+            itemValue: [(element.rtv * this.dataHash[element.pt][1]).toFixed(2), this.dataHash[element.pt][2], '/', (element.thv * this.dataHash[element.pt][1]).toFixed(2), this.dataHash[element.pt][2]].join(''),
+            itemError:(element.rtv>element.thv)||false
           };
           if (element.pt == '128'||element.pt == '129') {
-            single.itemValue = element.rtv == '1' ? '启用' : '不启用'
+            single.itemValue = element.rtv == '1' ? '启用' : '不启用';
+            single.itemError=false;
           }
           this.dataList.push(single)
         }
