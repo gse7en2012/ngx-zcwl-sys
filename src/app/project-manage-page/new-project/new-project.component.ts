@@ -58,7 +58,9 @@ export class NewProjectComponent implements OnInit {
       alert('添加失败，请联系管理员!')
     })
   }
-
+  goBack() {
+    this._location.back();
+  }
 
   initAmap() {
     this.bigMap = new AMap.Map('map', {

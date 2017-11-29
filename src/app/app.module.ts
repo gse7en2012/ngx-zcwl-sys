@@ -112,6 +112,8 @@ const mistakeRoutes: Routes = [
 const projectManageRoutes: Routes = [
   { path: '', component: PlaceholderPageComponent },
 
+  { path: 'new_project', component: NewProjectComponent },
+  
   { path: 'geo/project', component: ProjectManageListGeoComponent },
   { path: 'geo/project/details/:proejct_id', component: ProjectManageDeatilsComponent },
   { path: 'geo/project/details/:proejct_id/new_device', component: NewDeviceComponent },

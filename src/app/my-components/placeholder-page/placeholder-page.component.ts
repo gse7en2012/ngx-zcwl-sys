@@ -12,6 +12,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class PlaceholderPageComponent implements OnInit {
 
   private agencyList: any;
+  public isSuper:boolean=false;
+  public newProjectUrl:string;
 
   constructor(private projectService: ProjectService, private userService: UserService, private router: Router, private route: ActivatedRoute) { }
 
@@ -19,11 +21,15 @@ export class PlaceholderPageComponent implements OnInit {
 
 
     const userInfo: any = this.userService.getAdminInfo();
-    console.log(userInfo.user_level);
     if (userInfo.user_level == 0 || userInfo.user_level == 1)
       this.getSuperAdminNav();
     if (userInfo.user_level == 2 || userInfo.user_level == 3 || userInfo.user_level == 4)
       this.getGeoNavList();
+
+    if(location.href.indexOf('/super/')!=-1){
+      this.isSuper=true;
+    }
+    
   }
 
 
@@ -37,8 +43,10 @@ export class PlaceholderPageComponent implements OnInit {
 
   getGeoNavList() {
     this.projectService.getNormalUserProjectList().then((data) => {
-      const province = data[0].efairyproject_province;
-      this.router.navigate(['geo/project'], { relativeTo: this.route, queryParams: { province: province,geo_level:1 } });
+      if (data.length > 0) {
+        const province = data[0].efairyproject_province;
+        this.router.navigate(['geo/project'], { relativeTo: this.route, queryParams: { province: province, geo_level: 1 } });
+      }
     })
   }
 

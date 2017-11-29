@@ -17,6 +17,11 @@
       </div>
       <loading *ngIf="item.loading"></loading>
     </section>
+    <section *ngIf="agencyList.length==0">
+      <div class="row-header">
+        暂无项目
+      </div>
+    </section>
   </div>
 
   <!-- <div class="tree" *ngIf="!isAdminUser">
@@ -24,6 +29,12 @@
   </div> -->
 
   <div class="place-list" *ngIf="!isAdminUser">
+    <div class="province" *ngIf="normalNavList.length==0">
+      <span>
+          &nbsp;&nbsp;暂无项目
+      </span>
+      
+    </div>
     <div class="province" *ngFor="let province of normalNavList">
       <span (click)="toggleProvince(province)">
         <b class="close" *ngIf="!province.isOpen">+</b>
