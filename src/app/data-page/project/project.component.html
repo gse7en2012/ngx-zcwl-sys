@@ -9,12 +9,6 @@
 
     <loading *ngIf="loading"></loading>
 
-    <div class="search-box" *ngIf="!loading">
-      <input class="search" placeholder="项目名称" [(ngModel)]="projectKeyword">
-      <img src="assets/image/search_w.png" class="icon" (click)="searchProject()">
-    </div>
-
-
     <div class="pagination" *ngIf="!loading&&projectListPageShow.length!=0">
       共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
       <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
