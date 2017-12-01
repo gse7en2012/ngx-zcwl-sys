@@ -15,7 +15,7 @@ export class LoginPageComponent implements OnInit {
   public pass: string = '';
   public navMinHeight: string;
   public isSendSms: boolean = false;
-  public timer: number = 3;
+  public timer: number = 60;
   private stId: any;
 
   constructor(private userService: UserService, private router: Router, ) { }
@@ -30,6 +30,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   adminLogin() {
+    if (!this.username) return alert('请输入手机号码');
+    if (!this.pass) return alert('请输入验证码');
     this.userService.adminLogin(this.username, this.pass).then(data => {
       this.router.navigate(['/admin/master']);
     }).catch(e => {
