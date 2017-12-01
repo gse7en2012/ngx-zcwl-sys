@@ -31,6 +31,7 @@ export class LibService {
     return {
       token: encodeURIComponent(this.cookieService.get('pst_token')),
       search: params,
+      uid:this.cookieService.getObject('pst_admin_info')['efairyuser_id']
     }
   }
 

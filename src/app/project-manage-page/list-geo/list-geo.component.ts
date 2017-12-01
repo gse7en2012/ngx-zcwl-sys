@@ -48,7 +48,7 @@ export class ProjectManageListGeoComponent implements OnInit {
 
   getData() {
     this.getInitQueryString();    
-    this.projectService.getGeoProjectList(this.geoInfo,this.geoLevel).then((data) => {
+    this.projectService.getGeoProjectListManage(this.geoInfo,this.geoLevel).then((data) => {
       this.projectList = data.project_list;
       this.total = data.total_rows;
       this.loading = false;

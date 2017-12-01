@@ -22,6 +22,8 @@ export class LeftNavPartComponent implements OnInit {
   public normalNavList: any = [];
   public nodes = [];
 
+  private isManage: boolean = false;
+
   constructor(private projectService: ProjectService, private router: Router, private route: ActivatedRoute, private shareService: ShareService, private userService: UserService) {
     shareService.changeEmitted$.subscribe(text => {
       this.initCurrentParentTab();
@@ -36,10 +38,11 @@ export class LeftNavPartComponent implements OnInit {
     // this.getCurrentParentTabId();
 
     // const isNeedRedirect = !location.href.split(`${this.parentRouterParam}/`)[1];
+    this.isManage = this.parentRouterParam == 'super/project';
 
     const userInfo: any = this.userService.getAdminInfo();
-    if (userInfo.user_level == 0 || userInfo.user_level == 1) {
 
+    if (userInfo.user_level == 0 || userInfo.user_level == 1) {
       this.projectService.getAgencyList().then((r) => {
         this.loading = false;
         this.agencyList = r.agency_list;
@@ -49,7 +52,8 @@ export class LeftNavPartComponent implements OnInit {
 
     }
     if (userInfo.user_level == 4 || userInfo.user_level == 2 || userInfo.user_level == 3) {
-      this.projectService.getNormalUserProjectList().then((r) => {
+      const service = this.isManage ? 'getNormalUserProjectListManage' : 'getNormalUserProjectList'
+      this.projectService[service]().then((r) => {
         this.nodes = this.formatResToTree(r);
         this.normalNavList = r;
       })

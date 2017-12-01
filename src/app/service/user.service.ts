@@ -46,7 +46,8 @@ export class UserService {
           return data.result;
         } else {
           return Promise.reject(
-            this.codeHash[data.err_code] || '系统出错，请联系管理员'
+            // this.codeHash[data.err_code] || '系统出错，请联系管理员'
+            data.msg
           );
         }
       })
@@ -61,7 +62,8 @@ export class UserService {
           return data.result;
         } else {
           return Promise.reject(
-            this.codeHash[data.err_code] || '系统出错，请联系管理员'
+            // this.codeHash[data.err_code] || '系统出错，请联系管理员'
+            data.msg
           );
         }
       })
@@ -75,7 +77,8 @@ export class UserService {
           return data.result;
         } else {
           return Promise.reject(
-            this.codeHash[data.err_code] || '系统出错，请联系管理员'
+            // this.codeHash[data.err_code] || '系统出错，请联系管理员'
+            data.msg
           );
         }
       })

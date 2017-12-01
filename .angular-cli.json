@@ -23,6 +23,8 @@
       ],
       "scripts": [
         "../node_modules/echarts/dist/echarts.min.js",
+        "../src/assets/plupload.full.min.js",
+        "../src/assets/qiniu.js",
         "../src/assets/dark.js",
         "../src/assets/macarons.js",
         "../src/assets/vintage.js",

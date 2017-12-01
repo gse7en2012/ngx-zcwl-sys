@@ -1,0 +1,43 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">发表公告</span>
+    </p>
+  </div>
+  <div class="content">
+    <div class="tab-card">
+      <section class="form">
+        <div class="row">
+          <label>公告标题</label>
+          <input type="text" [(ngModel)]="notice.title">
+        </div>
+
+        <div class="row">
+          <label>公告内容</label>
+          <textarea [(ngModel)]="notice.ctx"></textarea>
+        </div>
+        <div class="row">
+          <label>上传图片</label>
+          <div class="img-box">
+            <div *ngFor="let item of uploadImgList" class="img-item">
+              <b class="delete" (click)="deleteImg(item)">&times;</b>
+              <img [src]="item">
+            </div>
+            <div class="img-upload-box">
+              <a id="img-upload" class="img-btn">+</a>
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <label>&nbsp;</label>
+          <a class="button" (click)="addNewNotice()" *ngIf="!adding">发布公告</a>
+          <a class="button grey" *ngIf="adding">正在发布</a>
+          <a class="button grey" (click)="goBack()">取消</a>
+        </div>
+      </section>
+
+
+    </div>
+  </div>
+</div>

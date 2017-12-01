@@ -22,7 +22,9 @@ export class ProjectService {
     getAgencyList: '/webapi/agency_list',
 
     getNormalUserProjectList: '/webapi/project_geo_list',
+    getNormalUserProjectListManage:'/webapi/manage_project_geo_list',
     getGeoProjectList: '/webapi/geo_project_list',
+    getGeoProjectListManage: '/webapi/manage_geo_project_list',
 
     getAgencyListLv2: '/webapi/lv2_agency_list',
     getProjectAlarmData: '/webapi/project_alarm_data',
@@ -53,7 +55,12 @@ export class ProjectService {
     getDangerousProject: '/webapi/dangerous_project',
     getTotalAlarmList: '/webapi/total_alarm_data',
 
-    postDeviceControl: '/webapi/device_control'
+    postDeviceControl: '/webapi/device_control',
+
+    getNoticeList: '/webapi/announcement_list',
+    addNotice:'/webapi/announcement',
+
+    getQiniuUploadToken: '/webapi/qiniu_upload_token'
   };
 
   private codeHash: any;
@@ -335,8 +342,18 @@ export class ProjectService {
     return this.gsevenRequestViaGet('getNormalUserProjectList', {})
   }
 
+  public getNormalUserProjectListManage() {
+    return this.gsevenRequestViaGet('getNormalUserProjectListManage', {})
+  }
+
   public getGeoProjectList(geoInfo: any, geoLevel: string) {
     return this.gsevenRequestViaGet('getGeoProjectList', {
+      geo_info: JSON.stringify(geoInfo),
+      geo_level: geoLevel
+    })
+  }
+  public getGeoProjectListManage(geoInfo: any, geoLevel: string) {
+    return this.gsevenRequestViaGet('getGeoProjectListManage', {
       geo_info: JSON.stringify(geoInfo),
       geo_level: geoLevel
     })
@@ -358,6 +375,32 @@ export class ProjectService {
       efairydevice_id: deviceId,
       control_order: order
     });
+  }
+
+
+  //notice
+  public getNoticeList(page?: number, size?: number, keyword?: string) {
+    return this.gsevenRequestViaGet('getNoticeList', {
+      page: page,
+      size: size,
+      keyword: keyword
+    })
+  }
+  public addNotice(opts){
+    return this.gsevenRequestViaPost('addNotice', opts);
+  }
+
+  public getQiniuUploadToken() {
+    return this.gsevenRequestViaGet(`getQiniuUploadToken`, {});
+  }
+  public getQiniuUploadTokenUrl() {
+
+    const uri = this.serviceUrl['getQiniuUploadToken'];
+    const param = this.libService.generateHttpGetSearchParams();
+    const uid = param.search.get('efairyuser_id');
+    console.log(uid)
+
+    return `${uri}?access_token=${param.token}&efairyuser_id=${param.uid}`;
   }
 
 }

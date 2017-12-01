@@ -1,0 +1,41 @@
+<div class="right">
+    <div class="info-bar">
+      <p class="bread-crumb">
+        <span class="title">公告中心</span>
+        <a class="btn fr" [routerLink]="['new_notice']">发表公告</a>
+      </p>
+    </div>
+  
+  
+    <div class="content">
+  
+      <loading *ngIf="loading"></loading>
+  
+      <div class="pagination" *ngIf="!loading&&noticeList.length!=0">
+        共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+        <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+        <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+        <a class="btn" (click)="changePage()">GO</a>
+      </div>
+  
+      <div class="notice-list">
+        <div class="notice" *ngFor="let notice of noticeList">
+          <div class="header">
+            <div class="title">{{notice.efairyannouncement_title}}</div>
+            <p class="author">{{notice.efairyannouncement_publisher_nickname}} {{notice.efairyannouncement_add_time}}</p>
+          </div>
+          <div class="ctx">
+            <p>
+              {{notice.efairyannouncement_content}}
+            </p>
+            <div class="img-list">
+              <img [src]="img.efairyannouncementimage_imgurl" *ngFor="let img of notice.efairyannouncement_image_list" >
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <p *ngIf="noticeList.length==0&&!loading" class="no-data">暂无数据</p>
+  
+    </div>

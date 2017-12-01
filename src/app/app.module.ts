@@ -63,6 +63,9 @@ import { NewDeviceComponent } from './project-manage-page/new-device/new-device.
 import { EditDeviceComponent } from './project-manage-page/edit-device/edit-device.component';
 import { NewProjectComponent } from './project-manage-page/new-project/new-project.component';
 import { ProjectGeoComponent } from './data-page/project-geo/project-geo.component';
+import { NoticePageComponent } from './notice-page/notice-page.component';
+import { NoticeListComponent } from './notice-page/list/list.component';
+import { NewNoticeComponent } from './notice-page/new-notice/new-notice.component';
 
 
 
@@ -107,13 +110,19 @@ const mistakeRoutes: Routes = [
   { path: 'agency/:agency_id/device/:device_id', component: ErrorDetailsTableComponent },
 ]
 
+const noticeRoutes: Routes = [
+  { path: '', component: NoticeListComponent },
+  { path: 'list', component: NoticeListComponent },
+  { path: 'new_notice', component: NewNoticeComponent },
+]
+
 //super manage
 
 const projectManageRoutes: Routes = [
   { path: '', component: PlaceholderPageComponent },
 
   { path: 'new_project', component: NewProjectComponent },
-  
+
   { path: 'geo/project', component: ProjectManageListGeoComponent },
   { path: 'geo/project/details/:proejct_id', component: ProjectManageDeatilsComponent },
   { path: 'geo/project/details/:proejct_id/new_device', component: NewDeviceComponent },
@@ -138,6 +147,7 @@ const adminRoutes: Routes = [
       { path: 'data', component: DataPageComponent, children: dataRoutes },
       { path: 'warning', component: WarningPageComponent, children: warningRoutes },
       { path: 'mistake', component: ErrorPageComponent, children: mistakeRoutes },
+      { path: 'notice', component: NoticePageComponent, children: noticeRoutes },
       // { path: 'dashboard', component: DashboardPageComponent },
       { path: 'danger', component: DangerPageComponent },
     ],
@@ -193,8 +203,9 @@ const adminRoutes: Routes = [
     EditDeviceComponent,
     NewProjectComponent,
     ProjectGeoComponent,
-
-
+    NoticePageComponent,
+    NoticeListComponent,
+    NewNoticeComponent,
   ],
   imports: [
     BrowserModule,

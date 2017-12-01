@@ -13,7 +13,8 @@
       </div>
       <div class="row">
         <input placeholder="验证码" id="pass" [(ngModel)]="pass">
-        <a class="btn" id="sms-code" (click)="getSmsCode()">获取验证码</a>
+        <a class="btn" id="sms-code" (click)="getSmsCode()" *ngIf="!isSendSms" >获取验证码</a>
+        <a class="btn" id="sms-code" *ngIf="isSendSms">{{timer}}s后重发</a>
       </div>
       <!--<div class="row" id="box"><label><input type="checkbox" id="auto"><span>下次自动登录</span></label></div>-->
       <a class="login-btn" (click)="adminLogin()">登录</a>
