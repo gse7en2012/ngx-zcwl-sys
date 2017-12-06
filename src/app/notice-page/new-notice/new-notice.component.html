@@ -23,10 +23,21 @@
               <b class="delete" (click)="deleteImg(item)">&times;</b>
               <img [src]="item">
             </div>
-            <div class="img-upload-box">
+            <div class="img-upload-box" [hidden]="uploadImgList.length>=3">
               <a id="img-upload" class="img-btn">+</a>
             </div>
 
+          </div>
+        </div>
+        <div class="row">
+          <label>谁可以看</label>
+          <div class="radio-box">
+            <label>
+              <input type="radio" name="see" [value]="1" [(ngModel)]="seeLv">全部可见</label>
+            <label>
+              <input type="radio" name="see" [value]="2" [(ngModel)]="seeLv">选中项目可见</label>
+            <label>
+              <input type="radio" name="see" [value]="3" [(ngModel)]="seeLv">选择项目不可见</label>
           </div>
         </div>
         <div class="row">
@@ -36,7 +47,15 @@
           <a class="button grey" (click)="goBack()">取消</a>
         </div>
       </section>
-
+      <section class="project-list" [hidden]="seeLv==1">
+        <h3 class="h">
+          选择该公告{{seeLv==2?'可见':'不可见'}}项目
+        </h3>
+        <div class="box">
+          <label *ngFor="let item of projectList;let i = index;">
+            <input type="checkbox" name="project" value="{{item.efairyproject_id}}" (change)="changeProjectCheckbox(i)" [checked]="item.checked">{{item.efairyproject_name}}</label>
+        </div>
+      </section>
 
     </div>
   </div>

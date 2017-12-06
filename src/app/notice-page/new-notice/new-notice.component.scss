@@ -103,9 +103,9 @@ p.no-data{
                     }
                     .img-item{
                         float: left;
-                        width: 120px;
-                        height: 120px;
-                        margin-right: 10px;
+                        width: 140px;
+                        height: 140px;
+                        margin-right: 19px;
                         position: relative;
                         img{
                             width: 100%;
@@ -131,17 +131,18 @@ p.no-data{
                         overflow: hidden;
                     }
                     .img-btn{
-                        width: 120px;
-                        height: 120px;
-                        margin-right: 10px;
-                        border:1px solid #999;
+                        width: 140px;
+                        height: 140px;
+                        margin-right: 19px;
+                        border: 1px solid #aaa;
                         box-sizing: border-box;
                         float: left;
                         text-align: center;
-                        font-size: 90px;
+                        font-size: 100px;
                         color: #bbb;
-                        line-height: 100px;
+                        line-height: 120px;
                     }
+
                     label{
                         float: left;
                         width: 160px;
@@ -150,7 +151,16 @@ p.no-data{
                         height:36px;
                         line-height: 36px;
                     }
-                    input{
+                    .radio-box{
+                        label{
+                            width: auto;
+                            margin-right: 15px;
+                            [type=radio]{
+                                margin-right: 4px;
+                            }
+                        }
+                    }
+                    input:not([type=radio]){
                         background: #fff;
                         outline: 0;
                         border: 1px solid #aaa;
@@ -189,10 +199,47 @@ p.no-data{
                             height: 62px;
                         }
                     }
-                }
-                
-                
+                }   
             }
+            .project-list{
+                float:left;
+                margin-left: 20px;
+                .h{
+                    font-weight: normal;
+                    font-size: 16px;
+                    position: relative;
+                    overflow: hidden;
+                }
+                .box{
+                    // margin-left: 20px;
+                    max-height: 380px;
+                    overflow: auto;
+                    border: 1px solid #ddd;
+                    padding: 10px 180px 10px 10px;
+                    box-sizing: border-box;
+                    background: #eee;
+                    &::-webkit-scrollbar{
+                        width: 8px;
+                        background: #eee;
+                    }
+                    &::-webkit-scrollbar-thumb{
+                        background: #999;
+                    }
+                    label{
+                        display: block;
+                        font-size: 15px;
+                        line-height: 20px;
+                        margin: 5px 0;
+                        [type=checkbox]{
+                            width: 20px;
+                            height: 20px;
+                            position: relative;
+                            top: 5px;
+                        }
+                    }
+                }
+            }
+
             .table{
                 width: 96%;
                 margin:15px auto;

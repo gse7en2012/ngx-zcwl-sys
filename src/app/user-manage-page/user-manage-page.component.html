@@ -1,25 +1,26 @@
-<div class="project-manage">
+<div class="user-manage">
   <div class="left">
     <div class="agency-list">
 
       <section>
         <div [ngClass]="{'row-header':true}">
-          用户列表
+          用户管理
           <span class="right-arrow"></span>
         </div>
+        <div [ngClass]="{'row-item':true}">一级经销商</div>
+        <div [ngClass]="{'row-item':true}">二级经销商</div>
+        <div [ngClass]="{'row-item':true}">普通用户</div>
       </section>
       <section>
         <div [ngClass]="{'row-header':true}">
-          管理员列表
+          权限管理
           <span class="right-arrow"></span>
         </div>
+        <div [ngClass]="{'row-item':true}"  [routerLink]="['permission']" routerLinkActive="cur">权限管理</div>
+        <div [ngClass]="{'row-item':true}">角色管理</div>
+        <div [ngClass]="{'row-item':true}">权限组管理</div>
       </section>
-      <section>
-        <div [ngClass]="{'row-header':true}">
-          设备列表
-          <span class="right-arrow"></span>
-        </div>
-      </section>
+
     </div>
   </div>
   <router-outlet></router-outlet>

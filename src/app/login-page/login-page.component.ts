@@ -18,10 +18,13 @@ export class LoginPageComponent implements OnInit {
   public timer: number = 60;
   private stId: any;
 
+  public phoneList:any=[];
+
   constructor(private userService: UserService, private router: Router, ) { }
 
   ngOnInit() {
     this.navMinHeight = (window.innerHeight) + 'px';
+    this.phoneList=this.userService.getPhoneCookie()||[];
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -32,12 +35,18 @@ export class LoginPageComponent implements OnInit {
   adminLogin() {
     if (!this.username) return alert('请输入手机号码');
     if (!this.pass) return alert('请输入验证码');
+
+   
+
     this.userService.adminLogin(this.username, this.pass).then(data => {
+      this.userService.savePhoneToCookie(this.username);
       this.router.navigate(['/admin/master']);
     }).catch(e => {
       alert(e);
     });
   }
+
+
 
   setUpCounter() {
     this.stId = setInterval(() => {

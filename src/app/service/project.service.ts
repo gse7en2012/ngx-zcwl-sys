@@ -59,8 +59,13 @@ export class ProjectService {
 
     getNoticeList: '/webapi/announcement_list',
     addNotice:'/webapi/announcement',
+    readNotice:'/webapi/announcement_is_read',
+    deleteNotice:'/webapi/announcement',
 
-    getQiniuUploadToken: '/webapi/qiniu_upload_token'
+    getQiniuUploadToken: '/webapi/qiniu_upload_token',
+
+    getPermissionList:'/webapi/right_list',
+    optPermission:'/webapi/right',
   };
 
   private codeHash: any;
@@ -389,18 +394,45 @@ export class ProjectService {
   public addNotice(opts){
     return this.gsevenRequestViaPost('addNotice', opts);
   }
+  public readNotice(noticeId){
+    return this.gsevenRequestViaPost('readNotice',{
+      efairyannouncement_id:noticeId
+    })
+  }
+  public deleteNotice(noticeId){
+    return this.gsevenRequestViaDelete('deleteNotice', {
+      announcement_id_list: JSON.stringify([noticeId])
+    })
+  }
 
   public getQiniuUploadToken() {
     return this.gsevenRequestViaGet(`getQiniuUploadToken`, {});
   }
   public getQiniuUploadTokenUrl() {
-
     const uri = this.serviceUrl['getQiniuUploadToken'];
     const param = this.libService.generateHttpGetSearchParams();
     const uid = param.search.get('efairyuser_id');
-    console.log(uid)
-
     return `${uri}?access_token=${param.token}&efairyuser_id=${param.uid}`;
+  }
+
+
+  public getPermissionList(page?:number,size?:number,keyword?:string){
+    return this.gsevenRequestViaGet(`getPermissionList`, {
+      page: page,
+      size: size,
+      keyword: keyword
+    });
+  }
+  public deletePermission(permissionId){
+    return this.gsevenRequestViaDelete('optPermission', {
+      efairyright_id_list: JSON.stringify([permissionId])
+    })
+  }
+  public addPermission(opts){
+    return this.gsevenRequestViaPost('optPermission', opts)
+  }
+  public editPermission(opts){
+    return this.gsevenRequestViaPut('optPermission', opts);
   }
 
 }

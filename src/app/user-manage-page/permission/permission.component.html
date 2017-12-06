@@ -1,0 +1,80 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">权限管理</span>
+      <a class="btn fr" (click)="addNewPermission()">新增权限</a>
+    </p>
+  </div>
+  <div class="content">
+
+    <loading *ngIf="loading"></loading>
+
+
+    <!-- <div class="search-box" *ngIf="!loading">
+      <input class="search" placeholder="项目名称" [(ngModel)]="projectKeyword">
+      <img src="assets/image/search_w.png" class="icon" (click)="searchProject()">
+    </div> -->
+
+    <div class="pagination" *ngIf="!loading">
+      共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+      <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+      <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+      <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+      <a class="btn" (click)="changePage()">GO</a>
+    </div>
+
+
+    <table class="table">
+      <tr>
+        <th>权限编号</th>
+        <th>权限名称</th>
+        <th>权限描述</th>
+        <th>权限路径</th>
+        <th>操作</th>
+      </tr>
+      <tr *ngIf="isAddingPermission">
+        <td>系统自动生成</td>
+        <td>
+          <input [(ngModel)]="addName">
+        </td>
+        <td>
+          <input [(ngModel)]="addDesc">
+        </td>
+        <td>
+          <input [(ngModel)]="addPath">
+        </td>
+        <td>
+          <a (click)="ensureAddNewPermission()">确定添加</a>
+          <a (click)="cancelAddNewPermission()">取消</a>
+        </td>
+      </tr>
+      <tr *ngFor="let item of permissionList">
+        <td>{{item.efairyright_id}}</td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairyright_name}}</span>
+          <input *ngIf="item.isEdit" [(ngModel)]="item.efairyright_name">
+        </td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairyright_description}}</span>
+          <input *ngIf="item.isEdit" [(ngModel)]="item.efairyright_description">
+        </td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairyright_api_path}}</span>
+          <input *ngIf="item.isEdit" [(ngModel)]="item.efairyright_api_path">
+        </td>
+        <td>
+          <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a>
+          <a (click)="editPermission(item)" *ngIf="item.isEdit">确定</a> |
+          <a (click)="deletePermission(item)" *ngIf="!item.isEdit">删除</a>
+          <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
+        </td>
+      </tr>
+      <tr *ngIf="permissionList.length==0">
+        <td colspan="5">没有符合条件的数据</td>
+      </tr>
+
+    </table>
+
+    <p *ngIf="permissionList.length==0&&!loading" class="no-data">暂无数据</p>
+
+  </div>

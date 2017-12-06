@@ -19,12 +19,27 @@ export class NewNoticeComponent implements OnInit {
   public notice: any = {};
   public uploadImgList: string[] = [];
   public adding:boolean=false;
+  public projectList:any;
+  public seeLv:number=1;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router, private zone: NgZone,private _location: Location,) { }
 
   ngOnInit() {
     const uploadImg = Qiniu.uploader(this.getUploadOpts());
+    this.getAllProject();
+
   }
+
+  getAllProject(){
+    return this.projectService.getAllProjectList().then((data)=>{
+      this.projectList=data.project_list;
+    })
+  }
+
+  changeProjectCheckbox(i){
+    this.projectList[i].checked = !this.projectList[i].checked;
+  }
+
   getQiniuToken() {
     return this.projectService.getQiniuUploadToken().then((r) => {
       return r.uptoken;
@@ -37,15 +52,18 @@ export class NewNoticeComponent implements OnInit {
     return this.projectService.getQiniuUploadTokenUrl();
   }
   deleteImg(img){
-    console.log(this.uploadImgList);
+
     const index=this.uploadImgList.indexOf(img);
     this.uploadImgList.splice(index,1);
   }
   addNewNotice() {
     this.adding=true;
+
+    const chooseList=this.projectList.filter(opt => opt.checked).map(opt => opt.efairyproject_id);
+
     const newNotice = {
-      visibility_mode: 1,
-      project_id_list: [],
+      visibility_mode: this.seeLv,
+      project_id_list: this.seeLv==1?[]:chooseList,
       efairyannouncement_info: {
         efairyannouncement_title: this.notice.title,
         efairyannouncement_content: this.notice.ctx,

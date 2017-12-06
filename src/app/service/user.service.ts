@@ -10,6 +10,8 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 
+declare var moment;
+
 @Injectable()
 export class UserService {
 
@@ -32,6 +34,19 @@ export class UserService {
     this.codeHash = codeHashObj.codeHash;
   }
 
+
+  public savePhoneToCookie(phone: string) {
+    const list: any = this.getPhoneCookie() || [];
+    console.log(list);
+    if (list.indexOf(phone) == -1) list.push(phone);
+    if (list.length > 8) list.shift();
+    this.cookieService.putObject('pst_admin_phone', list, {
+      expires: moment().add(30, 'd').format('YYYY-MM-DD HH:mm:ss')
+    });
+  }
+  public getPhoneCookie() {
+    return this.cookieService.getObject('pst_admin_phone');
+  }
 
   public adminLogin(username: string, pass: string) {
     const params: URLSearchParams = new URLSearchParams();

@@ -8,11 +8,11 @@
   <div class="ctx">
     <div class="form">
       <h3 class="title">用户登录</h3>
-      <div class="row">
-        <input type="text" placeholder="用户名" [(ngModel)]="username" id="name">
+      <div class="row clear">
+        <input type="number" placeholder="用户名" [(ngModel)]="username" id="name" pattern="[0-9]*" autocomplete="off" auto-complete  [source]="phoneList" no-match-found-text="没有符合条件的号码">
       </div>
-      <div class="row">
-        <input placeholder="验证码" id="pass" [(ngModel)]="pass">
+      <div class="row clear">
+        <input placeholder="验证码" id="pass" [(ngModel)]="pass" type="number" pattern="[0-9]*">
         <a class="btn" id="sms-code" (click)="getSmsCode()" *ngIf="!isSendSms" >获取验证码</a>
         <a class="btn" id="sms-code" *ngIf="isSendSms">{{timer}}s后重发</a>
       </div>

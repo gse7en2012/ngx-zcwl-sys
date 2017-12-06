@@ -33,7 +33,7 @@ export class DashboardPageComponent implements OnInit {
   public locationPointLngLat: string[];
 
 
-  public deviceAlarmDataLoading:boolean=true;
+  public deviceAlarmDataLoading: boolean = true;
 
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
@@ -450,14 +450,16 @@ export class DashboardPageComponent implements OnInit {
     // })
     this.projectService.getTotalAlarmList().then((data) => {
       this.deviceAlarmData = data.alarm_data_list;
-      this.deviceAlarmDataLoading=false;
+      this.deviceAlarmDataLoading = false;
       this.deviceAlarmData.forEach((item) => {
         item.blueTime = moment(item.efairydevice_alarm_time).format('YYYY-MM-DD');
         item.spanTime = moment(item.efairydevice_alarm_time).format('HH:mm:ss');
         item.ss = this.dataHash[item.efairydevice_alarm_pt][0];
         item.state = this.stateHash[item.efairydevice_detail_state];
-        item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
-        item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+        if (this.dataHash[item.efairydevice_alarm_pt] && this.dataHash[item.efairydevice_alarm_pt][1]) {
+          item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+          item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+        }
       })
     })
 
@@ -467,7 +469,7 @@ export class DashboardPageComponent implements OnInit {
     this.projectService.getAllProjectList().then((data) => {
       this.projectList = data.project_list;
       this.locationPointLngLat = this.projectList.map((row: any) => {
-        const color = row.efairyproject_fire_number > 0 ? "r" : ((row.efairyproject_trouble_number > 0 ||row.efairyproject_state == 0)? 'o' : 'g');
+        const color = row.efairyproject_fire_number > 0 ? "r" : ((row.efairyproject_trouble_number > 0 || row.efairyproject_state == 0) ? 'o' : 'g');
         if (color == 'r') {
           this.warningProjectNums++;
         } else if (color == 'o') {
@@ -478,7 +480,7 @@ export class DashboardPageComponent implements OnInit {
         return [row['efairyproject_location_lng'], row['efairyproject_location_lat'], color, row.efairyproject_name].join(',')
       })
       return data.project_list;
-    }).then(list => {      
+    }).then(list => {
       this.drawMap(list);
       this.testMapCluster();
       this.hugePointListMapCover();
@@ -492,8 +494,8 @@ export class DashboardPageComponent implements OnInit {
     });
     pointList.forEach((point, index) => {
       if (index === 0) this.bigMap.setCenter([point.efairyproject_location_lng, point.efairyproject_location_lat]);
-      const img = point.efairyproject_fire_number > 0  ?
-        "assets/image/building_red.png" : ((point.efairyproject_trouble_number > 0 ||point.efairyproject_state == 0)? 'assets/image/building_orange.png' : 'assets/image/building_green.png');
+      const img = point.efairyproject_fire_number > 0 ?
+        "assets/image/building_red.png" : ((point.efairyproject_trouble_number > 0 || point.efairyproject_state == 0) ? 'assets/image/building_orange.png' : 'assets/image/building_green.png');
       const pointMaker = new AMap.Marker({
         map: this.bigMap,
         position: [point.efairyproject_location_lng, point.efairyproject_location_lat],

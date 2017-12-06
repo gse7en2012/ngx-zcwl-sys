@@ -1,25 +1,39 @@
-p{margin: 0;}
-p.no-data{
+p {
+    margin: 0;
+}
+
+p.no-data {
     text-align: center;
     border: 1px solid #ddd;
     background: #fff;
     padding: 80px;
     font-size: 26px;
 }
-.fl{float: left}
-.fr{float: right}
-.left{
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.user-manage{
+    overflow: hidden;
+}
+
+.left {
     width: 186px;
-    float:left;
+    float: left;
     background: #2f3438;
     margin-bottom: -99999px;
     padding-bottom: 99999px;
-    .agency-list{
+    .agency-list {
         padding: 0;
         margin: 0;
-        .row-header{
+        .row-header {
             cursor: pointer;
-            height:55px;
+            height: 55px;
             line-height: 55px;
             color: #666a6d;
             text-align: center;
@@ -27,12 +41,13 @@ p.no-data{
             border-bottom: 1px solid #292d30;
             box-sizing: border-box;
             transition: all ease-in-out .2s;
-            &.cur,&:hover{
+            &.cur,
+            &:hover {
                 background: #276ab0;
                 color: #eee;
             }
         }
-        .right-arrow{
+        .right-arrow {
             display: inline-block;
             border: 2px solid #888;
             height: 10px;
@@ -43,7 +58,7 @@ p.no-data{
             border-left: 0;
             border-bottom: 0;
         }
-        .down-arrow{
+        .down-arrow {
             display: inline-block;
             border: 2px solid #eee;
             height: 10px;
@@ -57,7 +72,7 @@ p.no-data{
             left: 4px;
             top: -2px;
         }
-        .row-item{
+        .row-item {
             outline: 0;
             height: 48px;
             line-height: 48px;
@@ -68,13 +83,14 @@ p.no-data{
             background: #272b2e;
             transition: all ease-in-out .2s;
             cursor: pointer;
-            &.cur,&:hover{
+            &.cur,
+            &:hover {
                 background: #f1f1f1;
                 color: #276ab0;
             }
-            &.no-child{
+            &.no-child {
                 cursor: default;
-                &:hover{
+                &:hover {
                     background: #272b2e;
                     color: #888;
                 }

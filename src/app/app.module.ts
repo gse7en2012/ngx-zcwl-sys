@@ -67,6 +67,8 @@ import { NoticePageComponent } from './notice-page/notice-page.component';
 import { NoticeListComponent } from './notice-page/list/list.component';
 import { NewNoticeComponent } from './notice-page/new-notice/new-notice.component';
 
+import { PermissionComponent } from './user-manage-page/permission/permission.component';
+
 
 
 const appRoutes: Routes = [
@@ -138,6 +140,10 @@ const projectManageRoutes: Routes = [
   { path: ':parent_id/agency/:agency_id/device/:device_id', component: DeviceComponent },
 ]
 
+const userManageRoutes: Routes = [
+  { path: '', redirectTo: 'permission', pathMatch: 'full' },
+  { path: 'permission', component: PermissionComponent },
+]
 
 const adminRoutes: Routes = [
   {
@@ -157,7 +163,7 @@ const adminRoutes: Routes = [
   {
     path: 'super', component: SuperContainerComponent, children: [
       { path: '', redirectTo: 'project', pathMatch: 'full' },
-      { path: 'user', component: UserManagePageComponent },
+      { path: 'user', component: UserManagePageComponent, children: userManageRoutes },
       { path: 'project', component: ProjectManagePageComponent, children: projectManageRoutes },
       { path: 'sms', component: SmsManagePageComponent },
     ]
@@ -199,6 +205,8 @@ const adminRoutes: Routes = [
     ProjectManageListGeoVComponent,
     ProjectManageDeatilsComponent,
 
+    PermissionComponent,
+
     NewDeviceComponent,
     EditDeviceComponent,
     NewProjectComponent,
@@ -213,6 +221,7 @@ const adminRoutes: Routes = [
     FormsModule,
     HttpModule,
     NguiAutoCompleteModule,
+    ClickOutsideModule,
     MyDatePickerModule,
     CookieModule.forRoot(),
     RouterModule.forRoot(appRoutes),

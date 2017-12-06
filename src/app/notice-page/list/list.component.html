@@ -19,18 +19,24 @@
         <a class="btn" (click)="changePage()">GO</a>
       </div>
   
-      <div class="notice-list">
-        <div class="notice" *ngFor="let notice of noticeList">
+      <div class="notice-list" *ngIf="!loading">
+        <div class="notice" *ngFor="let notice of noticeList" (click)="readNotice(notice)">
           <div class="header">
+            <span class="unread" *ngIf="!notice.efairyuserhasannouncement_is_read" ></span>
             <div class="title">{{notice.efairyannouncement_title}}</div>
             <p class="author">{{notice.efairyannouncement_publisher_nickname}} {{notice.efairyannouncement_add_time}}</p>
+            <div class="opts" (click)="deleteNotice(notice.efairyannouncement_id)">
+                <b>-</b>
+                <a>删除</a>
+            </div>
+
           </div>
           <div class="ctx">
             <p>
               {{notice.efairyannouncement_content}}
             </p>
             <div class="img-list">
-              <img [src]="img.efairyannouncementimage_imgurl" *ngFor="let img of notice.efairyannouncement_image_list" >
+              <img [src]="img.efairyannouncementimage_imgurl" *ngFor="let img of notice.efairyannouncement_image_list" (click)="scaleImg(img.efairyannouncementimage_imgurl)">
             </div>
           </div>
         </div>
@@ -38,4 +44,10 @@
   
       <p *ngIf="noticeList.length==0&&!loading" class="no-data">暂无数据</p>
   
+    </div>
+
+    <div class="bg" [hidden]="!isScaleImg" (click)="closeImg()"></div>
+    <div class="scale-img-box" [hidden]="!isScaleImg" [ngStyle]="{'top.px': scrollTop}">
+      <img [src]="scaleImgUri">
+      <a class="close" (click)="closeImg()">&times;</a>
     </div>

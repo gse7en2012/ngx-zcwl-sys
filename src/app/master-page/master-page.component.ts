@@ -72,11 +72,12 @@ export class MasterPageComponent implements OnInit {
       this.projectAlarmList.forEach((item) => {
         item.label = this.dataHash[item.efairydevice_alarm_pt] ? this.dataHash[item.efairydevice_alarm_pt][0] : '';
         item.state = this.stateHashList[item.efairydevice_detail_state];
-        item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
-        item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
         item.efairydevice_alarm_time = moment(item.efairydevice_alarm_time).format('MM-DD HH:mm');
+        if (this.dataHash[item.efairydevice_alarm_pt] && this.dataHash[item.efairydevice_alarm_pt][1]) {
+          item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
+          item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
+        }
       })
-
     })
   }
 
@@ -133,7 +134,7 @@ export class MasterPageComponent implements OnInit {
             name: this.dataHash[item.pt][0] + ':' + item.alarm_times
           }
         });
-        this.rightChartOption = this.formatPieChartData('报警占比', rightChartData,[
+        this.rightChartOption = this.formatPieChartData('报警占比', rightChartData, [
           "#e50304",
           "#f08300",
           "#f8da10",
@@ -212,7 +213,7 @@ export class MasterPageComponent implements OnInit {
         },
         position: ['40%', '50%']
       },
-      color:color,
+      color: color,
       title: {
         text: title,
         left: 5,
