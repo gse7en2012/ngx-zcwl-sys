@@ -1,13 +1,17 @@
-import { Component, OnInit, EventEmitter, Input, Output,HostListener } from '@angular/core';
-import { Router, ActivatedRoute, Params,Event,NavigationEnd } from '@angular/router';
+import { Component, OnInit, OnDestroy, EventEmitter, Input, Output, HostListener } from '@angular/core';
+import { Router, ActivatedRoute, Params, Event, NavigationEnd } from '@angular/router';
 import { ProjectService } from '../../service/project.service';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-list-geo',
   templateUrl: './list-geo.component.html',
   styleUrls: ['./list-geo.component.scss']
 })
-export class ProjectManageListGeoComponent implements OnInit {
+export class ProjectManageListGeoComponent implements OnInit, OnDestroy {
 
   public agencyId;
   public projectList = [];
@@ -18,37 +22,36 @@ export class ProjectManageListGeoComponent implements OnInit {
   public page: number = 1;
   public jumpPage: number = 1;
   public pageMax: number = 1;
-  public projectKeyword:string;
-  public projectSearch:any;
+  public projectKeyword: string;
+  public projectSearch: any;
 
 
-  public geoInfo:any={};
-  public geoLevel:string;
-  public qs:any;
+  public geoInfo: any = {};
+  public geoLevel: string;
+  public qs: any;
 
-
+  public urlSubscription: Subscription;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    
+
     this.getInitQueryString();
     this.getData();
-    this.router.events
-    .filter(event => event instanceof NavigationEnd)
-    .subscribe((event:NavigationEnd) => {
+    this.urlSubscription = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
       // You only receive NavigationStart events
-
       this.getData();
-      
     });
-
 
   }
 
+  ngOnDestroy() {
+    this.urlSubscription.unsubscribe();
+  }
+
   getData() {
-    this.getInitQueryString();    
-    this.projectService.getGeoProjectListManage(this.geoInfo,this.geoLevel).then((data) => {
+    this.getInitQueryString();
+    this.projectService.getGeoProjectListManage(this.geoInfo, this.geoLevel).then((data) => {
       this.projectList = data.project_list;
       this.total = data.total_rows;
       this.loading = false;
@@ -59,18 +62,18 @@ export class ProjectManageListGeoComponent implements OnInit {
     })
   }
 
-  getInitQueryString(){
-    this.route.queryParams.subscribe(queryParams=>{
-      this.geoLevel=queryParams.geo_level;
-      this.geoInfo={
-        efairyproject_province:queryParams.province,
-        efairyproject_city:queryParams.city,
-        efairyproject_district:queryParams.district,
-        efairyproject_township:queryParams.town,
-        efairyproject_seaarea:''
+  getInitQueryString() {
+    this.route.queryParams.subscribe(queryParams => {
+      this.geoLevel = queryParams.geo_level;
+      this.geoInfo = {
+        efairyproject_province: queryParams.province,
+        efairyproject_city: queryParams.city,
+        efairyproject_district: queryParams.district,
+        efairyproject_township: queryParams.town,
+        efairyproject_seaarea: ''
       }
-      this.qs=queryParams;
-    
+      this.qs = queryParams;
+
 
     })
   }
@@ -96,15 +99,15 @@ export class ProjectManageListGeoComponent implements OnInit {
     this.renderData();
   }
 
-  deleteProject(pid){
-    if(!confirm('确定删除该项目？')) return;
-    this.projectService.deleteProject(pid).then(()=>{
+  deleteProject(pid) {
+    if (!confirm('确定删除该项目？')) return;
+    this.projectService.deleteProject(pid).then(() => {
       this.getData();
     })
   }
 
 
-  searchProject(){
+  searchProject() {
     if (this.projectKeyword !== '') {
       this.projectSearch = [];
       this.projectList.forEach((item) => {

@@ -1,6 +1,8 @@
-import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { Router, ActivatedRoute, Params,Event,NavigationEnd } from '@angular/router';
+import { Component, OnInit, OnDestroy, EventEmitter, Input, Output } from '@angular/core';
+import { Router, ActivatedRoute, Params, Event, NavigationEnd } from '@angular/router';
 import { ProjectService } from '../../service/project.service';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -8,7 +10,7 @@ import 'rxjs/add/operator/filter';
   templateUrl: './project-geo.component.html',
   styleUrls: ['./project-geo.component.scss']
 })
-export class ProjectGeoComponent implements OnInit {
+export class ProjectGeoComponent implements OnInit, OnDestroy {
 
   public agencyId;
   public projectList = [];
@@ -21,39 +23,43 @@ export class ProjectGeoComponent implements OnInit {
   public jumpPage: number = 1;
   public pageMax: number = 1;
 
-  public geoInfo:any={};
-  public geoLevel:string;
-  public qs:any;
+  public geoInfo: any = {};
+  public geoLevel: string;
+  public qs: any;
+
+  public urlSubscription: Subscription;
 
   // @Output() onRedirectToFirstTab = new EventEmitter<boolean>();
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-
-   
     this.getInitQueryString();
     this.getData();
-    this.router.events
-    .filter(event => event instanceof NavigationEnd)
-    .subscribe((event:NavigationEnd) => {
-      // You only receive NavigationStart events
-      console.log(event);
-      this.getData();
-      
-    });
-  //   this.router.events.subscribe((val) => {
-  //     // see also 
-  //     this.getInitQueryString();
-  //     this.getData()      ;
-  //     console.log(val instanceof NavigationEnd) 
-  // });
 
+    this.urlSubscription = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+        // You only receive NavigationStart events
+        console.log(event);
+        this.getData();
+
+      });
+
+    // this.router.events.subscribe((event:any)=>{
+    //   console.log(this.router.isActive(event.url,false))
+    //   if(this.router.isActive(event.url,false)){
+    //     console.log(event);
+    //     this.getData();
+    //   }
+    // })
+  }
+
+  ngOnDestroy() {
+    this.urlSubscription.unsubscribe();
   }
 
   getData() {
-    this.getInitQueryString();    
-    this.projectService.getGeoProjectList(this.geoInfo,this.geoLevel).then((data) => {
+    this.getInitQueryString();
+    this.projectService.getGeoProjectList(this.geoInfo, this.geoLevel).then((data) => {
       this.projectList = data.project_list;
       this.total = data.total_rows;
       this.loading = false;
@@ -64,18 +70,18 @@ export class ProjectGeoComponent implements OnInit {
     })
   }
 
-  getInitQueryString(){
-    this.route.queryParams.subscribe(queryParams=>{
-      this.geoLevel=queryParams.geo_level;
-      this.geoInfo={
-        efairyproject_province:queryParams.province,
-        efairyproject_city:queryParams.city,
-        efairyproject_district:queryParams.district,
-        efairyproject_township:queryParams.town,
-        efairyproject_seaarea:''
+  getInitQueryString() {
+    this.route.queryParams.subscribe(queryParams => {
+      this.geoLevel = queryParams.geo_level;
+      this.geoInfo = {
+        efairyproject_province: queryParams.province,
+        efairyproject_city: queryParams.city,
+        efairyproject_district: queryParams.district,
+        efairyproject_township: queryParams.town,
+        efairyproject_seaarea: ''
       }
-      this.qs=queryParams;
-    
+      this.qs = queryParams;
+
 
     })
   }
