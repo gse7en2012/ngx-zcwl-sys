@@ -63,6 +63,7 @@
           <input *ngIf="item.isEdit" [(ngModel)]="item.efairyright_api_path">
         </td>
         <td>
+          <a (click)="showBindPop(item)" *ngIf="!item.isEdit">绑定到角色和权限组 </a><span *ngIf="!item.isEdit">|</span>
           <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a>
           <a (click)="editPermission(item)" *ngIf="item.isEdit">确定</a> |
           <a (click)="deletePermission(item)" *ngIf="!item.isEdit">删除</a>

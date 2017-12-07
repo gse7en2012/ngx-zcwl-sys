@@ -5,7 +5,7 @@
         <a [routerLink]="['user']" routerLinkActive="cur" class="user" *ngIf="userInfo.user_level==0"><i class="icon"></i><span>用户管理</span></a>
         <a [routerLink]="['project']" routerLinkActive="cur" class="project"><i class="icon "></i><span>项目管理</span></a>
         <a [routerLink]="['sms']" routerLinkActive="cur" class="sms" *ngIf="userInfo.user_level==0"><i class="icon "></i><span>短信管理</span></a>
-
+        <a (click)="waiting()" class="remote" *ngIf="userInfo.user_level==0"><i class="icon "></i><span>远程升级</span></a>
       </div>
       <div class="setting">
         

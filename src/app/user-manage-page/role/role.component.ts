@@ -4,13 +4,13 @@ import { NgStyle } from '@angular/common';
 import { ProjectService } from '../../service/project.service';
 
 @Component({
-  selector: 'app-permission',
-  templateUrl: './permission.component.html',
-  styleUrls: ['./permission.component.scss']
+  selector: 'app-role',
+  templateUrl: './role.component.html',
+  styleUrls: ['./role.component.scss']
 })
-export class PermissionComponent implements OnInit {
+export class RoleComponent implements OnInit {
 
-  public permissionList = [];
+  public roleList = [];
   public loading: boolean = true;
   public total: number = 0;
   public pageSize: number = 30;
@@ -23,22 +23,22 @@ export class PermissionComponent implements OnInit {
   public addDesc: string;
   public addName: string;
 
-  public isAddingPermission: boolean = false;
+  public isAddingRole: boolean = false;
 
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit() {
-    this.getPermissionList();
+    this.getRoleList();
   }
 
 
-  getPermissionList() {
+  getRoleList() {
     this.loading = true;
-    this.projectService.getPermissionList(this.page, this.pageSize, this.keyword).then((data) => {
+    this.projectService.getRoleList(this.page, this.pageSize, this.keyword).then((data) => {
       console.log(data);
-      this.permissionList = data.efairyright_list;
+      this.roleList = data.efairyrole_list;
       this.total = data.total_rows;
       this.pageMax = Math.ceil(this.total / this.pageSize);
       this.loading = false;
@@ -49,46 +49,46 @@ export class PermissionComponent implements OnInit {
   prevPage() {
     if (this.page <= 1) return false;
     this.page--;
-    this.getPermissionList();
+    this.getRoleList();
   }
 
   nextPage() {
     if (this.page >= this.pageMax) return false;
     this.page++;
-    this.getPermissionList();
+    this.getRoleList();
   }
 
   changePage() {
     this.page = this.jumpPage;
-    this.getPermissionList();
+    this.getRoleList();
   }
 
-  deletePermission(permission) {
+  deleteRole(role) {
     if (confirm('确定删除？')) {
-      this.projectService.deletePermission(permission.efairyright_id).then((r) => {
-        this.getPermissionList();
+      this.projectService.deleteRole(role.efairyrole_id).then((r) => {
+        this.getRoleList();
       }).catch((e) => {
         alert(e)
       })
     }
   }
-  addNewPermission() {
-    this.isAddingPermission = true;
+  addNewRole() {
+    this.isAddingRole = true;
   }
-  editPermission(permission) {
-    this.projectService.editPermission(permission).then(() => {
-      this.getPermissionList();
+  editRole(role) {
+    this.projectService.editRole(role).then(() => {
+      this.getRoleList();
     })
   }
 
-  showBindPop(permission){
-    
+  showBindPop(role) {
+
   }
 
-  ensureAddNewPermission() {
-    this.projectService.addPermission({
-      efairyright_info: {
-        efairyright_name: this.addName,
+  ensureAddNewRole() {
+    this.projectService.addRole({
+      efairyrole_info: {
+        efairyrole_name: this.addName,
         efairyright_description: this.addDesc,
         efairyright_api_path: this.addPath,
         // efairyright_rightgroup_id: '',
@@ -96,8 +96,8 @@ export class PermissionComponent implements OnInit {
       }
     }).then((r) => {
       //this.getPermissionList();
-      this.permissionList.unshift(r);
-      this.isAddingPermission = false;
+      this.roleList.unshift(r);
+      this.isAddingRole = false;
       this.addName = '';
       this.addDesc = '';
       this.addPath = ''
@@ -105,7 +105,8 @@ export class PermissionComponent implements OnInit {
       alert(e)
     })
   }
-  cancelAddNewPermission() {
-    this.isAddingPermission = false;
+  cancelAddNewRole() {
+    this.isAddingRole = false;
   }
+
 }

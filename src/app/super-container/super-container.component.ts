@@ -16,7 +16,9 @@ export class SuperContainerComponent implements OnInit {
   ngOnInit() {
     this.userInfo = this.userService.getAdminInfo();
   }
-
+  waiting() {
+    alert('敬请期待')
+  }
 
   logout() {
     this.userService.logOut();

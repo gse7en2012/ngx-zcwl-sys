@@ -1,0 +1,87 @@
+<div class="right">
+    <div class="info-bar">
+      <p class="bread-crumb">
+        <span class="title">角色管理</span>
+        <a class="btn fr" (click)="addNewRole()">新增角色</a>
+      </p>
+    </div>
+    <div class="content">
+  
+      <loading *ngIf="loading"></loading>
+  
+  
+      <!-- <div class="search-box" *ngIf="!loading">
+        <input class="search" placeholder="项目名称" [(ngModel)]="projectKeyword">
+        <img src="assets/image/search_w.png" class="icon" (click)="searchProject()">
+      </div> -->
+  
+      <div class="pagination" *ngIf="!loading">
+        共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+        <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+        <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+        <a class="btn" (click)="changePage()">GO</a>
+      </div>
+  
+  
+      <table class="table">
+        <tr>
+          <th>角色编号</th>
+          <th>角色名称</th>
+          <th>角色描述</th>
+          <th>角色等级</th>
+          <th>添加时间</th>
+          <th>操作</th>
+        </tr>
+        <tr *ngIf="isAddingRole">
+          <td>系统自动生成</td>
+          <td>
+            <input [(ngModel)]="addName">
+          </td>
+          <td>
+            <input [(ngModel)]="addDesc">
+          </td>
+          <td>
+            <input [(ngModel)]="addPath">
+          </td>
+          <td>
+            <a (click)="ensureAddNewRole()">确定添加</a>
+            <a (click)="cancelAddNewRole()">取消</a>
+          </td>
+        </tr>
+        <tr *ngFor="let item of roleList">
+          <td>{{item.efairyrole_id}}</td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairyrole_name}}</span>
+            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_name">
+          </td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairyrole_description}}</span>
+            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_description">
+          </td>
+          <td>
+              <span *ngIf="!item.isEdit">{{item.efairyrole_level}}</span>
+              <!-- <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_level"> -->
+            </td>
+          <td>
+            <span *ngIf="!item.isEdit">{{item.efairyrole_add_time}}</span>
+            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_add_time">
+          </td>
+          <td>
+            <a (click)="showBindPop(item)" *ngIf="!item.isEdit">增加权限和权限组 </a><span *ngIf="!item.isEdit">|</span>
+            <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a>
+            <a (click)="editRole(item)" *ngIf="item.isEdit">确定</a> |
+            <a (click)="deleteRole(item)" *ngIf="!item.isEdit">删除</a>
+            <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
+          </td>
+        </tr>
+        <tr *ngIf="roleList.length==0">
+          <td colspan="6">没有符合条件的数据</td>
+        </tr>
+  
+      </table>
+  
+      <p *ngIf="roleList.length==0&&!loading" class="no-data">暂无数据</p>
+  
+    </div>
+  

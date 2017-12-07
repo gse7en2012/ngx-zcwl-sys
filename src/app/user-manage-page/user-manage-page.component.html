@@ -2,25 +2,17 @@
   <div class="left">
     <div class="agency-list">
 
-      <section>
-        <div [ngClass]="{'row-header':true}">
-          用户管理
-          <span class="right-arrow"></span>
+      <section *ngFor="let item of navList">
+        <div [ngClass]="{'row-header':true,cur:item.current}" (click)="parentNavClick(item)">
+          {{item.title}}
+          <span *ngIf="!item.current" class="right-arrow"></span>
+          <span *ngIf="item.current" class="down-arrow"></span>
         </div>
-        <div [ngClass]="{'row-item':true}">一级经销商</div>
-        <div [ngClass]="{'row-item':true}">二级经销商</div>
-        <div [ngClass]="{'row-item':true}">普通用户</div>
-      </section>
-      <section>
-        <div [ngClass]="{'row-header':true}">
-          权限管理
-          <span class="right-arrow"></span>
+        <div [ngClass]="{'row-item':true,cur:secondItem.current}" *ngFor="let secondItem of item.children" [hidden]="!item.showChildren"
+          [routerLink]="secondItem.link" routerLinkActive="cur">
+          {{secondItem.title}}
         </div>
-        <div [ngClass]="{'row-item':true}"  [routerLink]="['permission']" routerLinkActive="cur">权限管理</div>
-        <div [ngClass]="{'row-item':true}">角色管理</div>
-        <div [ngClass]="{'row-item':true}">权限组管理</div>
       </section>
-
     </div>
   </div>
   <router-outlet></router-outlet>

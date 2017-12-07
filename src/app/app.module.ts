@@ -68,6 +68,8 @@ import { NoticeListComponent } from './notice-page/list/list.component';
 import { NewNoticeComponent } from './notice-page/new-notice/new-notice.component';
 
 import { PermissionComponent } from './user-manage-page/permission/permission.component';
+import { RoleComponent } from './user-manage-page/role/role.component';
+import { GroupComponent } from './user-manage-page/group/group.component';
 
 
 
@@ -116,6 +118,7 @@ const noticeRoutes: Routes = [
   { path: '', component: NoticeListComponent },
   { path: 'list', component: NoticeListComponent },
   { path: 'new_notice', component: NewNoticeComponent },
+  // { path:'new_notice',loadChildren: './notice-page/new-notice/new-notice.module#NewNoticeModule' }
 ]
 
 //super manage
@@ -143,6 +146,8 @@ const projectManageRoutes: Routes = [
 const userManageRoutes: Routes = [
   { path: '', redirectTo: 'permission', pathMatch: 'full' },
   { path: 'permission', component: PermissionComponent },
+  { path: 'role', component: RoleComponent },
+  { path: 'per_group', component: RoleComponent },
 ]
 
 const adminRoutes: Routes = [
@@ -154,6 +159,7 @@ const adminRoutes: Routes = [
       { path: 'warning', component: WarningPageComponent, children: warningRoutes },
       { path: 'mistake', component: ErrorPageComponent, children: mistakeRoutes },
       { path: 'notice', component: NoticePageComponent, children: noticeRoutes },
+      // { path: 'notice', loadChildren: './weather/weather.module#WeatherModule' , children: noticeRoutes },
       // { path: 'dashboard', component: DashboardPageComponent },
       { path: 'danger', component: DangerPageComponent },
     ],
@@ -214,6 +220,8 @@ const adminRoutes: Routes = [
     NoticePageComponent,
     NoticeListComponent,
     NewNoticeComponent,
+    RoleComponent,
+    GroupComponent,
   ],
   imports: [
     BrowserModule,
