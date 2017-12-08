@@ -147,7 +147,7 @@ const userManageRoutes: Routes = [
   { path: '', redirectTo: 'permission', pathMatch: 'full' },
   { path: 'permission', component: PermissionComponent },
   { path: 'role', component: RoleComponent },
-  { path: 'per_group', component: RoleComponent },
+  { path: 'per_group', component: GroupComponent },
 ]
 
 const adminRoutes: Routes = [

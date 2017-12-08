@@ -19,7 +19,7 @@ export class RoleComponent implements OnInit {
   public pageMax: number = 1;
   public keyword: string;
 
-  public addPath: string;
+  public addLevel: string;
   public addDesc: string;
   public addName: string;
 
@@ -76,7 +76,8 @@ export class RoleComponent implements OnInit {
     this.isAddingRole = true;
   }
   editRole(role) {
-    this.projectService.editRole(role).then(() => {
+    this.projectService.editRole({efairyrole_info:role}).then(() => {
+      alert("编辑成功!")
       this.getRoleList();
     })
   }
@@ -89,8 +90,8 @@ export class RoleComponent implements OnInit {
     this.projectService.addRole({
       efairyrole_info: {
         efairyrole_name: this.addName,
-        efairyright_description: this.addDesc,
-        efairyright_api_path: this.addPath,
+        efairyrole_description: this.addDesc,
+        efairyrole_level: this.addLevel,
         // efairyright_rightgroup_id: '',
         // efairyrole_id_list: []
       }
@@ -100,7 +101,7 @@ export class RoleComponent implements OnInit {
       this.isAddingRole = false;
       this.addName = '';
       this.addDesc = '';
-      this.addPath = ''
+      this.addLevel = ''
     }).catch((e) => {
       alert(e)
     })

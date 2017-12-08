@@ -66,6 +66,7 @@ export class PermissionComponent implements OnInit {
   deletePermission(permission) {
     if (confirm('确定删除？')) {
       this.projectService.deletePermission(permission.efairyright_id).then((r) => {
+        alert('删除成功！')
         this.getPermissionList();
       }).catch((e) => {
         alert(e)
@@ -76,13 +77,13 @@ export class PermissionComponent implements OnInit {
     this.isAddingPermission = true;
   }
   editPermission(permission) {
-    this.projectService.editPermission(permission).then(() => {
+    this.projectService.editPermission({efairyright_info:permission}).then(() => {
       this.getPermissionList();
     })
   }
 
   showBindPop(permission){
-    
+
   }
 
   ensureAddNewPermission() {

@@ -67,6 +67,9 @@ export class ProjectService {
     getPermissionList:'/webapi/right_list',
     optPermission:'/webapi/right',
 
+    getPermissionGroupList:'/webapi/rightgroup_list',
+    optPermissionGroup:'/webapi/rightgroup',
+
     getRoleList:'/webapi/role_list',
     optRole:'/webapi/role',
   };
@@ -437,6 +440,27 @@ export class ProjectService {
   public editPermission(opts){
     return this.gsevenRequestViaPut('optPermission', opts);
   }
+
+ //group
+  public getPermissionGroupList(page?:number,size?:number,keyword?:string){
+    return this.gsevenRequestViaGet(`getPermissionGroupList`, {
+      page: page,
+      size: size,
+      keyword: keyword
+    });
+  }
+  public deletePermissionGroup(permissionId){
+    return this.gsevenRequestViaDelete('optPermissionGroup', {
+      efairyright_id_list: JSON.stringify([permissionId])
+    })
+  }
+  public addPermissionGroup(opts){
+    return this.gsevenRequestViaPost('optPermissionGroup', opts)
+  }
+  public editPermissionGroup(opts){
+    return this.gsevenRequestViaPut('optPermissionGroup', opts);
+  }
+
 
 
   public getRoleList(page?:number,size?:number,keyword?:string){

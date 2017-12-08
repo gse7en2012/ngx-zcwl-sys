@@ -24,7 +24,7 @@
       </div>
   
   
-      <table class="table">
+      <table class="table" *ngIf="!loading">
         <tr>
           <th>角色编号</th>
           <th>角色名称</th>
@@ -42,8 +42,9 @@
             <input [(ngModel)]="addDesc">
           </td>
           <td>
-            <input [(ngModel)]="addPath">
+            <input [(ngModel)]="addLevel">
           </td>
+          <td>系统自动生成</td>
           <td>
             <a (click)="ensureAddNewRole()">确定添加</a>
             <a (click)="cancelAddNewRole()">取消</a>
@@ -61,11 +62,11 @@
           </td>
           <td>
               <span *ngIf="!item.isEdit">{{item.efairyrole_level}}</span>
-              <!-- <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_level"> -->
+              <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_level">
             </td>
           <td>
             <span *ngIf="!item.isEdit">{{item.efairyrole_add_time}}</span>
-            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_add_time">
+            <!-- <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrole_add_time"> -->
           </td>
           <td>
             <a (click)="showBindPop(item)" *ngIf="!item.isEdit">增加权限和权限组 </a><span *ngIf="!item.isEdit">|</span>
