@@ -1,0 +1,69 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">搜索设备</span>
+    </p>
+  </div>
+  <div class="content">
+
+    <loading *ngIf="deviceLoading"></loading>
+    <div class="search-box">
+      <input class="search" placeholder="设备ID或设备名称" [(ngModel)]="deviceKeyword">
+      <img src="assets/image/search_w.png" class="icon" (click)="searchDevice()">
+    </div>
+
+    <table class="table" [hidden]="deviceLoading">
+      <tr>
+        <th>设备编号</th>
+        <th>设备名称</th>
+        <th>所属项目</th>
+        <th>设备类型</th>
+        <th>设备状态</th>
+        <th>设备地址</th>
+        <th>创建日期</th>
+        <th>操作</th>
+      </tr>
+      <tr *ngFor="let item of deviceList">
+        <td><a [routerLink]="['edit_device/'+item.efairydevice_project_id+'/'+item.efairydevice_id]">{{item.efairydevice_uuid}}</a></td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairydevice_name}}</span>
+          <input *ngIf="item.isEdit" [(ngModel)]="item.efairydevice_name">
+        </td>
+        <td>
+            {{item.efairyproject_name}}
+        </td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairydevice_device_type}}</span>
+        </td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairydevice_state}}</span>
+        </td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairydevice_address}}</span>
+          <input *ngIf="item.isEdit" [(ngModel)]="item.efairydevice_address">
+        </td>
+        <td>
+          <span>{{item.efairydevice_install_time}}</span>
+        </td>
+        <td>
+          <!-- /project/2/agency/0/details/0/edit_device/1090 -->
+          <a [routerLink]="['edit_device/'+item.efairydevice_project_id+'/'+item.efairydevice_id]">修改</a>
+          <a (click)="editGm(item)" *ngIf="item.isEdit">提交</a>
+          <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
+          <!-- <a (click)="deleteDevice(item)" *ngIf="!item.isEdit">删除</a> -->
+        </td>
+      </tr>
+      <tr *ngIf="deviceList.length==0">
+        <td colspan="8">没有符合条件的数据</td>
+      </tr>
+    </table>
+
+    <div class="pagination">
+      共{{devicePageMax}}页 / {{deviceTotal}}条数据 （当前第{{devicePage}}页）
+      <a class="btn " (click)="prevDevicePage()" [ngClass]="{btn:true,disabled:devicePage<=1}">上一页</a>
+      <a class="btn" (click)="nextDevicePage()" [ngClass]="{btn:true,disabled:devicePage>=devicePageMax}">下一页</a> 前往
+      <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpDevicePage"> 页
+      <a class="btn" (click)="changeDevicePage()">GO</a>
+    </div>
+  </div>
+</div>

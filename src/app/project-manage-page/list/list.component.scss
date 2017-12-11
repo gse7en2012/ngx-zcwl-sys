@@ -35,6 +35,13 @@ p.no-data{
                 border-radius: 5px;
                 float: right;
                 margin-top: 10px;
+                margin-left: 15px;
+                box-sizing: border-box;
+                &.blue{
+                    color: #15aeef;
+                    border:1px solid #15aeef;
+                    background: #fff;
+                }
             }
         }
         .switch-box{

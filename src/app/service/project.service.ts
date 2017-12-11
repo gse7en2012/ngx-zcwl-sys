@@ -22,7 +22,7 @@ export class ProjectService {
     getAgencyList: '/webapi/agency_list',
 
     getNormalUserProjectList: '/webapi/project_geo_list',
-    getNormalUserProjectListManage:'/webapi/manage_project_geo_list',
+    getNormalUserProjectListManage: '/webapi/manage_project_geo_list',
     getGeoProjectList: '/webapi/geo_project_list',
     getGeoProjectListManage: '/webapi/manage_geo_project_list',
 
@@ -34,6 +34,8 @@ export class ProjectService {
     getProjectGmListManage: '/webapi/manage_project_gm_list',
     getProjectUserListManage: '/webapi/manage_project_user_list',
     getProjectDeviceListManage: '/webapi/manage_project_device_list',
+    getProjectDeviceListSearch: '/webapi/device_search',
+
     getProjectDeviceDetailsManage: '/webapi/manage_project_device',
     getProjectDeviceIotCardListManage: '/webapi/iotcard_list',
 
@@ -58,20 +60,20 @@ export class ProjectService {
     postDeviceControl: '/webapi/device_control',
 
     getNoticeList: '/webapi/announcement_list',
-    addNotice:'/webapi/announcement',
-    readNotice:'/webapi/announcement_is_read',
-    deleteNotice:'/webapi/announcement',
+    addNotice: '/webapi/announcement',
+    readNotice: '/webapi/announcement_is_read',
+    deleteNotice: '/webapi/announcement',
 
     getQiniuUploadToken: '/webapi/qiniu_upload_token',
 
-    getPermissionList:'/webapi/right_list',
-    optPermission:'/webapi/right',
+    getPermissionList: '/webapi/right_list',
+    optPermission: '/webapi/right',
 
-    getPermissionGroupList:'/webapi/rightgroup_list',
-    optPermissionGroup:'/webapi/rightgroup',
+    getPermissionGroupList: '/webapi/rightgroup_list',
+    optPermissionGroup: '/webapi/rightgroup',
 
-    getRoleList:'/webapi/role_list',
-    optRole:'/webapi/role',
+    getRoleList: '/webapi/role_list',
+    optRole: '/webapi/role',
   };
 
   private codeHash: any;
@@ -146,18 +148,23 @@ export class ProjectService {
 
 
   public getProjectList(agencyId: string) {
-    const param = this.libService.generateHttpGetSearchParams({
+
+    return this.gsevenRequestViaGet('list', {
       lv2_agency_id: agencyId
-    });
-    return this.http.get(`${this.serviceUrl['list']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-      //  return this.http.get(`${this.serviceUrl['list']}`, { search: param.search }).map(res => res.json()).toPromise()
-      .then((data) => {
-        if (data.err_code === 200) {
-          return data.result;
-        } else {
-          return Promise.reject(data.msg || '返回数据格式出错！');
-        }
-      })
+    })
+
+    // const param = this.libService.generateHttpGetSearchParams({
+    //   lv2_agency_id: agencyId
+    // });
+    // return this.http.get(`${this.serviceUrl['list']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
+    //   //  return this.http.get(`${this.serviceUrl['list']}`, { search: param.search }).map(res => res.json()).toPromise()
+    //   .then((data) => {
+    //     if (data.err_code === 200) {
+    //       return data.result;
+    //     } else {
+    //       return Promise.reject(data.msg || '返回数据格式出错！');
+    //     }
+    //   })
   }
 
   public getAllProjectList() {
@@ -169,10 +176,10 @@ export class ProjectService {
         return Promise.reject(data.msg || '返回数据格式出错！');
       }
     })
+    
   }
 
   public getAgencyList() {
-
     return this.gsevenRequestViaGet('getAgencyList', {})
   }
 
@@ -236,6 +243,14 @@ export class ProjectService {
   public getProjectDeviceListManage(pid: string, page?: number, size?: number, keyword?: string) {
     return this.gsevenRequestViaGet('getProjectDeviceListManage', {
       efairyproject_id: pid,
+      page: page,
+      size: size,
+      keyword: keyword
+    })
+  }
+
+  public getProjectDeviceListSearch(keyword: string, page?: number, size?: number) {
+    return this.gsevenRequestViaGet('getProjectDeviceListSearch', {
       page: page,
       size: size,
       keyword: keyword
@@ -397,15 +412,15 @@ export class ProjectService {
       keyword: keyword
     })
   }
-  public addNotice(opts){
+  public addNotice(opts) {
     return this.gsevenRequestViaPost('addNotice', opts);
   }
-  public readNotice(noticeId){
-    return this.gsevenRequestViaPost('readNotice',{
-      efairyannouncement_id:noticeId
+  public readNotice(noticeId) {
+    return this.gsevenRequestViaPost('readNotice', {
+      efairyannouncement_id: noticeId
     })
   }
-  public deleteNotice(noticeId){
+  public deleteNotice(noticeId) {
     return this.gsevenRequestViaDelete('deleteNotice', {
       announcement_id_list: JSON.stringify([noticeId])
     })
@@ -422,63 +437,63 @@ export class ProjectService {
   }
 
 
-  public getPermissionList(page?:number,size?:number,keyword?:string){
+  public getPermissionList(page?: number, size?: number, keyword?: string) {
     return this.gsevenRequestViaGet(`getPermissionList`, {
       page: page,
       size: size,
       keyword: keyword
     });
   }
-  public deletePermission(permissionId){
+  public deletePermission(permissionId) {
     return this.gsevenRequestViaDelete('optPermission', {
       efairyright_id_list: JSON.stringify([permissionId])
     })
   }
-  public addPermission(opts){
+  public addPermission(opts) {
     return this.gsevenRequestViaPost('optPermission', opts)
   }
-  public editPermission(opts){
+  public editPermission(opts) {
     return this.gsevenRequestViaPut('optPermission', opts);
   }
 
- //group
-  public getPermissionGroupList(page?:number,size?:number,keyword?:string){
+  //group
+  public getPermissionGroupList(page?: number, size?: number, keyword?: string) {
     return this.gsevenRequestViaGet(`getPermissionGroupList`, {
       page: page,
       size: size,
       keyword: keyword
     });
   }
-  public deletePermissionGroup(permissionId){
+  public deletePermissionGroup(permissionId) {
     return this.gsevenRequestViaDelete('optPermissionGroup', {
       efairyright_id_list: JSON.stringify([permissionId])
     })
   }
-  public addPermissionGroup(opts){
+  public addPermissionGroup(opts) {
     return this.gsevenRequestViaPost('optPermissionGroup', opts)
   }
-  public editPermissionGroup(opts){
+  public editPermissionGroup(opts) {
     return this.gsevenRequestViaPut('optPermissionGroup', opts);
   }
 
 
 
-  public getRoleList(page?:number,size?:number,keyword?:string){
+  public getRoleList(page?: number, size?: number, keyword?: string) {
     return this.gsevenRequestViaGet(`getRoleList`, {
       page: page,
       size: size,
       keyword: keyword
     });
   }
-  public deleteRole(roleId){
+  public deleteRole(roleId) {
     return this.gsevenRequestViaDelete('optRole', {
       efairyrole_id_list: JSON.stringify([roleId])
     })
   }
-  public addRole(opts){
+  public addRole(opts) {
     return this.gsevenRequestViaPost('optRole', opts)
   }
-  public editRole(opts){
+  public editRole(opts) {
     return this.gsevenRequestViaPut('optRole', opts);
   }
 

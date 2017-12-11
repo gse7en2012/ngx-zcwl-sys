@@ -70,6 +70,7 @@ import { NewNoticeComponent } from './notice-page/new-notice/new-notice.componen
 import { PermissionComponent } from './user-manage-page/permission/permission.component';
 import { RoleComponent } from './user-manage-page/role/role.component';
 import { GroupComponent } from './user-manage-page/group/group.component';
+import { DeviceSearchComponent } from './project-manage-page/device-search/device-search.component';
 
 
 
@@ -127,6 +128,7 @@ const projectManageRoutes: Routes = [
   { path: '', component: PlaceholderPageComponent },
 
   { path: 'new_project', component: NewProjectComponent },
+  
 
   { path: 'geo/project', component: ProjectManageListGeoComponent },
   { path: 'geo/project/details/:proejct_id', component: ProjectManageDeatilsComponent },
@@ -172,6 +174,8 @@ const adminRoutes: Routes = [
       { path: 'user', component: UserManagePageComponent, children: userManageRoutes },
       { path: 'project', component: ProjectManagePageComponent, children: projectManageRoutes },
       { path: 'sms', component: SmsManagePageComponent },
+      { path: 'search_device', component: DeviceSearchComponent },
+      { path: 'search_device/edit_device/:proejct_id/:device_id', component: EditDeviceComponent },
     ]
   }
 ]
@@ -210,6 +214,7 @@ const adminRoutes: Routes = [
     ProjectManageListGeoComponent,
     ProjectManageListGeoVComponent,
     ProjectManageDeatilsComponent,
+    DeviceSearchComponent,
 
     PermissionComponent,
 
@@ -222,6 +227,7 @@ const adminRoutes: Routes = [
     NewNoticeComponent,
     RoleComponent,
     GroupComponent,
+    
   ],
   imports: [
     BrowserModule,
