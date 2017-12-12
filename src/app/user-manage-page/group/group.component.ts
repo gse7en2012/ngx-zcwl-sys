@@ -11,6 +11,8 @@ import { ProjectService } from '../../service/project.service';
 export class GroupComponent implements OnInit {
 
   public permissionGroupList = [];
+  public permissionGroupRightList = [];
+  public permissionList = [];
   public loading: boolean = true;
   public total: number = 0;
   public pageSize: number = 30;
@@ -19,29 +21,45 @@ export class GroupComponent implements OnInit {
   public pageMax: number = 1;
   public keyword: string;
 
-  public addPath: string;
+  public addType: number = 1;
   public addDesc: string;
   public addName: string;
 
   public isAddingPermissionGroup: boolean = false;
 
 
+  public popUp: boolean = false;
+  public popUpGroup: any = {};
+
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit() {
     this.getPermissionGroupList();
+    this.getPermissionList();
+    this.getPermissionGroupRightList();
   }
 
 
   getPermissionGroupList() {
     this.loading = true;
     this.projectService.getPermissionGroupList(this.page, this.pageSize, this.keyword).then((data) => {
-      console.log(data);
       this.permissionGroupList = data.rightgroup_list;
       this.total = data.total_rows;
       this.pageMax = Math.ceil(this.total / this.pageSize);
       this.loading = false;
+    })
+  }
+
+  getPermissionList() {
+    this.projectService.getPermissionList().then((data) => {
+      this.permissionList = data.efairyright_list;
+    })
+  }
+
+  getPermissionGroupRightList() {
+    this.projectService.getPermissionGroupRightList().then((data) => {
+      this.permissionGroupRightList = data.rightgroup_list
     })
   }
 
@@ -77,21 +95,63 @@ export class GroupComponent implements OnInit {
     this.isAddingPermissionGroup = true;
   }
   editPermissionGroup(permission) {
-    this.projectService.editPermissionGroup({efairyright_info:permission}).then(() => {
+    this.projectService.editPermissionGroup({ efairyright_info: permission }).then(() => {
       this.getPermissionGroupList();
     })
   }
 
-  showBindPop(permission){
+  showBindPop(group) {
+    console.log(group);
+    this.popUp = true;
+    this.popUpGroup = group;
+    this.permissionGroupRightList.forEach((g) => {
+      if (g.efairyrightgroup_id == group.efairyrightgroup_id) {
+        console.log(g);
+        const chooseId = g.right_list.map((item) => item.efairyright_id);
+        console.log(chooseId);
+        this.permissionList.forEach((right) => {
+          right.is_choose = chooseId.indexOf(right.efairyright_id) != -1
+        })
+      }
+    })
+  }
 
+  changeEmp(list, i) {
+    list[i]['is_choose'] = !list[i]['is_choose'];
+  }
+
+  permissionGroupCb() {
+    this.permissionList.forEach((item) => {
+      item.is_choose = !item.is_choose
+    })
+  }
+
+  sureBind() {
+    const chooseRightList = this.permissionList.filter((item) => item.is_choose).map((item) => item.efairyright_id);
+    this.projectService.bindRightToGroup({
+      efairyrightgroup_id: this.popUpGroup['efairyrightgroup_id'],
+      efairyright_id_list: chooseRightList
+    }).then(() => {
+      alert('添加成功！');
+      this.closePop();
+      this.getPermissionGroupRightList();
+    })
+  }
+
+
+  closePop() {
+    this.popUp = false;
+    this.permissionList.forEach((item) => {
+      item.is_choose = false;
+    })
   }
 
   ensureAddNewPermissionGroup() {
     this.projectService.addPermissionGroup({
-      efairyright_info: {
-        efairyright_name: this.addName,
-        efairyright_description: this.addDesc,
-        efairyright_api_path: this.addPath,
+      efairyrightgroup_info: {
+        efairyrightgroup_name: this.addName,
+        efairyrightgroup_description: this.addDesc,
+        efairyrightgroup_type: this.addType
         // efairyright_rightgroup_id: '',
         // efairyrole_id_list: []
       }
@@ -101,7 +161,7 @@ export class GroupComponent implements OnInit {
       this.isAddingPermissionGroup = false;
       this.addName = '';
       this.addDesc = '';
-      this.addPath = ''
+      this.addType = 1;
     }).catch((e) => {
       alert(e)
     })

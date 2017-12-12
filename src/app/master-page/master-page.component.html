@@ -60,6 +60,9 @@
         <div class="item">
           <div class="title">
             <img src="assets/image/file.png" class="map-icon">基础信息
+            <a [routerLink]="['../personal']">
+              <img src="assets/image/roll.png" class="right-icon">
+            </a>
           </div>
           <loading *ngIf="userCenterLoading"></loading>
           <div class="box">

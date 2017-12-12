@@ -1,82 +1,113 @@
 <div class="right">
-    <div class="info-bar">
-      <p class="bread-crumb">
-        <span class="title">权限组管理</span>
-        <a class="btn fr" (click)="addNewPermissionGroup()">新增权限组</a>
-      </p>
-    </div>
-    <div class="content">
-  
-      <loading *ngIf="loading"></loading>
-  
-  
-      <!-- <div class="search-box" *ngIf="!loading">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">权限组管理</span>
+      <a class="btn fr" (click)="addNewPermissionGroup()">新增权限组</a>
+    </p>
+  </div>
+  <div class="content">
+
+    <loading *ngIf="loading"></loading>
+
+
+    <!-- <div class="search-box" *ngIf="!loading">
         <input class="search" placeholder="项目名称" [(ngModel)]="projectKeyword">
         <img src="assets/image/search_w.png" class="icon" (click)="searchProject()">
       </div> -->
-  
-      <div class="pagination" *ngIf="!loading">
-        共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
-        <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
-        <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
-        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
-        <a class="btn" (click)="changePage()">GO</a>
-      </div>
-  
-  
-      <table class="table" *ngIf="!loading">
-        <tr>
-          <th>权限组编号</th>
-          <th>权限组名称</th>
-          <th>权限组描述</th>
-          <th>权限组类型</th>
-          <th>操作</th>
-        </tr>
-        <tr *ngIf="isAddingPermissionGroup">
-          <td>系统自动生成</td>
-          <td>
-            <input [(ngModel)]="addName">
-          </td>
-          <td>
-            <input [(ngModel)]="addDesc">
-          </td>
-          <td>
-            <input [(ngModel)]="addType">
-          </td>
-          <td>
-            <a (click)="ensureAddNewPermissionGroup()">确定添加</a>
-            <a (click)="cancelAddNewPermissionGroup()">取消</a>
-          </td>
-        </tr>
-        <tr *ngFor="let item of permissionGroupList">
-          <td>{{item.efairyrightgroup_id}}</td>
-          <td>
-            <span *ngIf="!item.isEdit">{{item.efairyrightgroup_name}}</span>
-            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrightgroup_name">
-          </td>
-          <td>
-            <span *ngIf="!item.isEdit">{{item.efairyrightgroup_description}}</span>
-            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrightgroup_description">
-          </td>
-          <td>
-            <span *ngIf="!item.isEdit">{{item.efairyrightgroup_type}}</span>
-            <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrightgroup_type">
-          </td>
-          <td>
-            <a (click)="showBindPop(item)" *ngIf="!item.isEdit">绑定到角色和权限组 </a><span *ngIf="!item.isEdit">|</span>
-            <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a>
-            <a (click)="editPermissionGroup(item)" *ngIf="item.isEdit">确定</a> |
-            <a (click)="deletePermissionGroup(item)" *ngIf="!item.isEdit">删除</a>
-            <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
-          </td>
-        </tr>
-        <tr *ngIf="permissionGroupList.length==0">
-          <td colspan="5">没有符合条件的数据</td>
-        </tr>
-  
-      </table>
-  
-      <p *ngIf="permissionGroupList.length==0&&!loading" class="no-data">暂无数据</p>
-  
+
+    <div class="pagination" *ngIf="!loading">
+      共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+      <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+      <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+      <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+      <a class="btn" (click)="changePage()">GO</a>
     </div>
-  
+
+
+    <table class="table" *ngIf="!loading">
+      <tr>
+        <th>权限组编号</th>
+        <th>权限组名称</th>
+        <th>权限组描述</th>
+        <th>权限组类型</th>
+        <th>操作</th>
+      </tr>
+      <tr *ngIf="isAddingPermissionGroup">
+        <td>系统自动生成</td>
+        <td>
+          <input [(ngModel)]="addName">
+        </td>
+        <td>
+          <input [(ngModel)]="addDesc">
+        </td>
+        <td>
+          <select [(ngModel)]="addType">
+            <option value="1">web</option>
+            <option value="0">app</option>
+          </select>
+        </td>
+        <td>
+          <a (click)="ensureAddNewPermissionGroup()">确定添加</a>
+          <a (click)="cancelAddNewPermissionGroup()">取消</a>
+        </td>
+      </tr>
+      <tr *ngFor="let item of permissionGroupList">
+        <td>{{item.efairyrightgroup_id}}</td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairyrightgroup_name}}</span>
+          <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrightgroup_name">
+        </td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairyrightgroup_description}}</span>
+          <input *ngIf="item.isEdit" [(ngModel)]="item.efairyrightgroup_description">
+        </td>
+        <td>
+          <span *ngIf="!item.isEdit">{{item.efairyrightgroup_typ==0?'app':'web'}}</span>
+          <select [(ngModel)]="item.efairyrightgroup_type" *ngIf="item.isEdit">
+            <option value="1">web</option>
+            <option value="0">app</option>
+          </select>
+        </td>
+        <td>
+          <a (click)="showBindPop(item)" *ngIf="!item.isEdit">添加权限 </a>
+          <span *ngIf="!item.isEdit">|</span>
+          <a (click)="item.isEdit=true" *ngIf="!item.isEdit">编辑</a>
+          <a (click)="editPermissionGroup(item)" *ngIf="item.isEdit">确定</a> |
+          <a (click)="deletePermissionGroup(item)" *ngIf="!item.isEdit">删除</a>
+          <a (click)="item.isEdit=false" *ngIf="item.isEdit">取消</a>
+        </td>
+      </tr>
+      <tr *ngIf="permissionGroupList.length==0">
+        <td colspan="5">没有符合条件的数据</td>
+      </tr>
+
+    </table>
+
+    <p *ngIf="permissionGroupList.length==0&&!loading" class="no-data">暂无数据</p>
+
+  </div>
+</div>
+
+
+<div class="bg" [hidden]="!popUp" (click)="closePop()"></div>
+<div class="pop" [hidden]="!popUp">
+  <header class="p-header">权限组添加权限</header>
+  <section class="form">
+    <div class="row">
+      <label>当前权限组</label>
+      <p>{{popUpGroup.efairyrightgroup_name}}</p>
+    </div>
+
+    <div class="row">
+      <label>
+        <input type="checkbox" (click)="permissionGroupCb()" class="cb">选择权限</label>
+      <div class="box">
+        <label *ngFor="let item of permissionList;let i=index">
+          <input type="checkbox" class="cb" [value]="item.efairyright_id" (change)="changeEmp(permissionList,i)" [checked]="item.is_choose">{{item.efairyright_name}}</label>
+      </div>
+    </div>
+
+  </section>
+  <a class="close" (click)="closePop()">&times;</a>
+  <a class="button" (click)="sureBind()">确定</a>
+</div>

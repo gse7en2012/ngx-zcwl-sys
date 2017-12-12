@@ -71,6 +71,7 @@ import { PermissionComponent } from './user-manage-page/permission/permission.co
 import { RoleComponent } from './user-manage-page/role/role.component';
 import { GroupComponent } from './user-manage-page/group/group.component';
 import { DeviceSearchComponent } from './project-manage-page/device-search/device-search.component';
+import { PersonalPageComponent } from './personal-page/personal-page.component';
 
 
 
@@ -157,6 +158,7 @@ const adminRoutes: Routes = [
     path: 'admin', component: ParentContainerComponent, children: [
       { path: '', redirectTo: 'master', pathMatch: 'full' },
       { path: 'master', component: MasterPageComponent },
+      { path: 'personal', component: PersonalPageComponent },
       { path: 'data', component: DataPageComponent, children: dataRoutes },
       { path: 'warning', component: WarningPageComponent, children: warningRoutes },
       { path: 'mistake', component: ErrorPageComponent, children: mistakeRoutes },
@@ -227,6 +229,7 @@ const adminRoutes: Routes = [
     NewNoticeComponent,
     RoleComponent,
     GroupComponent,
+    PersonalPageComponent,
     
   ],
   imports: [

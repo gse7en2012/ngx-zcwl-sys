@@ -11,6 +11,9 @@ import { ProjectService } from '../../service/project.service';
 export class PermissionComponent implements OnInit {
 
   public permissionList = [];
+  public roleList = [];
+  public permissionGroupList = [];
+
   public loading: boolean = true;
   public total: number = 0;
   public pageSize: number = 30;
@@ -24,24 +27,54 @@ export class PermissionComponent implements OnInit {
   public addName: string;
 
   public isAddingPermission: boolean = false;
+  public popUp: boolean = false;
+  public permissionGroupId: any;
+
+  public popUpPermission: any = {};
 
 
+
+
+  
   constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit() {
     this.getPermissionList();
+    this.getRoleList();
+    this.getPermissionGroupList();
   }
 
 
   getPermissionList() {
     this.loading = true;
     this.projectService.getPermissionList(this.page, this.pageSize, this.keyword).then((data) => {
-      console.log(data);
       this.permissionList = data.efairyright_list;
       this.total = data.total_rows;
       this.pageMax = Math.ceil(this.total / this.pageSize);
       this.loading = false;
+    })
+  }
+  getPermissionGroupList() {
+    this.projectService.getPermissionGroupList().then((data) => {
+      this.permissionGroupList = data.rightgroup_list;
+      if (this.permissionGroupList && this.permissionGroupList.length > 0){
+        this.permissionGroupId = this.permissionGroupList[0].efairyrightgroup_id
+      }
+        
+    })
+  }
+
+  closePop() {
+    this.popUp = false;
+    this.roleList.forEach((item) => {
+      item.is_choose = false;
+    })
+  }
+
+  getRoleList() {
+    this.projectService.getRoleList().then((data) => {
+      this.roleList = data.efairyrole_list;
     })
   }
 
@@ -77,14 +110,46 @@ export class PermissionComponent implements OnInit {
     this.isAddingPermission = true;
   }
   editPermission(permission) {
-    this.projectService.editPermission({efairyright_info:permission}).then(() => {
+    this.projectService.editPermission({ efairyright_info: permission }).then(() => {
       this.getPermissionList();
     })
   }
 
-  showBindPop(permission){
-
+  changeEmp(list, i) {
+    list[i]['is_choose'] = !list[i]['is_choose'];
   }
+
+  showBindPop(permission) {
+    this.popUp = true;
+    this.popUpPermission = permission;
+    this.projectService.getPerminssionRoleList(permission.efairyright_id).then((data)=>{
+      const roleChooseList=data.role_id_list;
+      this.permissionGroupId=data.efairyrightgroup_id;
+      this.roleList.forEach((role)=>{
+        if(roleChooseList.indexOf(role.efairyrole_id)!=-1){
+          role.is_choose=true;
+        }
+      })
+    })
+  }
+
+
+
+  sureBind() {
+    const chooseRoleList = this.roleList.filter((item) => item.is_choose).map((item) => item.efairyrole_id);
+    this.projectService.bindPermissionInfo({
+      efairyright_info:{
+        efairyright_id:this.popUpPermission['efairyright_id'],
+        efairyright_rightgroup_id:this.permissionGroupId,
+        efairyrole_id_list:chooseRoleList
+      }
+    }).then(()=>{
+      alert('绑定成功！');
+      this.closePop();
+    })
+  }
+
+
 
   ensureAddNewPermission() {
     this.projectService.addPermission({
