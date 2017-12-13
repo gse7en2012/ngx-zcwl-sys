@@ -19,7 +19,7 @@ declare var moment;
 export class MasterPageComponent implements OnInit {
 
   public userLevelLabel: string;
-  public userInfo: any;
+  public userInfo: any={};
   public time: string;
   public deviceAlarmData: any;
   public userCenter: any = {};
@@ -152,8 +152,15 @@ export class MasterPageComponent implements OnInit {
   }
 
   getUserCenter() {
-    this.userService.getUserCenter().then((data) => {
+
+    // this.userService.getUserCenter().then((data) => {
+    //   this.userCenter = data;
+    //   this.userCenterLoading = false;
+    // })
+
+    this.projectService.getUserCenter().then((data) => {
       this.userCenter = data;
+      this.userInfo=data;
       this.userCenterLoading = false;
     })
   }

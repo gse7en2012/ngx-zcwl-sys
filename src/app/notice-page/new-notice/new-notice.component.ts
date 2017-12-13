@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProjectService } from '../../service/project.service';
 import { Location } from '@angular/common';
-import { log } from 'util';
+// import { log } from 'util';
 
 declare var plupload: any;
 declare var Qiniu: any;

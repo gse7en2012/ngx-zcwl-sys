@@ -1,62 +1,52 @@
-<!-- <div class="right">
-    <div class="info-bar">
-      <p class="bread-crumb">
-        <span class="title">发表公告</span>
-      </p>
-    </div>
-    <div class="content">
-      <div class="tab-card">
-        <section class="form">
-          <div class="row">
-            <label>公告标题</label>
-            <input type="text" [(ngModel)]="notice.title">
-          </div>
-  
-          <div class="row">
-            <label>公告内容</label>
-            <textarea [(ngModel)]="notice.ctx"></textarea>
-          </div>
-          <div class="row">
-            <label>上传图片</label>
-            <div class="img-box">
-              <div *ngFor="let item of uploadImgList" class="img-item">
-                <b class="delete" (click)="deleteImg(item)">&times;</b>
-                <img [src]="item">
-              </div>
-              <div class="img-upload-box" [hidden]="uploadImgList.length>=3">
-                <a id="img-upload" class="img-btn">+</a>
-              </div>
-  
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">编辑个人信息</span>
+    </p>
+  </div>
+  <div class="content">
+    <div class="tab-card">
+      <section class="form">
+        <div class="row">
+          <label>上传头像</label>
+          <div class="img-box">
+            <div class="img-item">
+              <!-- <b class="delete" (click)="deleteImg(item)">&times;</b> -->
+              <div class="mask" [hidden]="!uploading">正在上传...</div>
+              <img [src]="userInfo.efairyuser_headimg_url">
             </div>
-          </div>
-          <div class="row">
-            <label>谁可以看</label>
-            <div class="radio-box">
-              <label>
-                <input type="radio" name="see" [value]="1" [(ngModel)]="seeLv">全部可见</label>
-              <label>
-                <input type="radio" name="see" [value]="2" [(ngModel)]="seeLv">选中项目可见</label>
-              <label>
-                <input type="radio" name="see" [value]="3" [(ngModel)]="seeLv">选择项目不可见</label>
+            <div class="img-upload-box">
+           
+              <a id="img-upload" class="img-btn">+</a>
             </div>
+
           </div>
-          <div class="row">
-            <label>&nbsp;</label>
-            <a class="button" (click)="addNewNotice()" *ngIf="!adding">发布公告</a>
-            <a class="button grey" *ngIf="adding">正在发布</a>
-            <a class="button grey" (click)="goBack()">取消</a>
-          </div>
-        </section>
-        <section class="project-list" [hidden]="seeLv==1">
-          <h3 class="h">
-            选择该公告{{seeLv==2?'可见':'不可见'}}项目
-          </h3>
-          <div class="box">
-            <label *ngFor="let item of projectList;let i = index;">
-              <input type="checkbox" name="project" value="{{item.efairyproject_id}}" (change)="changeProjectCheckbox(i)" [checked]="item.checked">{{item.efairyproject_name}}</label>
-          </div>
-        </section>
-  
-      </div>
+        </div>
+        <div class="row">
+          <label>用户昵称</label>
+          <input type="text" [(ngModel)]="userInfo.efairyuser_nickname">
+        </div>
+        <div class="row">
+          <label>单位名称</label>
+          <input type="text" [(ngModel)]="userInfo.efairyuser_company">
+        </div>
+
+
+        <div class="row">
+          <label>联系邮箱</label>
+          <input type="text" [(ngModel)]="userInfo.efairyuser_email">
+        </div>
+        <div class="row">
+          <label>单位地址</label>
+          <input type="text" [(ngModel)]="userInfo.efairyuser_company_address">
+        </div>
+        <div class="row">
+          <label>&nbsp;</label>
+          <a class="button" (click)="editUserInfo()" >确定修改</a>
+          <a class="button grey" (click)="goBack()">取消</a>
+        </div>
+      </section>
+
     </div>
-  </div> -->
+  </div>
+</div>

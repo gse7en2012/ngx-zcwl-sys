@@ -80,7 +80,12 @@ export class ProjectService {
 
     bindPermission:'/webapi/add_right_to_rightgroup_and_role',
     bindRightToRole:'/webapi/add_right_to_role',
-    bindRightToGroup:'/webapi/add_right_to_rightgroup'
+    bindRightToGroup:'/webapi/add_right_to_rightgroup',
+
+
+    userCenter:'/webapi/user_center'
+
+
   };
 
   private codeHash: any;
@@ -529,6 +534,15 @@ export class ProjectService {
 
   public bindRightToGroup(opts){
     return this.gsevenRequestViaPost('bindRightToGroup',opts)
+  }
+
+
+  public getUserCenter(){
+    return this.gsevenRequestViaGet('userCenter',{})
+  }
+
+  public putUserCenter(opts){
+    return this.gsevenRequestViaPut('userCenter',opts)
   }
 
 }

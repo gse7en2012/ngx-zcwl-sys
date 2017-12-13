@@ -110,9 +110,7 @@ export class UserService {
   }
 
   public getAdminInfo() {
-
     return this.cookieService.getObject('pst_admin_info')
-
   }
 
   public setProjectList(list) {

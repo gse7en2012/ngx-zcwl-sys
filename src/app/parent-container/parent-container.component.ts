@@ -10,13 +10,15 @@ import { UserService } from '../service/user.service';
 })
 export class ParentContainerComponent implements OnInit {
 
-  public userInfo: any;
+  public userInfo: any={};
 
   constructor(private userService: UserService, private router: Router, ) { }
 
   ngOnInit() {
-    this.userInfo = this.userService.getAdminInfo();
 
+    this.userService.getUserCenter().then((data) => {
+      this.userInfo=data;
+    })
 
   }
   waiting() {
