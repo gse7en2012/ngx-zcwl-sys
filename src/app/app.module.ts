@@ -163,9 +163,9 @@ const adminRoutes: Routes = [
       { path: 'warning', component: WarningPageComponent, children: warningRoutes },
       { path: 'mistake', component: ErrorPageComponent, children: mistakeRoutes },
       { path: 'notice', component: NoticePageComponent, children: noticeRoutes },
-      // { path: 'notice', loadChildren: './weather/weather.module#WeatherModule' , children: noticeRoutes },
       // { path: 'dashboard', component: DashboardPageComponent },
       { path: 'danger', component: DangerPageComponent },
+      { path: 'maint', loadChildren: './lazy/maint/maint.module#MaintModule' },
     ],
     canActivate: [AuthGuard]
   },

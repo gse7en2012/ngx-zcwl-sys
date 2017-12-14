@@ -1,0 +1,58 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">维护记录</span>
+      <a class="btn fr" [routerLink]="['new_maint']">添加维护记录</a>
+    </p>
+  </div>
+
+
+  <div class="content">
+
+    <!-- <loading *ngIf="loading"></loading> -->
+
+    <div class="pagination" *ngIf="!loading&&mtrecordList.length!=0">
+      共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+      <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+      <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+      <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+      <a class="btn" (click)="changePage()">GO</a>
+    </div>
+
+    <div class="notice-list" *ngIf="!loading">
+      <div class="notice" *ngFor="let maint of mtrecordList">
+        <div class="header">
+          <img [src]="maint.efairyuser_headimg_url" class="avatar">
+          <div class="title">{{maint.efairyuser_nickname}}</div>
+          <!-- <p class="author">{{maint.efairymtrecord_time}}</p> -->
+          <div class="opts" (click)="deleteMaint(maint.efairymtrecord_id)">
+            <b>-</b>
+            <a>删除</a>
+          </div>
+        </div>
+        <div class="middle">
+          <label class="blue">操作：{{typeHash[maint.efairymtrecord_mt_type_id]}}</label>
+          <label class="orange">维护状态：{{resultHash[maint.efairymtrecord_mt_type_id%2]}}</label>
+          <label>维护时间：{{maint.efairymtrecord_time}}</label>
+        </div>
+        <div class="ctx">
+          <p>
+            操作报告：{{maint.efairymtrecord_content}}
+          </p>
+          <div class="img-list">
+            <img [src]="img" *ngFor="let img of maint.efairymtrecord_imgurl_list" (click)="scaleImg(img)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p *ngIf="mtrecordList.length==0&&!loading" class="no-data">暂无数据</p>
+
+  </div>
+
+  <div class="bg" [hidden]="!isScaleImg" (click)="closeImg()"></div>
+  <div class="scale-img-box" [hidden]="!isScaleImg" [ngStyle]="{'top.px': scrollTop}">
+    <img [src]="scaleImgUri">
+    <a class="close" (click)="closeImg()">&times;</a>
+  </div>
+</div>

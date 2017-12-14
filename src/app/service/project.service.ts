@@ -71,19 +71,22 @@ export class ProjectService {
 
     getPermissionGroupList: '/webapi/rightgroup_list',
     optPermissionGroup: '/webapi/rightgroup',
-    getPermissionGroupRightList:'/webapi/rightgroup_right_list',
-    getPerminssionRoleList:'/webapi/right_rightgroup_role_list',
+    getPermissionGroupRightList: '/webapi/rightgroup_right_list',
+    getPerminssionRoleList: '/webapi/right_rightgroup_role_list',
 
     getRoleList: '/webapi/role_list',
     optRole: '/webapi/role',
-    getRolePermissionList:'/webapi/role_right_list',
+    getRolePermissionList: '/webapi/role_right_list',
 
-    bindPermission:'/webapi/add_right_to_rightgroup_and_role',
-    bindRightToRole:'/webapi/add_right_to_role',
-    bindRightToGroup:'/webapi/add_right_to_rightgroup',
+    bindPermission: '/webapi/add_right_to_rightgroup_and_role',
+    bindRightToRole: '/webapi/add_right_to_role',
+    bindRightToGroup: '/webapi/add_right_to_rightgroup',
 
 
-    userCenter:'/webapi/user_center'
+    userCenter: '/webapi/user_center',
+
+    maintainRecord: '/webapi/maintain_record',
+    getMaintainRecordList: '/webapi/maintain_record_list'
 
 
   };
@@ -164,31 +167,10 @@ export class ProjectService {
     return this.gsevenRequestViaGet('list', {
       lv2_agency_id: agencyId
     })
-
-    // const param = this.libService.generateHttpGetSearchParams({
-    //   lv2_agency_id: agencyId
-    // });
-    // return this.http.get(`${this.serviceUrl['list']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-    //   //  return this.http.get(`${this.serviceUrl['list']}`, { search: param.search }).map(res => res.json()).toPromise()
-    //   .then((data) => {
-    //     if (data.err_code === 200) {
-    //       return data.result;
-    //     } else {
-    //       return Promise.reject(data.msg || '返回数据格式出错！');
-    //     }
-    //   })
   }
 
   public getAllProjectList() {
-    const param = this.libService.generateHttpGetSearchParams({});
-    return this.http.get(`${this.serviceUrl['allList']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise().then((data) => {
-      if (data.err_code === 200) {
-        return data.result;
-      } else {
-        return Promise.reject(data.msg || '返回数据格式出错！');
-      }
-    })
-    
+    return this.gsevenRequestViaGet('allList', {})
   }
 
   public getAgencyList() {
@@ -206,50 +188,27 @@ export class ProjectService {
   }
 
   public getProjectAlarmData(pid: string, aid?: number) {
-    const param = this.libService.generateHttpGetSearchParams({
+
+    return this.gsevenRequestViaGet('getProjectAlarmData', {
       efairyproject_id: pid,
       alarm_id: aid || 1,
-    });
-    return this.http.get(`${this.serviceUrl['getProjectAlarmData']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-      .then((data) => {
-        if (data.err_code === 200) {
-          return data.result;
-        } else {
-          return Promise.reject(data.msg || '返回数据格式出错！');
-        }
-      })
+    })
   }
 
   //1-日报 2-周报 3-月报 4-季报 5-年报
   public getProjectReport(projectId: number, type: number, currentDate: string) {
-    const param = this.libService.generateHttpGetSearchParams({
+    return this.gsevenRequestViaGet('getProjectReport', {
       efairyproject_id: projectId,
       report_type: type || 5,
       current_date: currentDate
-    });
-    return this.http.get(`${this.serviceUrl['getProjectReport']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-      .then((data) => {
-        if (data.err_code === 200) {
-          return data.result;
-        } else {
-          return Promise.reject(data.msg || '返回数据格式出错！');
-        }
-      })
+    })
   }
 
   //super API
   public getProjectDetailsManage(projectId) {
-    const param = this.libService.generateHttpGetSearchParams({
+    return this.gsevenRequestViaGet('getProjectDetailsManage', {
       efairyproject_id: projectId
-    });
-    return this.http.get(`${this.serviceUrl['getProjectDetailsManage']}?access_token=${param.token}`, { search: param.search }).map(res => res.json()).toPromise()
-      .then((data) => {
-        if (data.err_code === 200) {
-          return data.result;
-        } else {
-          return Promise.reject(data.msg || '返回数据格式出错！');
-        }
-      })
+    })
   }
 
   public getProjectDeviceListManage(pid: string, page?: number, size?: number, keyword?: string) {
@@ -476,8 +435,8 @@ export class ProjectService {
       keyword: keyword
     });
   }
-  public getPermissionGroupRightList(){
-    return this.gsevenRequestViaGet('getPermissionGroupRightList',{})
+  public getPermissionGroupRightList() {
+    return this.gsevenRequestViaGet('getPermissionGroupRightList', {})
   }
   public deletePermissionGroup(permissionId) {
     return this.gsevenRequestViaDelete('optPermissionGroup', {
@@ -500,15 +459,15 @@ export class ProjectService {
       keyword: keyword
     });
   }
-// /webapi/role_level_list
-  public getRolePermissionList(roleId){
-    return this.gsevenRequestViaGet('getRolePermissionList',{
-      efairyrole_id:roleId
+  // /webapi/role_level_list
+  public getRolePermissionList(roleId) {
+    return this.gsevenRequestViaGet('getRolePermissionList', {
+      efairyrole_id: roleId
     })
   }
-  public getPerminssionRoleList(permissionId){
-    return this.gsevenRequestViaGet('getPerminssionRoleList',{
-      efairyright_id:permissionId
+  public getPerminssionRoleList(permissionId) {
+    return this.gsevenRequestViaGet('getPerminssionRoleList', {
+      efairyright_id: permissionId
     })
   }
 
@@ -524,25 +483,41 @@ export class ProjectService {
     return this.gsevenRequestViaPut('optRole', opts);
   }
 
-  public bindPermissionInfo(opts){
-    return this.gsevenRequestViaPost('bindPermission',opts)
+  public bindPermissionInfo(opts) {
+    return this.gsevenRequestViaPost('bindPermission', opts)
   }
 
-  public bindRightToRole(opts){
-    return this.gsevenRequestViaPost('bindRightToRole',opts)
+  public bindRightToRole(opts) {
+    return this.gsevenRequestViaPost('bindRightToRole', opts)
   }
 
-  public bindRightToGroup(opts){
-    return this.gsevenRequestViaPost('bindRightToGroup',opts)
+  public bindRightToGroup(opts) {
+    return this.gsevenRequestViaPost('bindRightToGroup', opts)
   }
 
 
-  public getUserCenter(){
-    return this.gsevenRequestViaGet('userCenter',{})
+  public getUserCenter() {
+    return this.gsevenRequestViaGet('userCenter', {})
   }
 
-  public putUserCenter(opts){
-    return this.gsevenRequestViaPut('userCenter',opts)
+  public putUserCenter(opts) {
+    return this.gsevenRequestViaPut('userCenter', opts)
+  }
+
+
+
+  public getMaintainRecordList(page?: number, size?: number, keyword?: string) {
+    return this.gsevenRequestViaGet(`getMaintainRecordList`, {
+      page: page,
+      size: size,
+      keyword: keyword
+    });
+  }
+
+  public deleteMaint(maintId) {
+    return this.gsevenRequestViaDelete('maintainRecord', {
+      efairymtrecord_id_list: JSON.stringify([maintId])
+    })
   }
 
 }
