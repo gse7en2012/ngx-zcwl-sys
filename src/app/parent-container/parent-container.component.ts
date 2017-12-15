@@ -15,9 +15,9 @@ export class ParentContainerComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, ) { }
 
   ngOnInit() {
-
+    this.userInfo = this.userService.getAdminInfo();
     this.userService.getUserCenter().then((data) => {
-      this.userInfo=data;
+      this.userInfo=Object.assign(this.userInfo,data);
     })
 
   }
