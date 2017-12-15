@@ -6,7 +6,7 @@
     </p>
 
     <p class="bread-crumb" *ngIf="pageFromType==2">
-      <a [routerLink]="['/admin/data/']">实时数据</a> 
+      <a [routerLink]="['/admin/data/']">实时数据</a>
       <span *ngIf="geoInfo.efairyproject_province">> {{geoInfo?.efairyproject_province}} </span>
       <span *ngIf="geoInfo.efairyproject_city">> {{geoInfo?.efairyproject_city}}</span>
       <span *ngIf="geoInfo.efairyproject_district">> {{geoInfo?.efairyproject_district}}</span>
@@ -66,7 +66,7 @@
               <img src="assets/image/device_online.png">
             </div>
             <div class="fr">
-              在线
+              <span [ngClass]="{red:device.efairydevice_state==1,orange:device.efairydevice_state==2||device.efairydevice_state==3,green:device.efairydevice_state==4||device.efairydevice_state==6}">{{stateHash[device.efairydevice_state]}}</span>
               <img src="assets/image/icon_online.png">
             </div>
           </div>
@@ -75,7 +75,7 @@
               <img src="assets/image/device_off.png">
             </div>
             <div class="fr">
-              离线
+                <span [ngClass]="{red:device.efairydevice_state==1,orange:device.efairydevice_state==2||device.efairydevice_state==3,green:device.efairydevice_state==4||device.efairydevice_state==6}">{{stateHash[device.efairydevice_state]}}</span>
               <img src="assets/image/icon_off.png">
             </div>
           </div>

@@ -1,6 +1,8 @@
 <div class="dashboard">
-  <a class="header"  [routerLink]="['/admin/master']">
+  <a class="header" [routerLink]="['/admin/master']">
     <img src="assets/image/dashboard_view.png">智慧用电安全隐患监管服务平台
+
+
   </a>
 
   <div class="ctx">
@@ -14,9 +16,12 @@
 
       <div class="desc" [ngClass]="{full:leftMapIsFull}">
         <p>单位状态</p>
-        <p><img src="assets/image/building_green.png">正常</p>
-        <p><img src="assets/image/building_red.png">报警</p>
-        <p><img src="assets/image/building_orange.png">故障</p>
+        <p>
+          <img src="assets/image/building_green.png">正常</p>
+        <p>
+          <img src="assets/image/building_red.png">报警</p>
+        <p>
+          <img src="assets/image/building_orange.png">故障</p>
       </div>
 
       <div id="l-map" class="map" [ngClass]="{full:leftMapIsFull}"></div>
@@ -31,17 +36,17 @@
 
       <div class="r-desc" [ngClass]="{full:rightMapIsFull}">
         <div class="ele">
-           <p class="num">{{normalProjectNums}}</p>
-           <p class="txt">正常单位</p>
+          <p class="num">{{normalProjectNums}}</p>
+          <p class="txt">正常单位</p>
         </div>
         <div class="ele red">
-            <p class="num">{{warningProjectNums}}</p>
-            <p class="txt">报警单位</p>
-         </div>
-         <div class="ele orange">
-            <p class="num">{{mistakeProjectNums}}</p>
-            <p class="txt">故障单位</p>
-         </div>
+          <p class="num">{{warningProjectNums}}</p>
+          <p class="txt">报警单位</p>
+        </div>
+        <div class="ele orange">
+          <p class="num">{{mistakeProjectNums}}</p>
+          <p class="txt">故障单位</p>
+        </div>
       </div>
 
 
@@ -51,25 +56,31 @@
   </div>
 
   <div class="footer">
-    <div class="item pink">
+    <div class="item pink" (click)="clearAlaramInterval()">
+      <div class="item-mask" [ngClass]="{blink:alarmMaskBlink,hide:!alarmMaskBlink}"></div>
       <h3 class="title">设备报警
+        <img src="assets/image/voice.png" class="voice" [hidden]="!alarmMaskBlink" (click)="clearAlaramInterval()">
+
         <span>{{deviceAlarmData?.length}}</span>
+
       </h3>
-      <div class="content">
-        <loading *ngIf="deviceAlarmDataLoading" ></loading>
-        <section class="block" *ngFor="let item of deviceAlarmData">
-          <div class="time">
-            <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}
-          </div>
-          <div class="details">
-            设备id：{{item.efairydevice_uuid}}
-            <br> 设备名称：{{item.efairydevice_name}}
-            <!-- <br> 报警类型：{{item.ss}}报警 -->
-            <br> 设备状态：{{item.state}}
-            <br> 报警值：{{item.efairydevice_alarm_rtv}}
-            <br> 阀值：{{item.efairydevice_alarm_thv}}
-          </div>
-        </section>
+      <div class="content" [scrollTop]="alarmScrollTop" (scroll)="alarmOnScroll()">
+        <loading *ngIf="deviceAlarmDataLoading"></loading>
+        <div #alarmBlock>
+          <section class="block" *ngFor="let item of deviceAlarmData">
+            <div class="time">
+              <span class="blue">{{item.blueTime}}</span> {{item.spanTime}}
+            </div>
+            <div class="details">
+              设备id：{{item.efairydevice_uuid}}
+              <br> 设备名称：{{item.efairydevice_name}}
+              <!-- <br> 报警类型：{{item.ss}}报警 -->
+              <br> 设备状态：{{item.state}}
+              <br> 报警值：{{item.efairydevice_alarm_rtv}}
+              <br> 阀值：{{item.efairydevice_alarm_thv}}
+            </div>
+          </section>
+        </div>
       </div>
     </div>
     <div class="item red">

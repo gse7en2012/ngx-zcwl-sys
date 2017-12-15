@@ -7,11 +7,13 @@ import { FormsModule } from '@angular/forms';
 // import { MaintRoutingModule } from './maint-routing.module';
 import { MaintComponent } from './maint.component';
 import { ListComponent } from './list/list.component';
+import { NewMaintComponent } from './new-maint/new-maint.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo:'list'},
   { path: 'list', component: ListComponent },
+  { path: 'new_maint', component: NewMaintComponent },
 ];
 
 
@@ -23,6 +25,6 @@ const routes: Routes = [
     // MaintRoutingModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MaintComponent, ListComponent]
+  declarations: [MaintComponent, ListComponent, NewMaintComponent]
 })
 export class MaintModule { }

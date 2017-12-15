@@ -513,7 +513,9 @@ export class ProjectService {
       keyword: keyword
     });
   }
-
+  public addMaint(opts) {
+    return this.gsevenRequestViaPost('maintainRecord', opts);
+  }
   public deleteMaint(maintId) {
     return this.gsevenRequestViaDelete('maintainRecord', {
       efairymtrecord_id_list: JSON.stringify([maintId])

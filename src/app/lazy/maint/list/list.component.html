@@ -2,7 +2,7 @@
   <div class="info-bar">
     <p class="bread-crumb">
       <span class="title">维护记录</span>
-      <a class="btn fr" [routerLink]="['new_maint']">添加维护记录</a>
+      <a class="btn fr" [routerLink]="['../new_maint']">添加维护记录</a>
     </p>
   </div>
 
@@ -31,12 +31,15 @@
           </div>
         </div>
         <div class="middle">
+         
           <label class="blue">操作：{{typeHash[maint.efairymtrecord_mt_type_id]}}</label>
           <label class="orange">维护状态：{{resultHash[maint.efairymtrecord_mt_type_id%2]}}</label>
+          <label>现场处理：{{maint.efairymtrecord_is_insite_handle==1?'是':'否'}}</label>   
           <label>维护时间：{{maint.efairymtrecord_time}}</label>
         </div>
         <div class="ctx">
           <p>
+            设备名称：{{maint.efairydevice_name}} <br>
             操作报告：{{maint.efairymtrecord_content}}
           </p>
           <div class="img-list">

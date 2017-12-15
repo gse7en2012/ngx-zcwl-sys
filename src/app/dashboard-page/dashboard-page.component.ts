@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+
 import { ProjectService } from '../service/project.service';
 import { DeviceService } from '../service/device.service';
 import * as myGlobals from '../global/globals';
+
 
 declare var AMap;
 declare var AMapUI;
@@ -13,7 +15,7 @@ declare var moment;
   styleUrls: ['./dashboard-page.component.scss'],
   providers: [ProjectService, DeviceService]
 })
-export class DashboardPageComponent implements OnInit {
+export class DashboardPageComponent implements OnInit, OnDestroy {
 
   public bigMap: any;
   public rightMap: any;
@@ -32,17 +34,33 @@ export class DashboardPageComponent implements OnInit {
   public normalProjectNums: number = 0;
   public locationPointLngLat: string[];
 
+  public alarmScrollTop: number = 0;
+  public alarmScrollStId: any;
+  public alarmMaskBlink: boolean = true;
+  public alarmVoiceMp3:any;
+
 
   public deviceAlarmDataLoading: boolean = true;
 
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
 
+
+  @ViewChild('alarmBlock') alarmBlockView: ElementRef;
+
+
   constructor(private projectService: ProjectService, private deviceService: DeviceService) { }
+
+
+
+
   //API http://lbs.amap.com/api/javascript-api/reference-amap-ui/geo/district-cluster#render
+
+  ngOnDestroy() {
+    this.clearAlaramInterval();
+  }
+
   ngOnInit() {
-
-
     this.bigMap = new AMap.Map('l-map', {
       resizeEnable: true,
       zoom: 12,
@@ -75,6 +93,43 @@ export class DashboardPageComponent implements OnInit {
 
     this.getLastAlarmDevice();
     this.getProjectReport();
+
+    
+  }
+
+  createAlarmVoice(){
+    this.alarmVoiceMp3=new Audio();
+    this.alarmVoiceMp3.src = "assets/alarm.mp3";
+    this.alarmVoiceMp3.loop=true;
+    this.alarmVoiceMp3.load();
+    this.alarmVoiceMp3.play();
+  }
+
+  removeAlarmVoice(){
+    this.alarmVoiceMp3.pause();
+  }
+
+  setAlarmAutoScrollAndBlink() {
+    this.alarmScrollStId = setInterval(() => {
+      // this.alarmMaskHide=false;
+      // console.log(this.alarmBlockView.nativeElement.offsetHeight);
+      if (this.alarmScrollTop <= this.alarmBlockView.nativeElement.offsetHeight) {
+        this.alarmScrollTop += 141;
+      } else {
+        this.clearAlaramInterval();
+      }
+    }, 1800)
+  }
+
+  clearAlaramInterval() {
+    if (this.alarmScrollStId) clearInterval(this.alarmScrollStId);
+    this.alarmMaskBlink = false;
+    this.removeAlarmVoice();
+  }
+
+  alarmOnScroll() {
+    console.log('scorll');
+    // this.alarmMaskHide=true;
   }
 
   testRenderMapPolygon() {
@@ -454,13 +509,18 @@ export class DashboardPageComponent implements OnInit {
       this.deviceAlarmData.forEach((item) => {
         item.blueTime = moment(item.efairydevice_alarm_time).format('YYYY-MM-DD');
         item.spanTime = moment(item.efairydevice_alarm_time).format('HH:mm:ss');
-        item.ss = this.dataHash[item.efairydevice_alarm_pt][0];
+
         item.state = this.stateHash[item.efairydevice_detail_state];
         if (this.dataHash[item.efairydevice_alarm_pt] && this.dataHash[item.efairydevice_alarm_pt][1]) {
+          item.ss = this.dataHash[item.efairydevice_alarm_pt][0];
           item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
           item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
         }
       })
+
+      this.setAlarmAutoScrollAndBlink();
+      this.createAlarmVoice();
+
     })
 
   }

@@ -1,0 +1,79 @@
+<div class="right">
+  <div class="info-bar">
+    <p class="bread-crumb">
+      <span class="title">新增维护记录</span>
+    </p>
+  </div>
+  <div class="content">
+    <div class="tab-card">
+      <section class="form">
+        <div class="row">
+          <label>维护记录标题</label>
+          <input type="text" [(ngModel)]="title">
+        </div>
+        <div class="row">
+          <label>选择项目</label>
+          <!-- <select></select> -->
+          <select [(ngModel)]="project" (change)="changeProject()">
+            <option *ngFor="let item of projectList" [value]="item.efairyproject_id">{{item.efairyproject_name}}</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>选择维护设备</label>
+          <!-- <select></select> -->
+          <select [(ngModel)]="device">
+            <option *ngFor="let item of deviceList" [value]="item.efairydevice_id">{{item.efairydevice_name}}</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>选择维护类型</label>
+          <!-- <select></select> -->
+          <select [(ngModel)]="type">
+            <option *ngFor="let item of typeHash;let i=index" [value]="i">{{item}}</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>故障是否排除</label>
+          <!-- <select></select> -->
+          <select [(ngModel)]="result">
+            <option *ngFor="let item of resultHash;let i=index" [value]="i">{{item}}</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>是否现场处理</label>
+          <!-- <select></select> -->
+          <select [(ngModel)]="opts">
+            <option value="1">是现场处理</option>
+            <option value="0">非现场处理</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>维护操作内容</label>
+          <textarea [(ngModel)]="ctx"></textarea>
+        </div>
+        <div class="row">
+          <label>上传图片</label>
+          <div class="img-box">
+            <div *ngFor="let item of uploadImgList" class="img-item">
+              <b class="delete" (click)="deleteImg(item)">&times;</b>
+              <img [src]="item">
+            </div>
+            <div class="img-upload-box" [hidden]="uploadImgList.length>=9">
+              <a id="img-upload" class="img-btn">+</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <label>&nbsp;</label>
+          <a class="button" (click)="addNewMaint()" *ngIf="!adding">新增维护记录</a>
+          <a class="button grey" *ngIf="adding">正在发布</a>
+          <a class="button grey" (click)="goBack()">取消</a>
+        </div>
+      </section>
+
+
+    </div>
+  </div>
+</div>
