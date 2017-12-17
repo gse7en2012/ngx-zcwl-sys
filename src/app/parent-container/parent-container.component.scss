@@ -53,6 +53,39 @@ header{
         margin: 10px auto;
     }
 }
+.msg{
+    float: right;
+    box-sizing: border-box;
+    border: 1px solid #f45d4c;
+    padding: 0 10px;
+    position: relative;
+    cursor: pointer;
+    margin-right: 10px;
+    background: rgba(244, 93, 76, .5);
+    &::-webkit-scrollbar{
+        width: 6px;
+        background:  rgba(17, 82, 143, 0.55);
+    }
+    &::-webkit-scrollbar-thumb{
+        background:#f45d4c;
+    }
+    .item{
+        color: #eee;
+        font-size: 15px;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 2;
+        margin: 3px;
+        text-align: right;
+        img{
+            position: relative;
+            top: 4px;
+            margin-right: 4px;
+        }
+    }
+}
 .setting{
     float:right;
     color: #fff;
@@ -61,20 +94,24 @@ header{
         height: 34px;
         border-radius: 50%;
         float: left;
-        margin: 18px;
+        margin: 18px 8px;
     }
     .name{
         font-size: 16px;
         line-height: 70px;
         position: relative;
         border-right:1px solid #888;
-        padding-right: 15px;
+        padding-right: 10px;
         
     }
     .power{
         float: right;
-        margin: 26px;
+        margin: 26px 0;
         cursor: pointer;
+        margin-left: 10px;
+        img{
+            width:20px;
+        }
     }
 
     .super-entrance{
@@ -83,7 +120,7 @@ header{
         font-size: 16px;
         position: relative;
         border-right: 1px solid #888;
-        padding-right: 15px;
+        padding-right: 10px;
         margin-top: 26px;
         color: #3fa4ce;
     }

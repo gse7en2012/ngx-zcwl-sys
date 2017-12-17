@@ -8,6 +8,8 @@ export class ShareService {
 
   private warningPageParentNeedInitTab = false;
 
+  public allowVoice:boolean=true;
+
   // constructor() { }
 
   // Observable string sources

@@ -74,8 +74,8 @@ export class MasterPageComponent implements OnInit {
         item.state = this.stateHashList[item.efairydevice_detail_state];
         item.efairydevice_alarm_time = moment(item.efairydevice_alarm_time).format('MM-DD HH:mm');
         if (this.dataHash[item.efairydevice_alarm_pt] && this.dataHash[item.efairydevice_alarm_pt][1]) {
-          item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(1) + this.dataHash[item.efairydevice_alarm_pt][2];
-          item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(1) + this.dataHash[item.efairydevice_alarm_pt][2];
+          item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
+          item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
         }
       })
     })
@@ -105,8 +105,8 @@ export class MasterPageComponent implements OnInit {
         item.spanTime = moment(item.efairydevicefiredata_time).format('HH:mm');
 
         item.ss = this.dataHash[item.efairydevicefiredata_parameter][0];
-        item.efairydevicefiredata_thv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_thv).toFixed(1) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
-        item.efairydevicefiredata_rtv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_rtv).toFixed(1) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
+        item.efairydevicefiredata_thv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_thv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
+        item.efairydevicefiredata_rtv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_rtv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
       })
 
       this.deviceAlarmDataLoading = false;

@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { DeviceService } from '../../service/device.service';
 import { UserService } from '../../service/user.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, Event, NavigationEnd } from '@angular/router';
 // import { Base64 } from '../../service/base64';
 import { Base64 } from 'js-base64';
+
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/filter';
 
 import { IMyDpOptions, IMyDateModel } from 'mydatepicker';
 
@@ -16,7 +20,7 @@ declare var moment;
   styleUrls: ['./details-table.component.scss'],
   providers: [DeviceService]
 })
-export class DetailsTableComponent implements OnInit {
+export class DetailsTableComponent implements OnInit,OnDestroy {
 
   public deviceId: string;
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
@@ -61,11 +65,24 @@ export class DetailsTableComponent implements OnInit {
   public optionList: any = [];
   // public optionListForShow:any=[];
   public dataViewTypeIsChart: boolean = false;
-
+  public urlSubscription:any;
   private defaultDays = 2;
   constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
+
+  ngOnDestroy(){
+    this.urlSubscription.unsubscribe();
+  }
+
   ngOnInit() {
+
+    this.urlSubscription=this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+      // You only receive NavigationStart events
+      this.getAlarmData(this.startTimeFormat, this.endTimeFormat);
+      this.getHistoryData(this.startTimeFormat, this.endTimeFormat);
+    });
+
+
     const nowTime = moment();
     const pastTime = moment().add(-this.defaultDays, 'd');
     this.endTime = {

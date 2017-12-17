@@ -2,25 +2,56 @@
   <header>
     <div class="logo">PST</div>
     <div class="nav">
-      <a [routerLink]="['master']" routerLinkActive="cur" class="index"><i class="icon"></i><span>首页</span></a>
-      <a [routerLink]="['data']" routerLinkActive="cur" class="data"><i class="icon "></i><span>实时数据</span></a>
+      <a [routerLink]="['master']" routerLinkActive="cur" class="index">
+        <i class="icon"></i>
+        <span>首页</span>
+      </a>
+      <a [routerLink]="['data']" routerLinkActive="cur" class="data">
+        <i class="icon "></i>
+        <span>实时数据</span>
+      </a>
       <!-- <a [routerLink]="['warning']" routerLinkActive="cur" class="warning"><i class="icon "></i><span>报警信息</span></a>
       <a [routerLink]="['mistake']" routerLinkActive="cur" class="error"><i class="icon "></i><span>故障信息</span></a> -->
-      <a [routerLink]="['/dashboard']" routerLinkActive="cur" class="dashboard"><i class="icon "></i><span>监控中心</span></a>
-      <a [routerLink]="['notice']" routerLinkActive="cur" class="notice"><i class="icon "></i><span>公告中心</span></a>
-      <a [routerLink]="['maint']" routerLinkActive="cur" class="maint"><i class="icon "></i><span>维护记录</span></a>
-      
-      <a (click)="waiting()" class="bug"><i class="icon "></i><span>隐患曝光</span></a>
+      <a [routerLink]="['/dashboard']" routerLinkActive="cur" class="dashboard">
+        <i class="icon "></i>
+        <span>监控中心</span>
+      </a>
+      <a [routerLink]="['notice']" routerLinkActive="cur" class="notice">
+        <i class="icon "></i>
+        <span>公告中心</span>
+      </a>
+      <a [routerLink]="['maint']" routerLinkActive="cur" class="maint">
+        <i class="icon "></i>
+        <span>维护记录</span>
+      </a>
+
+      <a (click)="waiting()" class="bug">
+        <i class="icon "></i>
+        <span>隐患曝光</span>
+      </a>
     </div>
+
     <div class="setting">
-      
       <div class="account">
-        <a  class="super-entrance" [routerLink]="['/super']" *ngIf="userInfo.user_level<4" >进入管理界面</a>
+        <a class="super-entrance" [routerLink]="['/super']" *ngIf="userInfo.user_level<4">进入管理界面</a>
         <img class="avatar" [src]="userInfo.efairyuser_headimg_url">
         <span class="name">{{userInfo.efairyuser_nickname}}</span>
-        <a class="power" (click)="logout()"><img src="./assets/image/power.png"></a>
+        <a class="power" (click)="logout()">
+          <img src="./assets/image/power.png">
+        </a>
+        <a class="power" (click)="toggleVoice()">
+          <img src="./assets/image/voice.png" *ngIf="allowVoice=='1'||!allowVoice">
+          <img src="./assets/image/voice_close.png" *ngIf="allowVoice=='0'">
+        </a>
       </div>
     </div>
+    <a class="msg" *ngIf="msgList.length>0" (click)="navToDeviceDetails(alarmDeviceId)">
+      <div class="item">
+        <img src="assets/image/bell.png"> {{alarmDevice}} <br> {{alarmMsg}}
+      </div>
+      <!-- <div *ngFor="let msg of msgList" class="item">{{msg.content}}</div> -->
+    </a>
   </header>
+
   <router-outlet></router-outlet>
 </div>

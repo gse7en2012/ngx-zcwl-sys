@@ -59,7 +59,7 @@
     <div class="item pink" (click)="clearAlaramInterval()">
       <div class="item-mask" [ngClass]="{blink:alarmMaskBlink,hide:!alarmMaskBlink}"></div>
       <h3 class="title">设备报警
-        <img src="assets/image/voice.png" class="voice" [hidden]="!alarmMaskBlink" (click)="clearAlaramInterval()">
+        <!-- <img src="assets/image/voice.png" class="voice" [hidden]="!alarmMaskBlink" (click)="clearAlaramInterval()"> -->
 
         <span>{{deviceAlarmData?.length}}</span>
 

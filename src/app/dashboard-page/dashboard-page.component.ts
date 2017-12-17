@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/co
 
 import { ProjectService } from '../service/project.service';
 import { DeviceService } from '../service/device.service';
+import { UserService } from '../service/user.service';
 import * as myGlobals from '../global/globals';
 
 
@@ -37,7 +38,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   public alarmScrollTop: number = 0;
   public alarmScrollStId: any;
   public alarmMaskBlink: boolean = true;
-  public alarmVoiceMp3:any;
+  public alarmVoiceMp3: any;
 
 
   public deviceAlarmDataLoading: boolean = true;
@@ -45,11 +46,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   private dataHash = myGlobals.dataHash;
   private stateHash = myGlobals.stateHash;
 
+  public allowVoice: string = '1';
 
   @ViewChild('alarmBlock') alarmBlockView: ElementRef;
 
 
-  constructor(private projectService: ProjectService, private deviceService: DeviceService) { }
+  constructor(private projectService: ProjectService, private deviceService: DeviceService, private userService: UserService) { }
 
 
 
@@ -61,6 +63,9 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    this.allowVoice = this.userService.getVoiceAllow();
+
     this.bigMap = new AMap.Map('l-map', {
       resizeEnable: true,
       zoom: 12,
@@ -94,18 +99,20 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.getLastAlarmDevice();
     this.getProjectReport();
 
-    
+
   }
 
-  createAlarmVoice(){
-    this.alarmVoiceMp3=new Audio();
+  createAlarmVoice() {
+    this.alarmVoiceMp3 = new Audio();
     this.alarmVoiceMp3.src = "assets/alarm.mp3";
-    this.alarmVoiceMp3.loop=true;
-    this.alarmVoiceMp3.load();
-    this.alarmVoiceMp3.play();
+    this.alarmVoiceMp3.loop = true;
+    if (this.allowVoice == '1') {
+      this.alarmVoiceMp3.load();
+      this.alarmVoiceMp3.play();
+    }
   }
 
-  removeAlarmVoice(){
+  removeAlarmVoice() {
     this.alarmVoiceMp3.pause();
   }
 

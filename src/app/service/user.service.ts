@@ -57,6 +57,7 @@ export class UserService {
         if (data.err_code === 200) {
           data.result.user_info.user_level = data.result.level;
           this.cookieService.put('pst_token', data.result.access_token);
+          this.cookieService.put('pst_ry_token', data.result.rongcloud_token);
           this.cookieService.putObject('pst_admin_info', data.result.user_info);
           return data.result;
         } else {
@@ -111,6 +112,18 @@ export class UserService {
 
   public getAdminInfo() {
     return this.cookieService.getObject('pst_admin_info')
+  }
+
+  public getRyToken() {
+    return this.cookieService.get('pst_ry_token')
+  }
+
+  public setVoiceAllow(flag){
+    this.cookieService.put('pst_admin_voice', flag);
+  }
+
+  public getVoiceAllow(){
+    return this.cookieService.get('pst_admin_voice');
   }
 
   public setProjectList(list) {
