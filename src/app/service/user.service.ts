@@ -58,6 +58,7 @@ export class UserService {
           data.result.user_info.user_level = data.result.level;
           this.cookieService.put('pst_token', data.result.access_token);
           this.cookieService.put('pst_ry_token', data.result.rongcloud_token);
+          this.cookieService.put('pst_ry_key', data.result.rongcloud_appkey);
           this.cookieService.putObject('pst_admin_info', data.result.user_info);
           return data.result;
         } else {
@@ -116,6 +117,9 @@ export class UserService {
 
   public getRyToken() {
     return this.cookieService.get('pst_ry_token')
+  }
+  public getRyKey(){
+    return this.cookieService.get('pst_ry_key');
   }
 
   public setVoiceAllow(flag){

@@ -178,7 +178,8 @@ const adminRoutes: Routes = [
       { path: 'sms', component: SmsManagePageComponent },
       { path: 'search_device', component: DeviceSearchComponent },
       { path: 'search_device/edit_device/:proejct_id/:device_id', component: EditDeviceComponent },
-    ]
+    ],
+    canActivate: [AuthGuard]
   }
 ]
 

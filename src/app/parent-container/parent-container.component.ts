@@ -67,7 +67,7 @@ export class ParentContainerComponent implements OnInit {
     this.rongYunSetup();
     this.initAlarmVoice();
 
-    this.allowVoice = this.userService.getVoiceAllow();
+    this.allowVoice = this.userService.getVoiceAllow()||'1';
     console.log(typeof this.userService.getVoiceAllow(), this.userService.getVoiceAllow())
 
   }
@@ -214,6 +214,7 @@ export class ParentContainerComponent implements OnInit {
 
   rongYunSetup() {
     this.token = this.userService.getRyToken();
+    this.appKey = this.userService.getRyKey();
     this.rongYunInit({
       appKey: this.appKey,
       token: this.token

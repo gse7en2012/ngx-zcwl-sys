@@ -62,6 +62,12 @@ header{
     cursor: pointer;
     margin-right: 10px;
     background: rgba(244, 93, 76, .5);
+    width: 16%;
+    &.normal{
+        height: 69px;
+        border: 1px solid #276CB2;
+        background: rgba(39, 108, 178, .5);        
+    }
     &::-webkit-scrollbar{
         width: 6px;
         background:  rgba(17, 82, 143, 0.55);

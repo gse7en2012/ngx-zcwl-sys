@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
+import { Router, CanActivate,ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../service/user.service';
 // import { setInterval } from 'timers';
 
@@ -20,11 +20,19 @@ export class LoginPageComponent implements OnInit {
 
   public phoneList:any=[];
 
-  constructor(private userService: UserService, private router: Router, ) { }
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router ) { }
 
   ngOnInit() {
     this.navMinHeight = (window.innerHeight) + 'px';
     this.phoneList=this.userService.getPhoneCookie()||[];
+
+
+    this.route.queryParams.subscribe(params => {
+      if(params.forbbiden==1){
+        alert('鉴权失败，请重新登录！')
+      }
+    });
+
   }
 
   @HostListener('window:keydown', ['$event'])

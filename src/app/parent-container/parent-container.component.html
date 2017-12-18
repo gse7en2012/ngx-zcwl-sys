@@ -51,6 +51,11 @@
       </div>
       <!-- <div *ngFor="let msg of msgList" class="item">{{msg.content}}</div> -->
     </a>
+    <a class="msg normal" *ngIf="msgList.length==0">
+        <div class="item">
+       
+        </div>
+      </a>
   </header>
 
   <router-outlet></router-outlet>
