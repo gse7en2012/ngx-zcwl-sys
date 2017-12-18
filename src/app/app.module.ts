@@ -88,11 +88,14 @@ const dataRoutes: Routes = [
   { path: 'geo/project/branch/:branch_id', component: BranchComponent },
   { path: 'geo/project/branch/:branch_id/device/:device_id', component: DeviceComponent },
   { path: 'geo/project/branch/:branch_id/device/:device_id/edit', component: EditDeviceComponent },
+  { path: 'geo/project/branch_warning/:branch_id', component: ListComponent },
+  { path: 'geo/project/branch_warning/:branch_id/device/:device_id', component: DetailsTableComponent },
+
+
 
   { path: ':parent_id/agency/:agency_id', component: ProjectComponent },
   { path: ':parent_id/agency/:agency_id/branch/:branch_id', component: BranchComponent },
   { path: ':parent_id/agency/:agency_id/branch_warning/:branch_id', component: ListComponent },
-
   { path: ':parent_id/agency/:agency_id/branch_warning/:branch_id/device/:device_id', component: DetailsTableComponent },
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DeviceService } from '../../service/device.service';
 import { UserService } from '../../service/user.service';
 import { Router, ActivatedRoute, Params, Event, NavigationEnd } from '@angular/router';
@@ -10,6 +10,8 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 
 import { IMyDpOptions, IMyDateModel } from 'mydatepicker';
+import * as myGlobals from '../../global/globals';
+
 
 declare var pako;
 declare var moment;
@@ -20,31 +22,13 @@ declare var moment;
   styleUrls: ['./details-table.component.scss'],
   providers: [DeviceService]
 })
-export class DetailsTableComponent implements OnInit,OnDestroy {
+export class DetailsTableComponent implements OnInit, OnDestroy {
 
   public deviceId: string;
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
-  public dataHash = {
-    1: ['高度', 0.01, 'm'],
-    2: ['温度', 0.1, '℃'],
-    3: ['压力', 0.1, 'MPa'],
-    4: ['压力', 0.1, 'kPa'],
-    5: ['气体浓度', 0.1, '%LEL'],
-    6: ['气体浓度', 0.1, '%VOL'],
-    7: ['气体浓度', 1, '10^-6体积分数'],
-    8: ['气体浓度', 1, 'mg/m3'],
-    9: ['时间', 1, 's'],
-    10: ['电压', 0.1, 'V'],
-    11: ['电流', 0.1, 'A'],
-    12: ['流量', 0.1, 'L/s'],
-    13: ['风量', 0.1, 'm3/min'],
-    14: ['风速', 0.1, 'm/s'],
-    15: ['漏电', 1, 'mA'],
-    16: ['烟参量', 0.1, ''],
-    128: ['输入检测', 1, ''],
-    129: ['输出控制', 1, '']
-  }
-  public stateHashList = this.createHash();
+  public dataHash = myGlobals.dataHash;
+  public stateHashList = myGlobals.stateHash;
+
   public alarmList: any = [];
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'yyyy-mm-dd',
@@ -65,18 +49,18 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
   public optionList: any = [];
   // public optionListForShow:any=[];
   public dataViewTypeIsChart: boolean = false;
-  public urlSubscription:any;
-  private defaultDays = 2;
+  public urlSubscription: any;
+  private defaultDays = 3;
   constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.urlSubscription.unsubscribe();
   }
 
   ngOnInit() {
 
-    this.urlSubscription=this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+    this.urlSubscription = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
       // You only receive NavigationStart events
       this.getAlarmData(this.startTimeFormat, this.endTimeFormat);
       this.getHistoryData(this.startTimeFormat, this.endTimeFormat);
@@ -113,75 +97,6 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
   }
 
 
-  createHash() {
-    let hashArray = new Array(255);
-    hashArray[0] = '预留';
-    hashArray[1] = '正常';
-    hashArray[2] = '火警';
-    hashArray[3] = '启动';
-    hashArray[4] = '动作';
-    hashArray[5] = '监管';
-    hashArray[6] = '故障';
-    hashArray[7] = '自检';
-    hashArray[21] = '通讯故障';
-    hashArray[22] = '主电故障';
-    hashArray[23] = '备电故障';
-    hashArray[24] = '线路故障';
-    hashArray[40] = '故障恢复';
-    hashArray[41] = '通讯故障恢复';
-    hashArray[42] = '主电故障恢复';
-    hashArray[43] = '备电故障恢复';
-    hashArray[44] = '线路故障恢复';
-    hashArray[70] = '停止';
-    hashArray[71] = '屏蔽';
-    hashArray[72] = '屏蔽撤销';
-    hashArray[73] = '开机';
-    hashArray[74] = '关机';
-    hashArray[75] = '复位';
-    hashArray[76] = '手动状态';
-    hashArray[77] = '自动状态';
-    hashArray[78] = '确认/消音';
-    hashArray[128] = '主电欠压故障';
-    hashArray[129] = '主电欠压恢复';
-    hashArray[130] = '备电欠压故障';
-    hashArray[131] = '备电欠压恢复';
-    hashArray[132] = '温度传感器短路';
-    hashArray[133] = '温度传感器短路恢复';
-    hashArray[134] = '温度传感器开路';
-    hashArray[135] = '温度传感器开路恢复';
-    hashArray[136] = '电流互感器短路';
-    hashArray[137] = '电流互感器短路恢复';
-    hashArray[138] = '电流互感器开路';
-    hashArray[139] = '电流互感器开路恢复';
-    hashArray[140] = '漏电预警';
-    hashArray[141] = '温度预警';
-    hashArray[142] = '过流预警';
-    hashArray[143] = '漏电报警';
-    hashArray[144] = '温度报警';
-    hashArray[145] = '过流报警';
-    hashArray[146] = '电源短路故障';
-    hashArray[147] = '电源短路故障恢复';
-    hashArray[148] = '回路短路';
-    hashArray[149] = '回路短路恢复';
-    hashArray[150] = '回路通信故障';
-    hashArray[151] = '回路通信故障恢复';
-    hashArray[152] = '输出线故障';
-    hashArray[153] = '输出线故障恢复';
-    hashArray[154] = '输入线故障';
-    hashArray[155] = '输入线故障恢复';
-    hashArray[156] = '模块电源故障';
-    hashArray[157] = '模块电源故障恢复';
-    hashArray[158] = '新设备注册';
-    hashArray[159] = '打印机故障';
-    hashArray[160] = '打印机故障恢复';
-    hashArray[161] = '打印机缺纸';
-    hashArray[162] = '打印机缺纸恢复';
-    hashArray[163] = '系统故障';
-    hashArray[164] = '系统故障恢复';
-    hashArray[165] = '反馈';
-    hashArray[166] = '停止反馈';
-    return hashArray;
-  }
 
 
   onStartDateChanged(event: IMyDateModel) {
@@ -213,7 +128,13 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
         element['value'] = (element.efairydevice_alarm_rtv * this['dataHash'][element.efairydevice_alarm_pt][1]).toFixed(2);
         element['valueThv'] = (element.efairydevice_alarm_thv * this['dataHash'][element.efairydevice_alarm_pt][1]).toFixed(2);
         element['efairydevice_alarm_rtv'] = element.value + this['dataHash'][element.efairydevice_alarm_pt][2]
-        element['efairydevice_alarm_thv'] = element.valueThv + this['dataHash'][element.efairydevice_alarm_pt][2]
+        element['efairydevice_alarm_thv'] = element.valueThv + this['dataHash'][element.efairydevice_alarm_pt][2];
+        if (element.efairydevice_alarm_pt == '128' || element.efairydevice_alarm_pt == '129') {
+          element.efairydevice_alarm_rtv = element.rtv == '1' ? '常开' : '常闭';
+          element.efairydevice_alarm_thv = '--'
+        }
+        if (element.efairydevice_alarm_cid == 9) element['type'] = '烟感探测输入1';
+        if (element.efairydevice_alarm_cid == 10) element['type'] = '气体探测输入2';
       });
       this.alarmList = data.device_alarm_data_list;
     })
@@ -228,16 +149,29 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
         const tmpStore = {};
 
         //临时hack
-        data.data_stream_list=[data.data_stream_list[data.data_stream_list.length-1]]
-        //等jb修复
 
+        // data.data_stream_list = [data.data_stream_list[data.data_stream_list.length - 1]]
+
+
+        //等jb修复 test
+        // const a1=data.data_stream_list[1];
+        // const a2=data.data_stream_list[0];
+        // console.log(pako.inflate(window.atob(a1), { to: 'string' }));
+        // setTimeout(()=>{
+        //   console.log(pako.inflate(window.atob(a2), { to: 'string' }));
+        // },4000)
         data.data_stream_list.forEach((ele) => {
           let eleData = (pako.inflate(window.atob(ele), { to: 'string' }));
           let eleDataJSON = JSON.parse(eleData);
-          console.log(typeof eleData,typeof eleDataJSON,eleDataJSON.length,eleDataJSON[0],typeof eleDataJSON[0],moment(eleDataJSON[0].ts*1000).format('YYYY-MM-DD'));
+          console.log(eleDataJSON)
+          if (typeof eleDataJSON[0] != 'object') {
+            eleDataJSON = JSON.parse(eleDataJSON[0]);
+            console.log(eleDataJSON)
+          }
+          console.log(typeof eleData, typeof eleDataJSON, eleDataJSON.length, eleDataJSON[0], typeof eleDataJSON[0], moment(eleDataJSON[0].ts * 1000).format('YYYY-MM-DD'));
 
           historyData = historyData.concat(eleDataJSON);
-
+          // console.log('================fenjiefu===============')
         })
         // console.log(historyData);
 
@@ -254,14 +188,14 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
               if (!tmpStore[row.pt].series[row['cid']]) {
                 tmpStore[row.pt].series[row['cid']] = [];
               }
-              tmpStore[row.pt].series[row['cid']].push((row.rtv*this.dataHash[row['pt']][1]).toFixed(2));
+              tmpStore[row.pt].series[row['cid']].push((row.rtv * this.dataHash[row['pt']][1]).toFixed(2));
             })
           } catch (e) {
 
           }
         })
         // console.log(tsList);
-        // console.log(tmpStore);
+        //  console.log(tmpStore);
 
         this.clearResponseToChartList(tmpStore, tsList);
       }
@@ -282,7 +216,7 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
           data: row['series'][k].reverse(),
           type: 'line',
           name: '通道' + k,
-         // stack: '总量',
+          // stack: '总量',
         })
       })
 
@@ -296,6 +230,7 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
       ))
 
     })
+    console.log(this.optionList[0])
   }
 
 
@@ -307,7 +242,7 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
         left: 'center',
       },
       tooltip: {
-        right:'10',
+        right: '10',
         trigger: 'axis',
         axisPointer: {
           type: 'cross',
@@ -354,14 +289,15 @@ export class DetailsTableComponent implements OnInit,OnDestroy {
       yAxis: [
         {
           type: 'value',
-          name: unit
+          name: unit,
+          min: 'dataMin'
         }
       ],
       series: series || [
         {
           name: '报警次数',
           type: 'line',
-         // stack: '总量',
+          // stack: '总量',
           // areaStyle: { normal: {} },
           data: []
         },

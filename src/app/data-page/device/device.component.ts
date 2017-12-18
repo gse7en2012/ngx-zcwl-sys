@@ -3,6 +3,7 @@ import { DeviceService } from '../../service/device.service';
 import { UserService } from '../../service/user.service';
 import { ProjectService } from '../../service/project.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import * as myGlobals from '../../global/globals';
 import { Base64 } from '../../service/base64';
 declare var pako;
 declare var moment;
@@ -40,29 +41,11 @@ export class DeviceComponent implements OnInit, OnDestroy {
   public geoLevel: string;
   public qs: any;
 
-
-
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
-  public dataHash = {
-    1: ['高度', 0.01, 'm'],
-    2: ['温度', 0.1, '℃'],
-    3: ['压力', 0.1, 'MPa'],
-    4: ['压力', 0.1, 'kPa'],
-    5: ['气体浓度', 0.1, '%LEL'],
-    6: ['气体浓度', 0.1, '%VOL'],
-    7: ['气体浓度', 1, '10^-6体积分数'],
-    8: ['气体浓度', 1, 'mg/m3'],
-    9: ['时间', 1, 's'],
-    10: ['电压', 0.1, 'V'],
-    11: ['电流', 0.1, 'A'],
-    12: ['流量', 0.1, 'L/s'],
-    13: ['风量', 0.1, 'm3/min'],
-    14: ['风速', 0.1, 'm/s'],
-    15: ['漏电', 1, 'mA'],
-    16: ['烟参量', 0.1, ''],
-    128: ['输入检测', 1, ''],
-    129: ['输出控制', 1, '']
-  }
+  public dataHash = myGlobals.dataHash;
+  public stateHashList = myGlobals.stateHash;
+
+
   public dataList: any = [];
   //0-离线 1- 警 2-预警 3-故障 4-启动 5-屏蔽 6-正常，优先级:离线 报警 预警 故障 启动 屏蔽 正常
 
@@ -105,10 +88,10 @@ export class DeviceComponent implements OnInit, OnDestroy {
     clearInterval(this.stId);
   }
 
-  conrtolDevice(order){
-    this.projectService.postDeviceControl(this.deviceId,order).then((r)=>{
-      alert(r.efairydevicemsg_content+'操作成功！')
-    }).catch(e=>{
+  conrtolDevice(order) {
+    this.projectService.postDeviceControl(this.deviceId, order).then((r) => {
+      alert(r.efairydevicemsg_content + '操作成功！')
+    }).catch(e => {
       alert(e)
     })
   }
@@ -181,12 +164,15 @@ export class DeviceComponent implements OnInit, OnDestroy {
           const single = {
             itemName: this.dataHash[element.pt][0] + '通道' + element.cid,
             itemValue: [(element.rtv * this.dataHash[element.pt][1]).toFixed(2), this.dataHash[element.pt][2], '/', (element.thv * this.dataHash[element.pt][1]).toFixed(2), this.dataHash[element.pt][2]].join(''),
-            itemError:(element.rtv>element.thv)||false
+            itemError: (element.rtv > element.thv) || false
           };
-          if (element.pt == '128'||element.pt == '129') {
-            single.itemValue = element.rtv == '1' ? '启用' : '不启用';
-            single.itemError=false;
+
+          if (element.pt == '128' || element.pt == '129') {
+            single.itemValue = element.rtv == '1' ? '常开' : '常闭';
+            single.itemError = false;
           }
+          if (element.cid == 9) single.itemName = '烟感探测输入1';
+          if (element.cid == 10) single.itemName = '气体探测输入2';
           this.dataList.push(single)
         }
       });
