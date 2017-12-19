@@ -1,7 +1,7 @@
 <div class="right">
   <div class="info-bar">
     <p class="bread-crumb">报警信息 > 全部</p>
-  
+
     <div class="fr">
       <!-- 报警：0 正常：1 -->
       <div class="search-box">
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    <div class="table-box" [ngClass]="{active:!dataViewTypeIsChart}" >
+    <div class="table-box" *ngIf="!dataViewTypeIsChart">
       <table class="table">
         <tr>
           <th>报警通道号</th>
@@ -56,18 +56,21 @@
         </tr>
       </table>
 
-      <div class="pagination">
+      <!-- <div class="pagination">
         共1页 / 1条数据 （当前第1页）
         <a class="btn disabled">上一页</a>
         <a class="btn">下一页</a>
         前往
         <input placeholder="跳转到" class="page-input"> 页
         <a class="btn">GO</a>
-      </div>
+      </div> -->
     </div>
 
-    <div class="charts-box" [ngClass]="{active:dataViewTypeIsChart}" >
-        <div echarts [options]="option" theme="macarons" class="chart chart-row" style="height:300px;" *ngFor="let option of optionList" ></div>
+    <div class="charts-box"  *ngIf="dataViewTypeIsChart">
+      <div echarts [options]="option" theme="macarons" class="chart chart-row" style="height:300px;" *ngFor="let option of optionList"
+        (chartInit)="onChartInit($event)"></div>
     </div>
+
+    <loading *ngIf="loading&&dataViewTypeIsChart" ></loading>
 
   </div>

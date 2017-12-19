@@ -52,28 +52,38 @@ export class ListComponent implements OnInit {
 
     this.projectService.getProjectList(this.agencyId).then((data) => {
       this.agencyName = data.lv2_agency_info.efairyuser_nickname;
-      data.project_list.forEach((item)=>{
-        if(item.efairyproject_id==this.projectId){
-          this.project=item;
+      data.project_list.forEach((item) => {
+        if (item.efairyproject_id == this.projectId) {
+          this.project = item;
         }
-      })      
+      })
     })
   }
 
 
   getData() {
+    console.log(this.dataHash);
     this.projectService.getProjectAlarmData(this.projectId).then((data) => {
       this.alarmList = data.project_alarm_data_list;
       this.total = data.total_rows;
       // this.project = data.project_info;
       this.loading = false;
       this.alarmList.forEach((item) => {
-        item.label = this.dataHash[item.efairydevice_alarm_pt][0];
         item.state = this.stateHashList[item.efairydevice_detail_state];
-        item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
-        item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+        if (item.efairydevice_alarm_pt) {
+          item.label = this.dataHash[item.efairydevice_alarm_pt][0];
+          item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+          item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2]
+        }else{
+          if(item.efairydevice_alarm_cid==9){
+            item.label='烟感探测输入1'
+          }
+          if(item.efairydevice_alarm_cid==10){
+            item.label='气体探测输入2'
+          }
+        }
       })
-
+      console.log(this.alarmList)
       this.pageMax = Math.ceil(this.total / this.pageSize)
       this.renderData();
     })

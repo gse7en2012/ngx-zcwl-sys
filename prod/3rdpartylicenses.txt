@@ -174,7 +174,7 @@ MIT
 MIT
 MIT
 
-ngx-echarts@1.2.4
+ngx-echarts@1.2.5
 MIT
 MIT License
 

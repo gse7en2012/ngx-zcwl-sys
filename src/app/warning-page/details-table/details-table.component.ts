@@ -24,6 +24,7 @@ declare var moment;
 })
 export class DetailsTableComponent implements OnInit, OnDestroy {
 
+  public loading:boolean=false;
   public deviceId: string;
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
   public dataHash = myGlobals.dataHash;
@@ -43,7 +44,7 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
   public endTimeFormat: string;
   public model: any = { date: { year: 2018, month: 10, day: 9 } };
 
-
+  public ecList: any = [];
 
   public option: any;
   public optionList: any = [];
@@ -51,6 +52,9 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
   public dataViewTypeIsChart: boolean = false;
   public urlSubscription: any;
   private defaultDays = 3;
+
+  private defaultPointTotal = 600;
+
   constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
 
@@ -141,10 +145,11 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
   }
 
   getHistoryData(startTime, endTime) {
-
+    this.optionList = [];
+    this.loading=true;
     this.deviceService.getDeviceHistoryData(this.deviceId, startTime, endTime).then((data) => {
       if (data.data_stream_list && data.data_stream_list.length > 0) {
-        let historyData = [];
+        let historyData: any[] = [];
         let tsList = [];
         const tmpStore = {};
 
@@ -152,28 +157,21 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
 
         // data.data_stream_list = [data.data_stream_list[data.data_stream_list.length - 1]]
 
-
-        //等jb修复 test
-        // const a1=data.data_stream_list[1];
-        // const a2=data.data_stream_list[0];
-        // console.log(pako.inflate(window.atob(a1), { to: 'string' }));
-        // setTimeout(()=>{
-        //   console.log(pako.inflate(window.atob(a2), { to: 'string' }));
-        // },4000)
         data.data_stream_list.forEach((ele) => {
           let eleData = (pako.inflate(window.atob(ele), { to: 'string' }));
           let eleDataJSON = JSON.parse(eleData);
-          console.log(eleDataJSON)
           if (typeof eleDataJSON[0] != 'object') {
             eleDataJSON = JSON.parse(eleDataJSON[0]);
-            console.log(eleDataJSON)
           }
-          console.log(typeof eleData, typeof eleDataJSON, eleDataJSON.length, eleDataJSON[0], typeof eleDataJSON[0], moment(eleDataJSON[0].ts * 1000).format('YYYY-MM-DD'));
+          // console.log(typeof eleData, typeof eleDataJSON, eleDataJSON.length, eleDataJSON[0], typeof eleDataJSON[0], moment(eleDataJSON[0].ts * 1000).format('YYYY-MM-DD'));
 
           historyData = historyData.concat(eleDataJSON);
-          // console.log('================fenjiefu===============')
         })
-        // console.log(historyData);
+        const splitPoint = Math.floor(historyData.length / this.defaultPointTotal);
+        historyData = historyData.filter((item, index) => {
+          return index % splitPoint == 0;
+        })
+        console.log(historyData.length);
 
         historyData.forEach(item => {
           tsList.push(moment(item['ts'] * 1000).format('YYYY-MM-DD HH:mm:ss'));
@@ -198,12 +196,24 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
         //  console.log(tmpStore);
 
         this.clearResponseToChartList(tmpStore, tsList);
+        // this.loading=false;
       }
     })
   }
 
   changeViewType(e) {
     this.dataViewTypeIsChart = !this.dataViewTypeIsChart;
+    if (this.dataViewTypeIsChart) {
+      // this.loading=true;
+      this.ecList.forEach((ec, index) => {
+        console.log(ec,this.optionList[index])
+        ec.setOption(this.optionList[index], true);
+        console.log(ec.setOption,this.optionList[index])
+        ec.resize();
+      })
+    }else{
+      this.loading=false;
+    }
   }
 
 
@@ -230,10 +240,13 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
       ))
 
     })
-    console.log(this.optionList[0])
+    // console.log(this.optionList)
+    this.loading=false;
   }
 
-
+  onChartInit(ec) {
+    this.ecList.push(ec);
+  }
 
   formatChartData(title, unit, xData, series) {
     const option = {
