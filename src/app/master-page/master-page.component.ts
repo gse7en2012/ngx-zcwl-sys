@@ -19,7 +19,7 @@ declare var moment;
 export class MasterPageComponent implements OnInit {
 
   public userLevelLabel: string;
-  public userInfo: any={};
+  public userInfo: any = {};
   public time: string;
   public deviceAlarmData: any;
   public userCenter: any = {};
@@ -77,6 +77,12 @@ export class MasterPageComponent implements OnInit {
           item.efairydevice_alarm_rtv = (item.efairydevice_alarm_rtv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
           item.efairydevice_alarm_thv = (item.efairydevice_alarm_thv * this.dataHash[item.efairydevice_alarm_pt][1]).toFixed(2) + this.dataHash[item.efairydevice_alarm_pt][2];
         }
+        //hack 128 129
+        if (item.efairydevice_alarm_pt == 128 || item.efairydevice_alarm_pt == 129) {
+          if (item.efairydevice_alarm_thv == 0) item.efairydevice_alarm_rtv = '不启用'
+          if (item.efairydevice_alarm_thv == 1) item.efairydevice_alarm_rtv = '常开检测'
+          if (item.efairydevice_alarm_thv == 2) item.efairydevice_alarm_rtv = '常闭检测'
+        }
       })
     })
   }
@@ -107,6 +113,21 @@ export class MasterPageComponent implements OnInit {
         item.ss = this.dataHash[item.efairydevicefiredata_parameter][0];
         item.efairydevicefiredata_thv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_thv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
         item.efairydevicefiredata_rtv_v = (this.dataHash[item.efairydevicefiredata_parameter][1] * item.efairydevicefiredata_rtv).toFixed(2) + '' + this.dataHash[item.efairydevicefiredata_parameter][2];
+
+
+        //hack 128 129
+        if (item.efairydevicefiredata_parameter == 128 || item.efairydevicefiredata_parameter == 129) {
+
+          if (item.efairydevicefiredata_rtv == 0) item.efairydevicefiredata_rtv_v = '不启用'
+          if (item.efairydevicefiredata_rtv == 1) item.efairydevicefiredata_rtv_v = '常开检测'
+          if (item.efairydevicefiredata_rtv == 2) item.efairydevicefiredata_rtv_v = '常闭检测'
+
+          if (item.efairydevicefiredata_thv == 0) item.efairydevicefiredata_thv_v = '不启用'
+          if (item.efairydevicefiredata_thv == 1) item.efairydevicefiredata_thv_v = '常开检测'
+          if (item.efairydevicefiredata_thv == 2) item.efairydevicefiredata_thv_v = '常闭检测'
+        }
+
+
       })
 
       this.deviceAlarmDataLoading = false;
@@ -160,7 +181,7 @@ export class MasterPageComponent implements OnInit {
 
     this.projectService.getUserCenter().then((data) => {
       this.userCenter = data;
-      this.userInfo=data;
+      this.userInfo = data;
       this.userCenterLoading = false;
     })
   }

@@ -24,7 +24,7 @@ declare var moment;
 })
 export class DetailsTableComponent implements OnInit, OnDestroy {
 
-  public loading:boolean=false;
+  public loading: boolean = false;
   public deviceId: string;
   public stateHash = ['离线', '报警', '预警', '故障', '启动', '屏蔽', '正常'];
   public dataHash = myGlobals.dataHash;
@@ -54,6 +54,16 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
   private defaultDays = 3;
 
   private defaultPointTotal = 600;
+
+
+
+  //for page
+  public total: number = 0;
+  public pageSize: number = 15;
+  public page: number = 1;
+  public jumpPage: number = 1;
+  public pageMax: number = 1;
+  public alarmListPageShow = [];
 
   constructor(private deviceService: DeviceService, private route: ActivatedRoute, private router: Router, private userService: UserService) { }
 
@@ -141,12 +151,15 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
         if (element.efairydevice_alarm_cid == 10) element['type'] = '气体探测输入2';
       });
       this.alarmList = data.device_alarm_data_list;
+      this.total = data.total_rows;
+      this.pageMax = Math.ceil(this.total / this.pageSize)
+      this.renderData();
     })
   }
 
   getHistoryData(startTime, endTime) {
     this.optionList = [];
-    this.loading=true;
+    this.loading = true;
     this.deviceService.getDeviceHistoryData(this.deviceId, startTime, endTime).then((data) => {
       if (data.data_stream_list && data.data_stream_list.length > 0) {
         let historyData: any[] = [];
@@ -206,13 +219,11 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
     if (this.dataViewTypeIsChart) {
       // this.loading=true;
       this.ecList.forEach((ec, index) => {
-        console.log(ec,this.optionList[index])
         ec.setOption(this.optionList[index], true);
-        console.log(ec.setOption,this.optionList[index])
         ec.resize();
       })
-    }else{
-      this.loading=false;
+    } else {
+      this.loading = false;
     }
   }
 
@@ -241,7 +252,7 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
 
     })
     // console.log(this.optionList)
-    this.loading=false;
+    this.loading = false;
   }
 
   onChartInit(ec) {
@@ -276,7 +287,8 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
           type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
           start: 0,      // 左边在 10% 的位置。
           end: 100,         // 右边在 60% 的位置。   
-          bottom: 0
+          bottom: 0,
+          handleSize: '200%'
         },
         // {   // 这个dataZoom组件，也控制x轴。
         //   type: 'inside', // 这个 dataZoom 组件是 inside 型 dataZoom 组件
@@ -317,6 +329,28 @@ export class DetailsTableComponent implements OnInit, OnDestroy {
       ]
     };
     return option;
+  }
+
+  //for page
+  renderData() {
+    this.alarmListPageShow = this.alarmList.slice((this.page - 1) * this.pageSize, this.page * this.pageSize);
+  }
+
+  prevPage() {
+    if (this.page <= 1) return false;
+    this.page--;
+    this.renderData();
+  }
+
+  nextPage() {
+    if (this.page >= this.pageMax) return false;
+    this.page++;
+    this.renderData();
+  }
+
+  changePage() {
+    this.page = this.jumpPage;
+    this.renderData();
   }
 
 

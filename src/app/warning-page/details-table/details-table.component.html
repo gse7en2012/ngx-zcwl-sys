@@ -43,7 +43,7 @@
           <th>阈值</th>
           <th>报警时间</th>
         </tr>
-        <tr *ngFor="let item of alarmList">
+        <tr *ngFor="let item of alarmListPageShow">
           <td>通道{{item.efairydevice_alarm_cid}}</td>
           <td>{{item.state}}</td>
           <td>{{item.type}}</td>
@@ -56,21 +56,21 @@
         </tr>
       </table>
 
-      <!-- <div class="pagination">
-        共1页 / 1条数据 （当前第1页）
-        <a class="btn disabled">上一页</a>
-        <a class="btn">下一页</a>
-        前往
-        <input placeholder="跳转到" class="page-input"> 页
-        <a class="btn">GO</a>
-      </div> -->
+      <div class="pagination">
+        共{{pageMax}}页 / {{total}}条数据 （当前第{{page}}页）
+        <a class="btn " (click)="prevPage()" [ngClass]="{btn:true,disabled:page<=1}">上一页</a>
+        <a class="btn" (click)="nextPage()" [ngClass]="{btn:true,disabled:page>=pageMax}">下一页</a> 前往
+        <input placeholder="跳转到" class="page-input" [(ngModel)]="jumpPage"> 页
+        <a class="btn" (click)="changePage()">GO</a>
+      </div>
+      
     </div>
 
-    <div class="charts-box"  *ngIf="dataViewTypeIsChart">
+    <div class="charts-box" *ngIf="dataViewTypeIsChart">
       <div echarts [options]="option" theme="macarons" class="chart chart-row" style="height:300px;" *ngFor="let option of optionList"
         (chartInit)="onChartInit($event)"></div>
     </div>
 
-    <loading *ngIf="loading&&dataViewTypeIsChart" ></loading>
+    <loading *ngIf="loading&&dataViewTypeIsChart"></loading>
 
   </div>

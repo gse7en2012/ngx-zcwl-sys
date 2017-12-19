@@ -83,7 +83,6 @@ export class ListComponent implements OnInit {
           }
         }
       })
-      console.log(this.alarmList)
       this.pageMax = Math.ceil(this.total / this.pageSize)
       this.renderData();
     })

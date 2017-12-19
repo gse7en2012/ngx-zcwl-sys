@@ -43,7 +43,7 @@
     <div class="box">
       <header class="red">
         基础信息
-        <div class="fr" (click)="editDevice()">
+        <div class="fr">
           <a [routerLink]="['edit']">
             <img src="assets/image/pencil.png">
           </a>
@@ -100,7 +100,7 @@
       <header class="blue">
         数据
         <div class="fr" (click)="getData()">
-          <img src="assets/image/clock.png">
+          <img src="assets/image/refresh.png">
         </div>
       </header>
       <div class="ctx min-h">
@@ -120,6 +120,9 @@
     <div class="box">
       <header class="pink">
         一周警报
+        <a class="fr" (click)="historyChartNavigate()">
+          <img src="assets/image/history.png">
+        </a>
       </header>
       <div class="ctx">
         <div echarts [options]="option" theme="macarons" class="chart" style="height:214px;"></div>

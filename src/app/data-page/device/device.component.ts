@@ -96,6 +96,11 @@ export class DeviceComponent implements OnInit, OnDestroy {
     })
   }
 
+  historyChartNavigate() {
+    this.router.navigate(['../../../../branch_warning/' + this.projectId + '/device/' + this.deviceId], { relativeTo: this.route })
+  }
+
+
   getInitQueryString() {
     this.route.queryParams.subscribe(queryParams => {
       this.geoLevel = queryParams.geo_level;
@@ -168,7 +173,9 @@ export class DeviceComponent implements OnInit, OnDestroy {
           };
 
           if (element.pt == '128' || element.pt == '129') {
-            single.itemValue = element.rtv == '1' ? '常开' : '常闭';
+            if (element.thv == '0') single.itemValue = '不启用'
+            if (element.thv == '1') single.itemValue = '常开检测'
+            if (element.thv == '2') single.itemValue = '常闭检测'
             single.itemError = false;
           }
           if (element.cid == 9) single.itemName = '烟感探测输入1';

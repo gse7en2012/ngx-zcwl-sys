@@ -64,7 +64,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.allowVoice = this.userService.getVoiceAllow();
+    this.allowVoice = this.userService.getVoiceAllow()||'1';
 
     this.bigMap = new AMap.Map('l-map', {
       resizeEnable: true,
